@@ -4,12 +4,12 @@ import { ExternalLink, Github } from "lucide-react"
 
 const projects = [
   {
-    title: "Plataforma E-commerce",
+    title: "Raapydo",
     description:
-      "Sistema completo de comercio electrónico con gestión de inventario, pagos y analytics en tiempo real.",
+      "Sitio web informativo para la aplicación Raapydo, una aplicación que conecta comercios con consumidores finales.",
     image: "/modern-ecommerce-dashboard.png",
-    tags: ["React", "Node.js", "PostgreSQL", "Stripe"],
-    category: "Web Platform",
+    tags: ["Next Js", "CSS", "Typescript"],
+    category: "Sitio web",
   },
   {
     title: "App de Gestión Empresarial",
