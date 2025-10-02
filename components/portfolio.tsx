@@ -1,37 +1,43 @@
 "use client"
 
-import { ExternalLink, Github } from "lucide-react"
+import { url } from "inspector"
+import { ExternalLink } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
 
 const projects = [
   {
     title: "Raapydo",
-    description:
-      "Sitio web informativo para la aplicación Raapydo, una aplicación que conecta comercios con consumidores finales.",
-    image: "/modern-ecommerce-dashboard.png",
-    tags: ["Next Js", "CSS", "Typescript"],
-    category: "Sitio web",
+    description: "Raapydo es una app dominicana que conecta comercios, clientes y deliverys para facilitar compras y envíos locales de forma rápida y sencilla.",
+    image: "/raapydo.png",
+    tags: ["NEXT.JS", "CSS", "TYPESCRIPT"],
+    category: "Sitio Web",
+    url: "https://www.raapydo.com/"
   },
   {
-    title: "App de Gestión Empresarial",
-    description: "Aplicación móvil para gestión de equipos, proyectos y recursos con sincronización en tiempo real.",
-    image: "/business-management-mobile-app.jpg",
-    tags: ["React Native", "Firebase", "TypeScript"],
-    category: "Mobile App",
+    title: "Raelix Drive",
+    description: "Raelix Drive actúa como intermediario entre propietarios de bienes para alquiler y usuarios interesados en alquilar dichos bienes. Facilitamos la búsqueda, reserva y pago de alquileres a través de nuestra plataforma en línea.",
+    image: "/raelixdrive.png",
+    tags: ["NEXT.JS", "CSS", "TYPESCRIPT"],
+    category: "Sitio Web",
+    url: "https://www.raelixdrive.app/"
   },
   {
-    title: "Sistema de Análisis de Datos",
-    description: "Dashboard interactivo para visualización y análisis de grandes volúmenes de datos empresariales.",
-    image: "/data-analytics-dashboard.png",
-    tags: ["Vue.js", "Python", "MongoDB", "D3.js"],
-    category: "Data Platform",
+    title: "The Vortex Capital",
+    description: "The Vortex Capital es una emisora de tokens registrada en El Salvador que convierte activos del mundo real en activos digitales mediante blockchain, brindando acceso a nuevas oportunidades de inversión.",
+    image: "/vortex.png",
+    tags: ["NEXT.JS", "CSS", "TYPESCRIPT"],
+    category: "Sitio Web",
+    url: "https://thevortexcapital.com/"
   },
   {
-    title: "API de Integración Bancaria",
-    description: "API robusta para integración con múltiples entidades bancarias y procesamiento de transacciones.",
-    image: "/banking-api-integration.jpg",
-    tags: ["Node.js", "Express", "Redis", "Docker"],
-    category: "Backend API",
-  },
+    title: "Dr. Dorka Jimenez",
+    description: "Soy la Dra. Dorka Jiménez, ortodoncista especialista con más de 15 años de experiencia transformando sonrisas con tecnología de vanguardia y atención personalizada.",
+    image: "/dorka.png",
+    tags: ["NEXT.JS", "CSS", "TYPESCRIPT"],
+    category: "Sitio Web",
+    url: "https://dorkadentalcenter-web.vercel.app/"
+  }
 ]
 
 export function Portfolio() {
@@ -69,15 +75,15 @@ export function Portfolio() {
 
               <div className="relative">
                 {/* Project Image */}
-                <div className="aspect-video overflow-hidden rounded-t-3xl bg-gradient-to-br from-[#111111] to-[#0a0a0a]">
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
-                    <div className="text-center">
-                      <div className="w-16 h-16 mx-auto mb-4 bg-primary/20 rounded-2xl flex items-center justify-center">
-                        <div className="w-8 h-8 bg-primary/40 rounded-lg"></div>
-                      </div>
-                      <p className="text-white/40 text-sm">Vista previa del proyecto</p>
-                    </div>
-                  </div>
+                <div className="aspect-video overflow-hidden rounded-t-3xl bg-gradient-to-br from-[#111111] to-[#0a0a0a] relative">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-all duration-500"
+                    priority={false}
+                  />
                 </div>
 
                 {/* Project Content */}
@@ -87,12 +93,9 @@ export function Portfolio() {
                       {project.category}
                     </span>
                     <div className="flex gap-3">
-                      <button className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary/30 transition-all duration-200 group/btn">
+                      <a href={project.url} className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary/30 transition-all duration-200 group/btn">
                         <ExternalLink className="w-4 h-4 text-white/60 group-hover/btn:text-primary transition-colors" />
-                      </button>
-                      <button className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary/30 transition-all duration-200 group/btn">
-                        <Github className="w-4 h-4 text-white/60 group-hover/btn:text-primary transition-colors" />
-                      </button>
+                      </a>
                     </div>
                   </div>
 
