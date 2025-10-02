@@ -14,6 +14,14 @@ const projects = [
     category: "Sitio Web",
     url: "https://www.raapydo.com/"
   },
+    {
+    title: "Dr. Dorka Jimenez",
+    description: "Soy la Dra. Dorka Jiménez, ortodoncista especialista con más de 15 años de experiencia transformando sonrisas con tecnología de vanguardia y atención personalizada.",
+    image: "/dorka.png",
+    tags: ["NEXT.JS", "CSS", "TYPESCRIPT"],
+    category: "Sitio Web",
+    url: "https://dorkadentalcenter-web.vercel.app/"
+  },
   {
     title: "Raelix Drive",
     description: "Raelix Drive actúa como intermediario entre propietarios de bienes para alquiler y usuarios interesados en alquilar dichos bienes. Facilitamos la búsqueda, reserva y pago de alquileres a través de nuestra plataforma en línea.",
@@ -29,14 +37,6 @@ const projects = [
     tags: ["NEXT.JS", "CSS", "TYPESCRIPT"],
     category: "Sitio Web",
     url: "https://thevortexcapital.com/"
-  },
-  {
-    title: "Dr. Dorka Jimenez",
-    description: "Soy la Dra. Dorka Jiménez, ortodoncista especialista con más de 15 años de experiencia transformando sonrisas con tecnología de vanguardia y atención personalizada.",
-    image: "/dorka.png",
-    tags: ["NEXT.JS", "CSS", "TYPESCRIPT"],
-    category: "Sitio Web",
-    url: "https://dorkadentalcenter-web.vercel.app/"
   }
 ]
 
