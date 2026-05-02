@@ -1,5 +1,7 @@
+import Link from "next/link"
 import { Mail, Phone } from "lucide-react"
 import Image from "next/image"
+import { PATH_SOLUCIONES_TECNOLOGIAS } from "@/lib/site-paths"
 
 export function Footer() {
   return (
@@ -30,11 +32,15 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Servicios</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>
+                <Link href={PATH_SOLUCIONES_TECNOLOGIAS} className="hover:text-primary transition-colors">
+                  Soluciones y tecnologías
+                </Link>
+              </li>
               <li>Desarrollo Web</li>
               <li>Apps Móviles</li>
               <li>Software a Medida</li>
               <li>Consultoría Tech</li>
-              <li>APIs e Integraciones</li>
             </ul>
           </div>
 

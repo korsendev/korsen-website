@@ -3,7 +3,9 @@
 import type React from "react"
 
 import { useState } from "react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { PATH_SOLUCIONES_TECNOLOGIAS } from "@/lib/site-paths"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -33,7 +35,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contacto" className="py-20 sm:py-32 bg-muted/20">
+    <section id="contacto" className="py-20 sm:py-32 bg-muted/20 scroll-mt-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-balance">Hablemos de tu proyecto</h2>
@@ -82,19 +84,21 @@ export function Contact() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-card/50 backdrop-blur-sm border-border">
-                <CardContent className="p-6">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                      <MessageCircle className="w-6 h-6 text-primary" />
+              <Link href={PATH_SOLUCIONES_TECNOLOGIAS} className="block">
+                <Card className="bg-card/50 backdrop-blur-sm border-border hover:border-primary/50 transition-colors h-full">
+                  <CardContent className="p-6">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                        <MessageCircle className="w-6 h-6 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold">WhatsApp</h4>
+                        <p className="text-muted-foreground">Elige solución o tecnología y cotiza en su página</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-semibold">WhatsApp</h4>
-                      <p className="text-muted-foreground">Respuesta inmediata</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </Link>
             </div>
           </div>
 

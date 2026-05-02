@@ -9,6 +9,12 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  async redirects() {
+    return [
+      { source: "/cotizar/:topic", destination: "/?cotizar=:topic", permanent: false },
+      { source: "/cotizar", destination: "/", permanent: false },
+    ]
+  },
 }
 
 export default nextConfig

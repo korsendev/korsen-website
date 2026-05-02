@@ -1,17 +1,12 @@
 "use client"
 
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { PATH_SOLUCIONES_TECNOLOGIAS, pathSolucionLanding } from "@/lib/site-paths"
 import { ArrowRight, Code, Smartphone, Globe, Target, Trophy, Cpu } from "lucide-react"
 import Image from "next/image"
 
 export function Hero() {
-  const scrollToContact = () => {
-    const element = document.getElementById("contacto")
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-    }
-  }
-
   return (
     <section id="inicio" className="relative min-h-[100vh] flex items-center justify-center overflow-hidden pt-36 pb-20">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,255,47,0.08),transparent_35%),radial-gradient(circle_at_80%_25%,rgba(0,255,47,0.06),transparent_40%),radial-gradient(circle_at_50%_80%,rgba(16,185,129,0.08),transparent_45%),linear-gradient(135deg,rgba(4,12,10,0.98)_0%,rgba(3,9,8,0.94)_45%,rgba(2,8,7,0.9)_100%)] backdrop-blur-3xl">
@@ -70,19 +65,16 @@ export function Hero() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
                 <Button
                   size="lg"
-                  onClick={scrollToContact}
+                  asChild
                   className="group bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg rounded-xl shadow-[0_0_34px_rgba(0,255,47,0.28)] hover:shadow-[0_0_58px_rgba(0,255,47,0.5)] hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.99] transition-all duration-300 ease-out animate-glow"
                 >
-                  Iniciar proyecto
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  <Link href={pathSolucionLanding("desarrollo-software-a-medida")}>
+                    Iniciar proyecto
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
                 </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={() => document.getElementById("servicios")?.scrollIntoView({ behavior: "smooth" })}
-                  className="px-8 py-3 text-lg rounded-xl border-primary/40 bg-background/40 backdrop-blur-sm hover:border-primary hover:bg-primary/12 hover:text-primary hover:-translate-y-0.5 hover:shadow-[0_0_26px_rgba(0,255,47,0.22)] active:scale-[0.99] transition-all duration-300 ease-out"
-                >
-                  Conocer el proceso
+                <Button variant="outline" size="lg" asChild className="px-8 py-3 text-lg rounded-xl border-primary/40 bg-background/40 backdrop-blur-sm hover:border-primary hover:bg-primary/12 hover:text-primary hover:-translate-y-0.5 hover:shadow-[0_0_26px_rgba(0,255,47,0.22)] active:scale-[0.99] transition-all duration-300 ease-out">
+                  <Link href={PATH_SOLUCIONES_TECNOLOGIAS}>Conocer soluciones y tecnologías</Link>
                 </Button>
               </div>
 
