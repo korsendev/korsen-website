@@ -1,21 +1,22 @@
-import { Header } from "@/components/header"
+import { PageWrapper } from "@/components/page-wrapper"
 import { Hero } from "@/components/hero"
 import { Services } from "@/components/services"
 import { Portfolio } from "@/components/portfolio"
-import { About } from "@/components/about"
+import { Tips } from "@/components/tips"
+import { IaPost } from "@/components/ia-post"
+import { WebDevPost } from "@/components/webdev-post"
 import { Contact } from "@/components/contact"
-import { Footer } from "@/components/footer"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background">
-      <Header />
+    <PageWrapper showBgEffects={false}>
       <Hero />
       <Services />
       <Portfolio />
-      <About />
+      <Tips />
+      <IaPost />
+      <WebDevPost />
       <Contact />
-      <Footer />
-    </main>
+    </PageWrapper>
   )
 }

@@ -1,106 +1,143 @@
 "use client"
 
-import { ExternalLink } from "lucide-react"
-import Image from "next/image"
-import { showcaseProjects } from "@/lib/projects-data"
+import { useState, useEffect } from "react"
+import { Button } from "@/components/ui/button"
+import { ArrowRight } from "lucide-react"
+
+// WIDGET: High-fidelity terminal-style dashboard mockup
+function SystemDashboardMockup() {
+  const [requests, setRequests] = useState(14820)
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRequests(r => r + Math.floor(Math.random() * 5) + 1)
+    }, 1500)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="w-full max-w-xl mx-auto border border-white/10 bg-[#0a0a0a]/90 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_24px_rgba(196,255,0,0.02)] overflow-hidden relative group text-left">
+      {/* Window Controls */}
+      <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/5 bg-white/[0.02]">
+        <div className="flex items-center gap-2">
+          <span className="w-3 h-3 rounded-full bg-red-500/50" />
+          <span className="w-3 h-3 rounded-full bg-yellow-500/50" />
+          <span className="w-3 h-3 rounded-full bg-green-500/50" />
+          <span className="text-[11px] font-mono text-[#a6a6a6] ml-3 uppercase tracking-wider">Korsen Analytics v2.8</span>
+        </div>
+        <span className="text-[10px] font-mono text-primary bg-primary/10 px-2 py-0.5 rounded uppercase tracking-widest font-bold animate-pulse">Running</span>
+      </div>
+
+      <div className="p-6 space-y-6">
+        {/* Metric Cards inside Mockup */}
+        <div className="grid grid-cols-3 gap-4">
+          <div className="bg-white/[0.02] border border-white/5 rounded-xl p-3.5 text-left relative">
+            <span className="text-[9px] font-mono text-[#a6a6a6] uppercase tracking-wider block">Latency</span>
+            <span className="text-xl font-bold text-[#F7F7F7] block mt-1 font-mono">11ms</span>
+          </div>
+          <div className="bg-white/[0.02] border border-white/5 rounded-xl p-3.5 text-left relative">
+            <span className="text-[9px] font-mono text-[#a6a6a6] uppercase tracking-wider block">Uptime</span>
+            <span className="text-xl font-bold text-primary block mt-1 font-mono">99.98%</span>
+          </div>
+          <div className="bg-white/[0.02] border border-white/5 rounded-xl p-3.5 text-left relative">
+            <span className="text-[9px] font-mono text-[#a6a6a6] uppercase tracking-wider block">Requests</span>
+            <span className="text-xl font-bold text-[#F7F7F7] block mt-1 font-mono">{requests}</span>
+          </div>
+        </div>
+
+        {/* Animated SVG Sparkline Chart */}
+        <div className="bg-white/[0.01] border border-white/5 rounded-xl p-4 text-left">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-[10px] font-mono text-[#a6a6a6] uppercase tracking-wider">System load query feed</span>
+            <span className="text-[10px] font-mono text-primary font-bold">120 QPS average</span>
+          </div>
+          <div className="h-32 w-full relative overflow-hidden flex items-end">
+            {/* SVG Grid lines */}
+            <div className="absolute inset-0 grid grid-rows-3 opacity-20">
+              <div className="border-b border-white/5 w-full h-full" />
+              <div className="border-b border-white/5 w-full h-full" />
+              <div className="border-b border-white/5 w-full h-full" />
+            </div>
+            
+            {/* SVG Chart path with pulse animation */}
+            <svg className="w-full h-full text-primary" viewBox="0 0 100 30" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="glow-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="var(--korsen-primary)" stopOpacity="0.25" />
+                  <stop offset="100%" stopColor="var(--korsen-primary)" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              {/* Fill path */}
+              <path d="M 0 30 L 10 20 L 20 25 L 30 10 L 40 15 L 50 5 L 60 12 L 70 8 L 80 18 L 90 4 L 100 2 L 100 30 Z" fill="url(#glow-grad)" />
+              {/* Line path */}
+              <path d="M 0 30 L 10 20 L 20 25 L 30 10 L 40 15 L 50 5 L 60 12 L 70 8 L 80 18 L 90 4 L 100 2" fill="none" stroke="currentColor" strokeWidth="1.5" />
+            </svg>
+          </div>
+        </div>
+
+        {/* Console Logger */}
+        <div className="bg-[#050505] border border-white/5 rounded-xl p-4 text-left font-mono text-[10px] text-white/50 space-y-1 max-h-24 overflow-y-auto">
+          <p className="text-primary">&gt; system.init() - Success</p>
+          <p>&gt; load_balancer: redirecting traffic to node_us_east_2</p>
+          <p>&gt; DB pool connection active (18ms pool load)</p>
+          <p className="text-white/35">&gt; cron_service.dbBackup() complete [04:00 UTC]</p>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export function Portfolio() {
   return (
-    <section id="proyectos" className="relative py-20 sm:py-32 overflow-hidden scroll-mt-24">
-      {/* Background with acrylic effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background/80">
-        <div className="absolute top-20 right-10 w-96 h-96 bg-primary/20 rounded-full blur-[150px] animate-pulse"></div>
-        <div className="absolute bottom-20 left-10 w-[500px] h-[500px] bg-primary/15 rounded-full blur-[200px] animate-pulse delay-1000"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(0,255,47,0.08),transparent_70%)]"></div>
-      </div>
-
+    <section id="proyectos" className="relative py-32 bg-[#050505] overflow-hidden">
+      {/* Subtle Grid */}
+      <div className="absolute inset-0 technical-grid opacity-15 pointer-events-none" />
+      
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-balance">
-            Nuestros <span className="text-gradient">Proyectos</span>
-          </h2>
-          <p className="text-xl text-white/70 max-w-2xl mx-auto text-pretty">Casos de éxito que hablan por sí mismos.</p>
-          <p className="text-lg text-white/60 mt-4 max-w-3xl mx-auto text-pretty">
-            Hemos trabajado junto a empresas de diferentes sectores para diseñar soluciones que mejoran procesos,
-            optimizan recursos y generan valor real.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {showcaseProjects.map((project) => (
-            <div
-              key={project.id}
-              className="group relative bg-gradient-to-br from-[#0a0a0a]/80 via-[#111111]/60 to-[#0f0f0f]/70 backdrop-blur-3xl rounded-3xl border border-primary/20 shadow-2xl overflow-hidden hover:border-primary/40 transition-all duration-500 hover:shadow-[0_25px_50px_-12px_rgba(0,255,47,0.3)]"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-primary/5 rounded-3xl blur-xl opacity-60 group-hover:opacity-80 transition-all duration-700"></div>
-
-              <div className="relative">
-                <div className="aspect-video overflow-hidden rounded-t-3xl bg-gradient-to-br from-[#111111] to-[#0a0a0a] relative">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-all duration-500"
-                    priority={false}
-                  />
-                </div>
-
-                <div className="p-6 lg:p-8">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/20 text-primary border border-primary/30">
-                      {project.category}
-                    </span>
-                    <div className="flex gap-3">
-                      <a
-                        href={project.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary/30 transition-all duration-200 group/btn"
-                      >
-                        <ExternalLink className="w-4 h-4 text-white/60 group-hover/btn:text-primary transition-colors" />
-                      </a>
-                    </div>
-                  </div>
-
-                  <h3 className="text-xl lg:text-2xl font-bold text-white mb-3 text-balance group-hover:text-primary/90 transition-colors duration-300">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-white/70 leading-relaxed mb-6 text-pretty">{project.description}</p>
-
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium bg-white/5 text-white/80 border border-white/10 hover:bg-primary/10 hover:border-primary/20 hover:text-primary transition-all duration-200"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center max-w-6xl mx-auto">
+          {/* Left Column: Metric and Text */}
+          <div className="lg:col-span-6 text-left">
+            <span className="text-[10px] font-mono text-primary tracking-widest uppercase block mb-4">
+              // case_studies
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tighter uppercase leading-none text-[#F7F7F7] mb-8">
+              CASOS DE ÉXITO
+            </h2>
+            
+            <div className="mb-8">
+              <span className="text-8xl sm:text-9xl font-extrabold tracking-tighter text-primary leading-none block font-sans">
+                +85%
+              </span>
+              <span className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#F7F7F7] mt-2 block leading-none">
+                DE EFICIENCIA
+              </span>
             </div>
-          ))}
-        </div>
+            
+            <p className="text-lg text-muted-foreground max-w-md mb-10 leading-relaxed font-sans font-medium">
+              Desarrollamos e integramos plataformas que optimizan procesos de negocio. Automatizamos flujos empresariales. Resultados tangibles en producción.
+            </p>
+            
+            <div>
+              <Button
+                variant="outline"
+                size="lg"
+                asChild
+                className="rounded-full border border-primary/25 bg-[#050505]/40 text-foreground/90 hover:bg-primary hover:text-primary-foreground dark:hover:bg-primary dark:hover:text-primary-foreground hover:border-primary dark:hover:border-primary hover:shadow-[0_0_15px_rgba(196,255,0,0.25)] font-mono text-xs uppercase tracking-wider gap-2 transition-all duration-300"
+              >
+                <a href="#contacto">
+                  Ver más casos
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </Button>
+            </div>
+          </div>
 
-        <div className="text-center mt-16">
-          <div className="inline-flex flex-col sm:flex-row gap-4 items-center">
-            <button
-              type="button"
-              onClick={() => document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" })}
-              className="px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl font-semibold transition-all duration-200 animate-glow"
-            >
-              Ver más proyectos
-            </button>
-            <button
-              type="button"
-              onClick={() => document.getElementById("servicios")?.scrollIntoView({ behavior: "smooth" })}
-              className="px-8 py-3 bg-white/5 hover:bg-white/10 text-white border border-white/20 hover:border-primary/30 rounded-xl font-semibold transition-all duration-200"
-            >
-              Nuestros servicios
-            </button>
+          {/* Right Column: Visual Dashboard Mockup */}
+          <div className="lg:col-span-6 relative">
+            <div className="absolute -inset-10 bg-radial from-primary/5 to-transparent blur-3xl opacity-50 pointer-events-none" />
+            <div className="animate-float">
+              <SystemDashboardMockup />
+            </div>
           </div>
         </div>
       </div>

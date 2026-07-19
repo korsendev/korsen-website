@@ -11,10 +11,17 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <div className="mb-4">
-              <Image src="/logo-korsen.svg" alt="Korsen" width={150} height={37} className="h-10 w-auto" />
+              <div className="relative h-12 w-36 overflow-hidden flex items-center justify-start">
+                <Image
+                  src="/logo-korsen.png"
+                  alt="Korsen"
+                  fill
+                  className="object-contain scale-[1.8] origin-left transform"
+                />
+              </div>
             </div>
             <p className="text-muted-foreground mb-4 max-w-md text-pretty">
-              Transformamos ideas en soluciones digitales escalables. Creando proyectos dignos de dioses desde 2019.
+              Transformamos ideas en soluciones digitales escalables. Creando software de alta precisión técnica desde 2019.
             </p>
             <div className="space-y-2">
               <div className="flex items-center space-x-2 text-sm text-muted-foreground">

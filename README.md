@@ -9,7 +9,7 @@ Este documento contiene todos los textos, títulos, párrafos y contenido de car
 ## 🏠 Header / Navegación
 
 ### Logo
-- **Korsen** (logo-korsen.svg)
+- **Korsen** (logo-korsen.png)
 
 ### Menú de Navegación
 - Inicio
@@ -24,7 +24,7 @@ Este documento contiene todos los textos, títulos, párrafos y contenido de car
 ## 🚀 Sección Hero (Inicio)
 
 ### Título Principal
-**"Creando Proyectos Dignos de Dioses"**
+**"Proyectos Creados Con Precisión Milimétrica"**
 
 ### Subtítulo
 "Transformamos ideas en soluciones digitales escalables con tecnología de vanguardia."
@@ -161,7 +161,7 @@ Soluciones E-commerce
 
 Nuestro equipo multidisciplinario trabaja con pasión para construir productos digitales que marcan la diferencia. Combinamos creatividad, tecnología de vanguardia y metodologías ágiles para entregar soluciones que superan las expectativas.
 
-En Korsen dominamos el arte del código como los antiguos dioses dominaban el rayo. Cada proyecto es una obra maestra digital diseñada para trascender."
+En Korsen dominamos el desarrollo digital con rigor técnico y arquitectura de alta disponibilidad. Cada proyecto es un sistema optimizado diseñado para escalar y liderar."
 
 ### Estadísticas
 
@@ -230,7 +230,7 @@ React, Next.js, Node.js, TypeScript, Python, PostgreSQL, MongoDB, AWS, Docker, K
 ## 🦶 Footer
 
 ### Descripción de la Empresa
-"Transformamos ideas en soluciones digitales escalables. Creando proyectos dignos de dioses desde 2019."
+"Transformamos ideas en soluciones digitales escalables. Creando software de alta precisión técnica desde 2019."
 
 ### Información de Contacto
 - **Email:** team@korsen.dev

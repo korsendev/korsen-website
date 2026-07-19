@@ -1,153 +1,211 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { PATH_SOLUCIONES_TECNOLOGIAS, pathSolucionLanding } from "@/lib/site-paths"
-import { ArrowRight, Code, Smartphone, Globe, Target, Trophy, Cpu } from "lucide-react"
+import { ArrowRight, Code, Smartphone, Globe, Cpu, MessageCircle } from "lucide-react"
 import Image from "next/image"
+
+// WIDGET 1: Server Telemetry Monitor
+function ServerMonitorWidget() {
+  const [cpu, setCpu] = useState(24)
+  const [latency, setLatency] = useState(12)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCpu(Math.floor(Math.random() * (38 - 18) + 18))
+      setLatency(Math.floor(Math.random() * (16 - 8) + 8))
+    }, 2500)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="korsen-container px-5 py-4 w-full max-w-sm mx-auto shadow-[0_0_30px_rgba(198,253,14,0.12)] text-left">
+      <div className="corner-bracket top-left opacity-80" />
+      <div className="corner-bracket top-right opacity-80" />
+      <div className="corner-bracket bottom-left opacity-80" />
+      <div className="corner-bracket bottom-right opacity-80" />
+      
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-xs uppercase tracking-wider font-semibold text-muted-foreground">Server Telemetry</span>
+        <span className="flex h-2 w-2 relative">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+        </span>
+      </div>
+      
+      <div className="space-y-3">
+        <div>
+          <div className="flex justify-between text-xs mb-1">
+            <span className="text-foreground/80">CPU LOAD</span>
+            <span className="numeric-value text-primary font-bold">{cpu}%</span>
+          </div>
+          <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+            <div className="h-full bg-primary transition-all duration-1000" style={{ width: `${cpu}%` }} />
+          </div>
+        </div>
+        
+        <div className="flex justify-between items-center text-xs">
+          <span className="text-foreground/80">LATENCY</span>
+          <span className="numeric-value text-foreground font-bold">{latency} ms</span>
+        </div>
+        
+        <div className="flex justify-between items-center text-xs">
+          <span className="text-foreground/80">MEMORY</span>
+          <span className="numeric-value text-foreground font-bold">4.2 GB / 16.0 GB</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// WIDGET 2: API Stream Logger
+const MOCK_LOGS = [
+  { method: "GET", path: "/api/v1/auth", status: 200 },
+  { method: "POST", path: "/api/v1/deploy", status: 201 },
+  { method: "GET", path: "/api/v1/users/me", status: 200 },
+  { method: "POST", path: "/api/v1/database/sync", status: 200 },
+  { method: "GET", path: "/api/v1/analytics", status: 200 },
+  { method: "PATCH", path: "/api/v1/settings", status: 200 },
+  { method: "POST", path: "/api/v1/media/upload", status: 201 },
+]
+
+function ApiLoggerWidget() {
+  const [logs, setLogs] = useState(MOCK_LOGS.slice(0, 4))
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLogs((prev) => {
+        const nextIndex = Math.floor(Math.random() * MOCK_LOGS.length)
+        const nextLog = MOCK_LOGS[nextIndex]
+        return [...prev.slice(1), nextLog]
+      })
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="korsen-container px-5 py-4 w-full max-w-sm mx-auto shadow-[0_0_30px_rgba(198,253,14,0.12)] text-left">
+      <div className="corner-bracket top-left opacity-80" />
+      <div className="corner-bracket top-right opacity-80" />
+      <div className="corner-bracket bottom-left opacity-80" />
+      <div className="corner-bracket bottom-right opacity-80" />
+      
+      <div className="flex items-center justify-between mb-3 border-b border-white/5 pb-2">
+        <span className="text-xs uppercase tracking-wider font-semibold text-muted-foreground">API Traffic Logs</span>
+        <span className="text-[10px] numeric-value text-primary font-bold">LIVE STREAM</span>
+      </div>
+      
+      <div className="space-y-2 monospace text-[11px]">
+        {logs.map((log, idx) => (
+          <div key={idx} className="flex justify-between items-center text-white/95">
+            <div className="flex items-center gap-1.5 min-w-0">
+              <span className={`font-bold px-1 rounded-[4px] shrink-0 ${
+                log.method === "POST" ? "text-emerald-400 bg-emerald-400/10" :
+                log.method === "PATCH" ? "text-amber-400 bg-amber-400/10" : "text-sky-400 bg-sky-400/10"
+              }`}>{log.method}</span>
+              <span className="truncate text-white/70">{log.path}</span>
+            </div>
+            <span className="text-primary font-bold shrink-0">{log.status}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// WIDGET 3: DB & Cache Performance
+function DbPerformanceWidget() {
+  const [qps, setQps] = useState(1245)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setQps(Math.floor(Math.random() * (1320 - 1180) + 1180))
+    }, 2000)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="korsen-container px-5 py-4 w-full max-w-sm mx-auto shadow-[0_0_30px_rgba(198,253,14,0.12)] text-left">
+      <div className="corner-bracket top-left opacity-80" />
+      <div className="corner-bracket top-right opacity-80" />
+      <div className="corner-bracket bottom-left opacity-80" />
+      <div className="corner-bracket bottom-right opacity-80" />
+      
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-xs uppercase tracking-wider font-semibold text-muted-foreground">DB Performance</span>
+        <span className="text-[10px] text-emerald-400 font-bold bg-emerald-400/10 px-1.5 py-0.5 rounded">HEALTHY</span>
+      </div>
+      
+      <div className="grid grid-cols-2 gap-2 mt-3 text-center">
+        <div className="bg-white/[0.02] border border-white/5 rounded-lg p-2">
+          <p className="text-[10px] text-muted-foreground uppercase">Queries/s</p>
+          <p className="text-lg font-bold text-primary numeric-value mt-1">{qps}</p>
+        </div>
+        <div className="bg-white/[0.02] border border-white/5 rounded-lg p-2">
+          <p className="text-[10px] text-muted-foreground uppercase">Cache Hit</p>
+          <p className="text-lg font-bold text-white numeric-value mt-1">99.2%</p>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export function Hero() {
   return (
-    <section id="inicio" className="relative min-h-[100vh] flex items-center justify-center overflow-hidden pt-36 pb-20">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,255,47,0.08),transparent_35%),radial-gradient(circle_at_80%_25%,rgba(0,255,47,0.06),transparent_40%),radial-gradient(circle_at_50%_80%,rgba(16,185,129,0.08),transparent_45%),linear-gradient(135deg,rgba(4,12,10,0.98)_0%,rgba(3,9,8,0.94)_45%,rgba(2,8,7,0.9)_100%)] backdrop-blur-3xl">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,47,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,47,0.06)_1px,transparent_1px)] bg-[size:42px_42px] opacity-10"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_58%,rgba(0,255,47,0.16)_59%,transparent_61%),radial-gradient(circle_at_50%_50%,transparent_70%,rgba(0,255,47,0.12)_71%,transparent_73%)] opacity-20 animate-[spin_28s_linear_infinite]"></div>
-        <div className="absolute -left-1/3 top-0 h-full w-1/2 bg-gradient-to-r from-transparent via-primary/20 to-transparent blur-2xl opacity-35 animate-[pulse_4s_ease-in-out_infinite]"></div>
-        <div className="absolute inset-0 bg-[linear-gradient(110deg,transparent_45%,rgba(0,255,47,0.16)_50%,transparent_55%)] bg-[length:220%_100%] opacity-30 animate-[pulse_5s_ease-in-out_infinite]"></div>
-        <div className="absolute inset-0 opacity-15 bg-[radial-gradient(circle,rgba(0,255,47,0.8)_1px,transparent_1.5px)] bg-[size:34px_34px]"></div>
-        <div className="absolute top-16 left-8 w-[30rem] h-[30rem] bg-primary/12 rounded-full blur-[170px] animate-pulse"></div>
-        <div className="absolute bottom-8 right-6 w-[34rem] h-[34rem] bg-emerald-400/12 rounded-full blur-[220px] animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[44rem] h-[44rem] bg-primary/6 rounded-full blur-[280px] animate-pulse delay-2000"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-primary/10"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,255,47,0.14),transparent_72%)]"></div>
-      </div>
-
-      {/* Floating icons */}
-      <div className="absolute top-1/4 left-1/4 animate-float">
-        <Code className="w-8 h-8 text-primary/30" />
-      </div>
-      <div className="absolute top-1/3 right-1/4 animate-float delay-1000">
-        <Smartphone className="w-6 h-6 text-primary/30" />
-      </div>
-      <div className="absolute bottom-1/3 left-1/3 animate-float delay-2000">
-        <Globe className="w-10 h-10 text-primary/30" />
-      </div>
+    <section id="inicio" className="relative min-h-[100vh] flex items-center justify-center overflow-hidden pt-32 pb-20 bg-background">
+      {/* Background grid */}
+      <div className="absolute inset-0 technical-grid opacity-20 pointer-events-none" />
+      <div className="absolute top-[20%] left-[10%] w-[30rem] h-[30rem] bg-primary/4 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-[10%] right-[10%] w-[35rem] h-[35rem] bg-primary/3 rounded-full blur-[200px] pointer-events-none" />
 
       <div className="w-full relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
-              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary mb-6 shadow-[0_0_20px_rgba(0,255,47,0.2)]">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full border border-primary/40 bg-primary/15 text-primary">
-                  <Cpu className="h-3.5 w-3.5" />
-                </span>
-                Software premium para liderar
+          <div className="grid lg:grid-cols-12 gap-16 lg:gap-8 items-center max-w-6xl mx-auto">
+            {/* Left Column: Bold Slogan (SOFTWARE QUE IMPULSA NEGOCIOS) */}
+            <div className="lg:col-span-7 text-left">
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-[10px] font-mono text-primary mb-8 tracking-widest uppercase">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                korsen // active_instance
               </div>
-
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-6 leading-[1.05] tracking-tight">
-                <span className="text-balance uppercase">Proyectos creados </span>
-                <span className="text-primary uppercase text-balance">con estándar de dioses</span>
+              
+              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold tracking-tighter uppercase leading-[0.85] text-foreground mb-8">
+                SOFTWARE<br/>
+                <span className="text-primary">QUE</span><br/>
+                IMPULSA<br/>
+                NEGOCIOS
               </h1>
-
-              <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground/95 mb-10 text-pretty max-w-xl mx-auto lg:mx-0">
-                En Korsen desarrollamos soluciones digitales con precisión, claridad y una base tecnológica preparada para crecer, integrarse y rendir al más alto nivel.
+              
+              <p className="text-lg text-muted-foreground max-w-md mb-10 font-sans leading-relaxed">
+                Sistemas robustos de alta precisión técnica. Código que genera resultados. No diez frases.
               </p>
-
-              <div className="flex flex-wrap gap-3 justify-center lg:justify-start mb-8">
-                <div className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-foreground/90 backdrop-blur-sm">
-                  Desarrollo a medida
-                </div>
-                <div className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-foreground/90 backdrop-blur-sm">
-                  Escalable y seguro
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
+              
+              <div className="flex gap-4 items-center">
                 <Button
                   size="lg"
                   asChild
-                  className="group bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg rounded-xl shadow-[0_0_34px_rgba(0,255,47,0.28)] hover:shadow-[0_0_58px_rgba(0,255,47,0.5)] hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.99] transition-all duration-300 ease-out animate-glow"
+                  className="bg-primary hover:bg-primary-light text-black font-bold font-sans rounded-[12px] px-8 py-3 shadow-[0_4px_12px_rgba(196,255,0,0.15)] hover:shadow-[0_6px_24px_rgba(196,255,0,0.3)] transition-all duration-300"
                 >
-                  <Link href={pathSolucionLanding("desarrollo-software-a-medida")}>
+                  <Link href="#contacto">
                     Iniciar proyecto
-                    <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                    <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg" asChild className="px-8 py-3 text-lg rounded-xl border-primary/40 bg-background/40 backdrop-blur-sm hover:border-primary hover:bg-primary/12 hover:text-primary hover:-translate-y-0.5 hover:shadow-[0_0_26px_rgba(0,255,47,0.22)] active:scale-[0.99] transition-all duration-300 ease-out">
-                  <Link href={PATH_SOLUCIONES_TECNOLOGIAS}>Conocer soluciones y tecnologías</Link>
-                </Button>
-              </div>
-
-              <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto lg:hidden text-center">
-                <div className="rounded-2xl border border-primary/35 bg-background px-4 py-5 shadow-[0_0_25px_rgba(0,255,47,0.14)]">
-                  <div className="mx-auto mb-2 flex h-8 w-8 items-center justify-center rounded-full bg-primary/15 text-primary">
-                    <Trophy className="h-4 w-4" />
-                  </div>
-                  <p className="text-2xl font-extrabold text-primary">+50</p>
-                  <p className="text-xs text-muted-foreground">proyectos entregados</p>
-                  <p className="text-[11px] text-muted-foreground/80 mt-1">Webs, apps y plataformas listas para producción.</p>
-                </div>
-                <div className="rounded-2xl border border-primary/35 bg-background px-4 py-5 shadow-[0_0_25px_rgba(0,255,47,0.14)]">
-                  <div className="mx-auto mb-2 flex h-8 w-8 items-center justify-center rounded-full bg-primary/15 text-primary">
-                    <Target className="h-4 w-4" />
-                  </div>
-                  <p className="text-2xl font-extrabold text-primary">3x</p>
-                  <p className="text-xs text-muted-foreground">mejor rendimiento técnico</p>
-                  <p className="text-[11px] text-muted-foreground/80 mt-1">Optimización de carga, arquitectura y experiencia.</p>
-                </div>
-                <div className="rounded-2xl border border-primary/35 bg-background px-4 py-5 shadow-[0_0_25px_rgba(0,255,47,0.14)]">
-                  <div className="mx-auto mb-2 flex h-8 w-8 items-center justify-center rounded-full bg-primary/15 text-primary">
-                    <Target className="h-4 w-4" />
-                  </div>
-                  <p className="text-2xl font-extrabold text-primary">72%</p>
-                  <p className="text-xs text-muted-foreground">objetivo anual completado</p>
-                  <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-primary/15">
-                    <div className="h-full w-[72%] rounded-full bg-primary" />
-                  </div>
-                  <p className="text-[11px] text-muted-foreground/80 mt-1">Meta: 100 proyectos premium este año.</p>
-                </div>
               </div>
             </div>
 
-            <div className="relative w-full max-w-2xl mx-auto lg:mx-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-transparent to-violet-500/10 blur-3xl" />
-              <div className="relative">
-                <Image
-                  src="/subjecthero.png"
-                  alt="Figura clásica futurista con laptop"
-                  width={1080}
-                  height={1080}
-                  priority
-                  className="relative z-10 w-full h-auto object-contain mix-blend-screen"
-                  style={{ borderWidth: 0, borderColor: "transparent", borderStyle: "none", borderImage: "none" }}
-                />
+            {/* Right Column: Floating high-fidelity UI widgets orbiting */}
+            <div className="lg:col-span-5 relative flex flex-col gap-6 items-center">
+              <div className="absolute -inset-10 bg-radial from-primary/5 to-transparent blur-3xl opacity-50 pointer-events-none" />
+              <div className="animate-float w-full">
+                <ServerMonitorWidget />
               </div>
-              <div className="hidden lg:block absolute -left-16 top-10 z-20 w-64 rounded-3xl border border-primary/35 bg-background/80 px-6 py-5 backdrop-blur-md shadow-[0_0_40px_rgba(0,255,47,0.2)] animate-float hover:-translate-y-2 transition-transform duration-300">
-                <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-primary/15 text-primary">
-                  <Trophy className="h-5 w-5" />
-                </div>
-                <p className="text-3xl font-extrabold text-primary">+50</p>
-                <p className="text-sm text-foreground/90">proyectos entregados</p>
-                <p className="text-xs text-muted-foreground mt-1">Webs, apps y plataformas construidas con estándar premium.</p>
+              <div className="animate-float delay-1000 w-full">
+                <ApiLoggerWidget />
               </div>
-              <div className="hidden lg:block absolute -right-12 top-20 z-30 w-72 rounded-3xl border border-primary/35 bg-background/85 px-6 py-5 backdrop-blur-md shadow-[0_0_40px_rgba(0,255,47,0.2)] animate-float delay-1000 hover:-translate-y-2 transition-transform duration-300">
-                <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-primary/15 text-primary">
-                  <Target className="h-5 w-5" />
-                </div>
-                <p className="text-3xl font-extrabold text-primary">3x</p>
-                <p className="text-sm text-foreground/90">mejor rendimiento técnico</p>
-                <p className="text-xs text-muted-foreground mt-1">Menor tiempo de carga y mayor estabilidad bajo demanda.</p>
-              </div>
-              <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 -bottom-6 z-30 w-80 rounded-3xl border border-primary/35 bg-background/85 px-6 py-5 backdrop-blur-md shadow-[0_0_40px_rgba(0,255,47,0.2)] animate-float delay-2000 hover:-translate-y-2 transition-transform duration-300">
-                <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-full bg-primary/15 text-primary">
-                  <Target className="h-5 w-5" />
-                </div>
-                <p className="text-3xl font-extrabold text-primary">72%</p>
-                <p className="text-sm text-foreground/90">objetivo anual completado</p>
-                <div className="mt-2 h-2.5 w-full overflow-hidden rounded-full bg-primary/15">
-                  <div className="h-full w-[72%] rounded-full bg-primary" />
-                </div>
-                <p className="text-xs text-muted-foreground mt-2">Meta: 100 proyectos premium entregados en el año.</p>
+              <div className="animate-float delay-2000 w-full">
+                <DbPerformanceWidget />
               </div>
             </div>
           </div>

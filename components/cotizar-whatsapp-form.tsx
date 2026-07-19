@@ -1,7 +1,6 @@
 "use client"
 
-import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -53,10 +52,15 @@ function composeMessage(params: {
 }
 
 export function CotizarWhatsAppForm({ topicTitle, topicKind }: Props) {
+  const [isMounted, setIsMounted] = useState(false)
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [company, setCompany] = useState("")
   const [details, setDetails] = useState("")
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const openWhatsApp = (e: React.FormEvent) => {
     e.preventDefault()
@@ -65,83 +69,85 @@ export function CotizarWhatsAppForm({ topicTitle, topicKind }: Props) {
     window.open(url, "_blank", "noopener,noreferrer")
   }
 
-  const heading =
-    topicTitle && topicKind === "servicio"
-      ? `Cotizar: ${topicTitle}`
-      : topicTitle && topicKind === "tecnologia"
-        ? `Cotizar con ${topicTitle}`
-        : topicTitle
-          ? `Cotizar: ${topicTitle}`
-          : "Cotizar proyecto"
-
-  const description =
-    topicTitle != null
-      ? "Completa el formulario y te llevamos a WhatsApp con el mensaje listo para enviar."
-      : "Describe tu idea; abriremos WhatsApp con un mensaje estructurado para el equipo de Korsen."
+  if (!isMounted) {
+    return (
+      <div className="w-full space-y-4">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="sm:col-span-2">
+            <div className="bg-[#050505] border border-white/5 h-12 rounded-[12px] animate-pulse" />
+          </div>
+          <div className="bg-[#050505] border border-white/5 h-12 rounded-[12px] animate-pulse" />
+          <div className="bg-[#050505] border border-white/5 h-12 rounded-[12px] animate-pulse" />
+        </div>
+        <div className="bg-[#050505] border border-white/5 h-32 rounded-[12px] animate-pulse" />
+        <div className="bg-primary/10 border border-primary/20 h-12 rounded-[12px] animate-pulse" />
+      </div>
+    )
+  }
 
   return (
-    <Card className="max-w-xl mx-auto bg-card/60 backdrop-blur-md border-border">
-      <CardHeader>
-        <div className="flex items-start gap-3">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary">
-            <MessageCircle className="h-5 w-5" />
+    <div className="w-full">
+      <form onSubmit={openWhatsApp} className="space-y-4" suppressHydrationWarning>
+        <div className="grid gap-4 sm:grid-cols-2" suppressHydrationWarning>
+          <div className="sm:col-span-2" suppressHydrationWarning>
+            <Input
+              placeholder="Tu nombre *"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              suppressHydrationWarning
+              className="bg-[#050505] border-white/10 focus:border-primary/50 text-[#F7F7F7] placeholder-[#525252] rounded-[12px] py-6 font-mono text-sm w-full outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+            />
           </div>
-          <div>
-            <CardTitle className="text-2xl">{heading}</CardTitle>
-            <CardDescription className="mt-2 text-base">{description}</CardDescription>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={openWhatsApp} className="space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="sm:col-span-2">
-              <Input
-                placeholder="Tu nombre *"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="bg-background/50"
-              />
-            </div>
+          <div suppressHydrationWarning>
             <Input
               type="email"
               placeholder="Email (opcional)"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="bg-background/50"
+              suppressHydrationWarning
+              className="bg-[#050505] border-white/10 focus:border-primary/50 text-[#F7F7F7] placeholder-[#525252] rounded-[12px] py-6 font-mono text-sm w-full outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
             />
+          </div>
+          <div suppressHydrationWarning>
             <Input
               placeholder="Empresa (opcional)"
               value={company}
               onChange={(e) => setCompany(e.target.value)}
-              className="bg-background/50"
+              suppressHydrationWarning
+              className="bg-[#050505] border-white/10 focus:border-primary/50 text-[#F7F7F7] placeholder-[#525252] rounded-[12px] py-6 font-mono text-sm w-full outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
             />
           </div>
+        </div>
+        <div suppressHydrationWarning>
           <Textarea
             placeholder="Cuéntanos plazos, presupuesto aproximado, integraciones necesarias…"
             value={details}
             onChange={(e) => setDetails(e.target.value)}
             rows={5}
-            className="bg-background/50 resize-y min-h-[120px]"
+            suppressHydrationWarning
+            className="bg-[#050505] border-white/10 focus:border-primary/50 text-[#F7F7F7] placeholder-[#525252] rounded-[12px] font-mono text-sm w-full outline-none focus-visible:ring-0 focus-visible:ring-offset-0 resize-none min-h-[120px]"
           />
-          <Button type="submit" size="lg" className="w-full gap-2">
-            <MessageCircle className="h-4 w-4" />
-            Continuar en WhatsApp
-          </Button>
-          <p className="text-xs text-muted-foreground text-center">
-            No enviamos datos a servidores: solo se abre WhatsApp con tu mensaje.
-          </p>
-        </form>
-        <div className="mt-6 pt-6 border-t border-border">
-          <Button variant="ghost" asChild className="w-full gap-2 text-muted-foreground">
-            <Link href={PATH_SOLUCIONES_TECNOLOGIAS}>
-              <ArrowLeft className="h-4 w-4" />
-              Volver a soluciones y tecnologías
-            </Link>
-          </Button>
         </div>
-      </CardContent>
-    </Card>
+        <Button
+          type="submit"
+          className="w-full bg-gradient-to-b from-korsen-primary-light to-korsen-primary text-black font-bold font-sans rounded-[12px] py-6 text-xs uppercase tracking-widest shadow-[0_4px_12px_rgba(196,255,0,0.15)] hover:shadow-[0_6px_24px_rgba(196,255,0,0.3)] transition-all duration-300"
+        >
+          <MessageCircle className="h-4 w-4 mr-2" />
+          Continuar en WhatsApp
+        </Button>
+        <p className="text-[10px] font-mono text-muted-foreground text-center uppercase tracking-wider">
+          // No enviamos datos a servidores: solo abre WhatsApp con tu mensaje.
+        </p>
+      </form>
+      <div className="mt-6 pt-6 border-t border-white/5">
+        <Button variant="ghost" asChild className="w-full gap-2 text-muted-foreground hover:text-primary hover:bg-primary/5 font-mono text-xs uppercase tracking-wider rounded-full transition-colors">
+          <Link href={PATH_SOLUCIONES_TECNOLOGIAS}>
+            <ArrowLeft className="h-4 w-4" />
+            Volver a soluciones y tecnologías
+          </Link>
+        </Button>
+      </div>
+    </div>
   )
 }
