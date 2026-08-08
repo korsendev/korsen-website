@@ -27,18 +27,40 @@ const ibmPlexMono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Korsen - Innovación y Desarrollo Tecnológico",
+  title: "korsen.dev | Software Studio Premium",
   description:
-    "Transformamos ideas en soluciones digitales escalables. Desarrollo de software, aplicaciones móviles y plataformas web.",
-  generator: "Korsen",
-  keywords: ["desarrollo web", "aplicaciones móviles", "software", "tecnología", "Korsen", "Korsen Dev", "Korsen Dev Studio", "Korsen Dev Studio Studio", "Korsen Dev Studio Studio Studio"],
-  authors: [{ name: "Korsen", url: "https://korsen.dev" }],
-  creator: "Korsen",
-  publisher: "Korsen",
+    "Convertimos problemas de negocio en software que produce resultados. Desarrollo de software a medida, plataformas web escalables y automatizaciones inteligentes con Inteligencia Artificial.",
+  generator: "korsen.dev",
+  keywords: ["desarrollo de software", "software a medida", "plataformas web", "automatización", "inteligencia artificial", "desarrollo web", "aplicaciones móviles", "Korsen", "korsen.dev"],
+  authors: [{ name: "korsen.dev", url: "https://www.korsen.dev" }],
+  creator: "korsen.dev",
+  publisher: "korsen.dev",
+  icons: {
+    icon: "/logokorsen.png",
+    shortcut: "/logokorsen.png",
+    apple: "/logokorsen.png",
+  },
   openGraph: {
-    title: "Korsen - Innovación y Desarrollo Tecnológico",
-    description: "Transformamos ideas en soluciones digitales escalables. Desarrollo de software, aplicaciones móviles y plataformas web.",
-    url: "https://korsen.dev",
+    title: "korsen.dev | Software Studio Premium",
+    description: "Convertimos problemas de negocio en software que produce resultados. Desarrollo de software a medida, plataformas web escalables y automatizaciones inteligentes con Inteligencia Artificial.",
+    url: "https://www.korsen.dev/",
+    siteName: "korsen.dev",
+    images: [
+      {
+        url: "/previewweb.png",
+        width: 1200,
+        height: 630,
+        alt: "korsen.dev - Software que produce resultados",
+      },
+    ],
+    locale: "es_ES",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "korsen.dev | Software Studio Premium",
+    description: "Convertimos problemas de negocio en software que produce resultados. Desarrollo de software a medida, plataformas web escalables y automatizaciones inteligentes con Inteligencia Artificial.",
+    images: ["/previewweb.png"],
   },
 }
 

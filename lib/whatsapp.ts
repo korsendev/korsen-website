@@ -1,6 +1,6 @@
-/** E.164 digits only, sin + (ej. República Dominicana NANP: 18492811452) */
+/** E.164 digits only, sin + (ej. UK: 447848445738) */
 export function getWhatsAppNumber(): string {
-  const raw = process.env.NEXT_PUBLIC_WHATSAPP_PHONE ?? "18492811452"
+  const raw = process.env.NEXT_PUBLIC_WHATSAPP_PHONE ?? "447848445738"
   return raw.replace(/\D/g, "")
 }
 

@@ -20,7 +20,7 @@ export function Technologies() {
             // stack_matrix
           </span>
           <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tighter uppercase leading-none text-[#F7F7F7]">
-            TECNOLOGÍAS
+            TECNOLOGÍA PREPARADA PARA CRECER CONTIGO.
           </h2>
         </div>
 

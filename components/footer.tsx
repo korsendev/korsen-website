@@ -30,7 +30,7 @@ export function Footer() {
               </div>
               <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                 <Phone className="w-4 h-4" />
-                <span>849-281-1452</span>
+                <span>+44 7848 445738</span>
               </div>
             </div>
           </div>
@@ -55,28 +55,33 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Empresa</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Sobre Nosotros</li>
-              <li>Proyectos</li>
-              <li>Blog</li>
-              <li>Carreras</li>
-              <li>Contacto</li>
+              <li>
+                <Link href="/#proyectos" className="hover:text-primary transition-colors">
+                  Proyectos
+                </Link>
+              </li>
+              <li>
+                <Link href="/#contacto" className="hover:text-primary transition-colors">
+                  Contacto
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-border mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-muted-foreground">© 2025 Korsen. Todos los derechos reservados.</p>
+            <p className="text-sm text-muted-foreground">© 2026 Korsen. Todos los derechos reservados.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              <Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                 Privacidad
-              </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              </Link>
+              <Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                 Términos
-              </a>
-              <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              </Link>
+              <Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                 Cookies
-              </a>
+              </Link>
             </div>
           </div>
         </div>

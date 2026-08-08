@@ -150,16 +150,22 @@ export function Header() {
             </DropdownMenu.Root>
 
             <Link
-              href={sectionHref("proyectos")}
+              href="/proyectos"
               className="px-3.5 py-1.5 rounded-full text-sm font-medium text-foreground/80 hover:text-primary transition-all hover:bg-white/[0.03]"
             >
               Proyectos
             </Link>
             <Link
-              href={sectionHref("nosotros")}
+              href="/nosotros"
               className="px-3.5 py-1.5 rounded-full text-sm font-medium text-foreground/80 hover:text-primary transition-all hover:bg-white/[0.03]"
             >
               Nosotros
+            </Link>
+            <Link
+              href="/blog"
+              className="px-3.5 py-1.5 rounded-full text-sm font-medium text-foreground/80 hover:text-primary transition-all hover:bg-white/[0.03]"
+            >
+              Blog
             </Link>
             
             <div className="h-5 w-px bg-white/10 mx-2" />
@@ -272,18 +278,25 @@ export function Header() {
               )}
 
               <Link
-                href={sectionHref("proyectos")}
+                href="/proyectos"
                 className="block w-full px-4 py-2 rounded-xl text-foreground/90 hover:text-primary hover:bg-primary/10 text-left text-sm transition-all"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Proyectos
               </Link>
               <Link
-                href={sectionHref("nosotros")}
+                href="/nosotros"
                 className="block w-full px-4 py-2 rounded-xl text-foreground/90 hover:text-primary hover:bg-primary/10 text-left text-sm transition-all"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Nosotros
+              </Link>
+              <Link
+                href="/blog"
+                className="block w-full px-4 py-2 rounded-xl text-foreground/90 hover:text-primary hover:bg-primary/10 text-left text-sm transition-all"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Blog
               </Link>
 
               <div className="h-px bg-white/5 my-2" />

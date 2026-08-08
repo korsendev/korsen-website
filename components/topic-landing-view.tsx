@@ -19,6 +19,9 @@ import type { CotizarTopicDef } from "@/lib/cotizar-topics"
 import type { TopicLandingCopy } from "@/lib/topic-landing-content"
 import { getProjectsByIds, type ShowcaseProject } from "@/lib/projects-data"
 import { PATH_SOLUCIONES_TECNOLOGIAS } from "@/lib/site-paths"
+import { Faq } from "@/components/faq"
+import { CtaFinal } from "@/components/cta-final"
+import { Button } from "@/components/ui/button"
 
 const DETAIL_ICONS = [Target, UsersRound, Sparkles] as const
 
@@ -124,17 +127,39 @@ export function TopicLandingView({ topic, copy }: { topic: CotizarTopicDef; copy
                   {topic.title}
                 </h1>
 
-                <div className="border border-white/5 bg-[#0B0B0B] p-6 sm:p-8 rounded-3xl relative">
+                <div className="border border-white/5 bg-[#0B0B0B] p-6 sm:p-8 rounded-3xl relative mb-6">
                   <div className="corner-bracket top-left opacity-30"></div>
                   <div className="corner-bracket top-right opacity-30"></div>
                   <div className="corner-bracket bottom-left opacity-30"></div>
                   <div className="corner-bracket bottom-right opacity-30"></div>
                   <IntroText text={copy.intro} />
                 </div>
+
+                <div className="flex flex-wrap gap-3 items-center mb-8">
+                  <Button
+                    size="sm"
+                    asChild
+                    className="bg-primary hover:bg-primary-light text-black font-bold font-sans rounded-xl px-5 py-2.5 transition-all duration-300"
+                  >
+                    <a href="#cotizar-form">
+                      Hablar con un especialista
+                    </a>
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    asChild
+                    className="border border-white/10 text-foreground hover:bg-white/5 font-bold font-sans rounded-xl px-5 py-2.5 transition-all duration-300"
+                  >
+                    <a href="#cotizar-form">
+                      Evaluar mi proyecto
+                    </a>
+                  </Button>
+                </div>
               </div>
 
               {/* Form: Right Column */}
-              <div className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start min-w-0">
+              <div id="cotizar-form" className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start min-w-0 scroll-mt-32">
                 <div className="relative border border-white/5 bg-[#0B0B0B] p-8 rounded-3xl text-left shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
                   <div className="corner-bracket top-left opacity-30" />
                   <div className="corner-bracket top-right opacity-30" />
@@ -228,6 +253,12 @@ export function TopicLandingView({ topic, copy }: { topic: CotizarTopicDef; copy
           )}
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <Faq />
+
+      {/* Final CTA */}
+      <CtaFinal />
 
     </PageWrapper>
   )

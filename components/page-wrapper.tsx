@@ -3,6 +3,7 @@
 import React from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { WhatsAppButton } from "@/components/whatsapp-button"
 
 interface PageWrapperProps {
   children: React.ReactNode
@@ -30,6 +31,9 @@ export function PageWrapper({ children, showBgEffects = true }: PageWrapperProps
       
       {/* Reusable Footer */}
       <Footer />
+
+      {/* Persistent WhatsApp Button */}
+      <WhatsAppButton />
     </main>
   )
 }
