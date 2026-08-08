@@ -171,7 +171,7 @@ export function Header() {
             <div className="h-5 w-px bg-white/10 mx-2" />
 
             <Button variant="outline" size="sm" asChild className="rounded-full border-primary/35 hover:bg-primary/10 hover:text-primary shrink-0 transition-all duration-300">
-              <Link href={PATH_SOLUCIONES_TECNOLOGIAS}>Cotizar</Link>
+              <Link href="/diagnostico">Cotizar</Link>
             </Button>
             <Button size="sm" asChild className="rounded-full bg-primary hover:bg-primary-light text-primary-foreground shrink-0 shadow-[0_0_15px_rgba(198,253,14,0.15)] hover:shadow-[0_0_25px_rgba(198,253,14,0.3)] transition-all duration-300">
               <Link href={sectionHref("contacto")}>Contacto</Link>
@@ -302,7 +302,7 @@ export function Header() {
               <div className="h-px bg-white/5 my-2" />
 
               <Button variant="outline" asChild className="w-full mt-1 border-primary/40 rounded-full">
-                <Link href={PATH_SOLUCIONES_TECNOLOGIAS} onClick={() => setIsMobileMenuOpen(false)}>
+                <Link href="/diagnostico" onClick={() => setIsMobileMenuOpen(false)}>
                   Cotizar
                 </Link>
               </Button>
