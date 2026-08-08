@@ -16,7 +16,7 @@ export function Footer() {
                   src="/logo-korsen.png"
                   alt="Korsen"
                   fill
-                  className="object-contain scale-[1.8] origin-left transform"
+                  className="object-contain object-left scale-[1.8] origin-left transform"
                 />
               </div>
             </div>

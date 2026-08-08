@@ -31,7 +31,7 @@ export function Tips() {
             <span className="text-[10px] font-mono text-primary tracking-widest uppercase block mb-4">
               // industry_insights
             </span>
-            <h2 className="text-5xl sm:text-6xl font-extrabold tracking-tighter uppercase leading-[0.9] text-[#F7F7F7] mb-8">
+            <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tighter uppercase leading-[0.9] text-[#F7F7F7] mb-8">
               3 ERRORES<br/>
               <span className="text-primary">AL CREAR</span><br/>
               SOFTWARE<br/>

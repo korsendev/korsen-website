@@ -26,22 +26,22 @@ export function WebDevPost() {
             </div>
 
             {/* Floating Glassmorphic UI 1 (Performance Card) */}
-            <div className="absolute top-10 right-4 w-52 bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 p-4 rounded-xl shadow-2xl animate-float text-left">
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-[9px] font-mono text-[#A6A6A6] uppercase tracking-wider">Interface Performance</span>
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <div className="absolute top-10 right-2 sm:right-4 w-40 sm:w-52 bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 p-3 sm:p-4 rounded-xl shadow-2xl animate-float text-left">
+              <div className="flex justify-between items-center mb-1.5 sm:mb-2">
+                <span className="text-[8px] sm:text-[9px] font-mono text-[#A6A6A6] uppercase tracking-wider">Interface Performance</span>
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary animate-pulse" />
               </div>
-              <div className="text-xl font-bold font-mono text-[#F7F7F7]">120 FPS</div>
-              <p className="text-[10px] text-[#A6A6A6] mt-1">Renderizado acelerado por GPU.</p>
+              <div className="text-sm sm:text-xl font-bold font-mono text-[#F7F7F7]">120 FPS</div>
+              <p className="text-[9px] sm:text-[10px] text-[#A6A6A6] mt-0.5 sm:mt-1">Renderizado acelerado por GPU.</p>
             </div>
 
             {/* Floating Glassmorphic UI 2 (User stats widget) */}
-            <div className="absolute bottom-6 left-2 w-48 bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 p-4 rounded-xl shadow-2xl animate-float delay-1500 text-left">
-              <div className="text-xs font-bold text-[#F7F7F7] uppercase tracking-wider mb-2 font-mono">NODE_RESOLVER</div>
-              <div className="w-full bg-white/10 h-1 rounded-full overflow-hidden mb-2">
+            <div className="absolute bottom-6 left-2 w-36 sm:w-48 bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 p-3 sm:p-4 rounded-xl shadow-2xl animate-float delay-1500 text-left">
+              <div className="text-[10px] sm:text-xs font-bold text-[#F7F7F7] uppercase tracking-wider mb-1.5 sm:mb-2 font-mono">NODE_RESOLVER</div>
+              <div className="w-full bg-white/10 h-0.5 sm:h-1 rounded-full overflow-hidden mb-1.5 sm:mb-2">
                 <div className="w-[85%] bg-primary h-full" />
               </div>
-              <span className="text-[9px] font-mono text-[#A6A6A6]">Core latency: 0.14ms</span>
+              <span className="text-[8px] sm:text-[9px] font-mono text-[#A6A6A6]">Core latency: 0.14ms</span>
             </div>
           </div>
 
@@ -50,11 +50,11 @@ export function WebDevPost() {
             <span className="text-[10px] font-mono text-primary tracking-widest uppercase block">
               // interactive_interfaces
             </span>
-            <h2 className="text-6xl sm:text-7xl md:text-8xl font-extrabold tracking-tighter uppercase leading-[0.85] text-[#F7F7F7]">
+            <h2 className="text-4xl sm:text-7xl md:text-8xl font-extrabold tracking-tighter uppercase leading-[0.85] text-[#F7F7F7]">
               CREAMOS<br/>
               INTERFACES<br/>
               DE ALTO<br/>
-              RENDIMIENTO.
+              <span className="text-primary">RENDIMIENTO.</span>
             </h2>
             <p className="text-lg text-[#A6A6A6] max-w-md leading-relaxed font-sans font-medium">
               Desarrollamos interfaces web rápidas, fluidas y responsivas. Diseñamos con un enfoque en rendimiento gráfico y animaciones fluidas a 120fps.

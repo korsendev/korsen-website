@@ -16,7 +16,7 @@ export function IaPost() {
             <span className="text-[10px] font-mono text-primary tracking-widest uppercase block">
               // cognitive_systems
             </span>
-            <h2 className="text-6xl sm:text-7xl md:text-8xl font-extrabold tracking-tighter uppercase leading-[0.85] text-[#F7F7F7]">
+            <h2 className="text-4xl sm:text-7xl md:text-8xl font-extrabold tracking-tighter uppercase leading-[0.85] text-[#F7F7F7]">
               INTELIGENCIA<br/>
               <span className="text-primary">ARTIFICIAL</span><br/>
               INTEGRADA.
@@ -64,10 +64,10 @@ export function IaPost() {
             </svg>
             
             {/* Technical Labels Orbiting */}
-            <div className="absolute top-10 left-10 bg-[#0b0b0b]/80 border border-white/5 px-3 py-1.5 rounded-lg text-[9px] font-mono text-[#A6A6A6] tracking-wider uppercase">
+            <div className="absolute top-10 left-2 sm:left-10 bg-[#0b0b0b]/80 border border-white/5 px-3 py-1.5 rounded-lg text-[9px] font-mono text-[#A6A6A6] tracking-wider uppercase">
               NLP_ENGINE: ACTIVE
             </div>
-            <div className="absolute bottom-10 right-10 bg-[#0b0b0b]/80 border border-white/5 px-3 py-1.5 rounded-lg text-[9px] font-mono text-[#A6A6A6] tracking-wider uppercase">
+            <div className="absolute bottom-10 right-2 sm:right-10 bg-[#0b0b0b]/80 border border-white/5 px-3 py-1.5 rounded-lg text-[9px] font-mono text-[#A6A6A6] tracking-wider uppercase">
               AGENT_RESOLVER: OK
             </div>
           </div>

@@ -30,18 +30,18 @@ function SystemDashboardMockup() {
 
       <div className="p-6 space-y-6">
         {/* Metric Cards inside Mockup */}
-        <div className="grid grid-cols-3 gap-4">
-          <div className="bg-white/[0.02] border border-white/5 rounded-xl p-3.5 text-left relative">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4">
+          <div className="bg-white/[0.02] border border-white/5 rounded-xl p-2 sm:p-3.5 text-left relative">
             <span className="text-[9px] font-mono text-[#a6a6a6] uppercase tracking-wider block">Latency</span>
-            <span className="text-xl font-bold text-[#F7F7F7] block mt-1 font-mono">11ms</span>
+            <span className="text-sm sm:text-xl font-bold text-[#F7F7F7] block mt-1 font-mono">11ms</span>
           </div>
-          <div className="bg-white/[0.02] border border-white/5 rounded-xl p-3.5 text-left relative">
+          <div className="bg-white/[0.02] border border-white/5 rounded-xl p-2 sm:p-3.5 text-left relative">
             <span className="text-[9px] font-mono text-[#a6a6a6] uppercase tracking-wider block">Uptime</span>
-            <span className="text-xl font-bold text-primary block mt-1 font-mono">99.98%</span>
+            <span className="text-sm sm:text-xl font-bold text-primary block mt-1 font-mono">99.98%</span>
           </div>
-          <div className="bg-white/[0.02] border border-white/5 rounded-xl p-3.5 text-left relative">
+          <div className="bg-white/[0.02] border border-white/5 rounded-xl p-2 sm:p-3.5 text-left relative">
             <span className="text-[9px] font-mono text-[#a6a6a6] uppercase tracking-wider block">Requests</span>
-            <span className="text-xl font-bold text-[#F7F7F7] block mt-1 font-mono">{requests}</span>
+            <span className="text-sm sm:text-xl font-bold text-[#F7F7F7] block mt-1 font-mono">{requests}</span>
           </div>
         </div>
 
@@ -105,10 +105,10 @@ export function Portfolio() {
             </h2>
             
             <div className="mb-8">
-              <span className="text-8xl sm:text-9xl font-extrabold tracking-tighter text-primary leading-none block font-sans">
+              <span className="text-6xl sm:text-9xl font-extrabold tracking-tighter text-primary leading-none block font-sans">
                 +85%
               </span>
-              <span className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#F7F7F7] mt-2 block leading-none">
+              <span className="text-xl sm:text-3xl font-extrabold uppercase tracking-tight text-[#F7F7F7] mt-2 block leading-none">
                 DE EFICIENCIA
               </span>
             </div>

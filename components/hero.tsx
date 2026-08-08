@@ -170,7 +170,7 @@ export function Hero() {
                 korsen // active_instance
               </div>
               
-              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold tracking-tighter uppercase leading-[0.85] text-foreground mb-8">
+              <h1 className="text-4xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold tracking-tighter uppercase leading-[0.85] text-foreground mb-8">
                 SOFTWARE<br/>
                 <span className="text-primary">QUE</span><br/>
                 IMPULSA<br/>

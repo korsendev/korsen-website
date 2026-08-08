@@ -47,10 +47,10 @@ export function Contact() {
               <span className="text-[10px] font-mono text-primary tracking-widest uppercase block">
                 // business_relations
               </span>
-              <h2 className="text-5xl sm:text-6xl font-extrabold tracking-tighter uppercase leading-[0.9] text-[#F7F7F7]">
+              <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tighter uppercase leading-[0.9] text-[#F7F7F7]">
                 HABLEMOS<br/>
                 DE TU<br/>
-                PROYECTO.
+                <span className="text-primary">PROYECTO.</span>
               </h2>
               <p className="text-md text-[#A6A6A6] max-w-sm leading-relaxed font-sans font-medium">
                 Escríbenos y nuestro equipo técnico te responderá en menos de 24 horas. Código y sistemas eficientes.
@@ -90,10 +90,10 @@ export function Contact() {
             <span className="text-[10px] font-mono text-primary tracking-widest uppercase block">
               // business_relations
             </span>
-            <h2 className="text-5xl sm:text-6xl font-extrabold tracking-tighter uppercase leading-[0.9] text-[#F7F7F7]">
+            <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tighter uppercase leading-[0.9] text-[#F7F7F7]">
               HABLEMOS<br/>
               DE TU<br/>
-              PROYECTO.
+              <span className="text-primary">PROYECTO.</span>
             </h2>
             <p className="text-md text-[#A6A6A6] max-w-sm leading-relaxed font-sans font-medium">
               Escríbenos y nuestro equipo técnico te responderá en menos de 24 horas. Código y sistemas eficientes.
