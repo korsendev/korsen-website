@@ -3,6 +3,7 @@ import { Hero } from "@/components/hero"
 import { Problems } from "@/components/problems"
 import { Services } from "@/components/services"
 import { Portfolio } from "@/components/portfolio"
+import { Products } from "@/components/products"
 import { Process } from "@/components/process"
 import { Technologies } from "@/components/technologies"
 import { RecentPosts } from "@/components/recent-posts"
@@ -17,6 +18,7 @@ export default function Home() {
       <Problems />
       <Services />
       <Portfolio />
+      <Products />
       <Process />
       <Technologies />
       <RecentPosts />
