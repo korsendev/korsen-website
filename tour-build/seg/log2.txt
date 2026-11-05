@@ -1,0 +1,8 @@
+seg/p2.mp4 1464 0
+seg/p2.mp4 1564 11
+seg/p2.mp4 1664 21
+seg/p2.mp4 1764 31
+seg/p2.mp4 1864 42
+seg/p2.mp4 1964 52
+seg/p2.mp4 2064 62
+seg/p2.mp4 2164 73

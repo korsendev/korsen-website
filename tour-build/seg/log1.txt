@@ -1,0 +1,8 @@
+seg/p1.mp4 732 0
+seg/p1.mp4 832 10
+seg/p1.mp4 932 21
+seg/p1.mp4 1032 31
+seg/p1.mp4 1132 42
+seg/p1.mp4 1232 52
+seg/p1.mp4 1332 62
+seg/p1.mp4 1432 73

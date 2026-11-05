@@ -1,0 +1,8 @@
+seg/p3.mp4 2196 0
+seg/p3.mp4 2296 11
+seg/p3.mp4 2396 23
+seg/p3.mp4 2496 33
+seg/p3.mp4 2596 43
+seg/p3.mp4 2696 53
+seg/p3.mp4 2796 63
+seg/p3.mp4 2896 73

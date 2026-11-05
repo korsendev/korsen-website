@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Korsen · Reel Diagnóstico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#C4FF00; --primary-light:#D9FF00; --primary-dark:#A9FF00;
+  --bg:#050505; --text:#F7F7F7; --text2:#A6A6A6; --muted:#737373;
+  --glass:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.035));
+  --glass-border:rgba(255,255,255,.16);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000;overflow:hidden;font-family:'Sora',system-ui,sans-serif;color:var(--text);-webkit-font-smoothing:antialiased}
+#viewport{position:fixed;inset:0}
+#stage{width:1080px;height:1920px;position:absolute;left:50%;top:50%;overflow:hidden;background:var(--bg);transform-origin:center;isolation:isolate}
+
+/* ───── Fondo ───── */
+.bg{position:absolute;inset:0;z-index:0}
+.orb{position:absolute;border-radius:50%;filter:blur(130px)}
+.orb.a{width:900px;height:900px;left:-300px;top:200px;background:rgba(196,255,0,.30);animation:drift1 14s ease-in-out infinite alternate}
+.orb.b{width:800px;height:800px;right:-350px;top:900px;background:rgba(77,163,255,.20);animation:drift2 16s ease-in-out infinite alternate}
+.orb.c{width:700px;height:700px;left:200px;bottom:-300px;background:rgba(196,255,0,.20);animation:drift1 18s ease-in-out infinite alternate-reverse}
+@keyframes drift1{to{transform:translate(160px,120px) scale(1.2)}}
+@keyframes drift2{to{transform:translate(-200px,-160px) scale(1.15)}}
+.floor{position:absolute;left:-50%;right:-50%;bottom:-8%;height:60%;background-size:90px 90px;
+  background-image:linear-gradient(to right,rgba(196,255,0,.22) 1px,transparent 1px),linear-gradient(to bottom,rgba(196,255,0,.22) 1px,transparent 1px);
+  transform:perspective(700px) rotateX(68deg);transform-origin:center bottom;
+  -webkit-mask-image:linear-gradient(to top,#000 0%,transparent 75%);mask-image:linear-gradient(to top,#000 0%,transparent 75%);
+  animation:floor 6s linear infinite}
+@keyframes floor{to{background-position:0 90px}}
+.grid{position:absolute;inset:0;background-size:54px 54px;
+  background-image:linear-gradient(to right,rgba(196,255,0,.045) 1px,transparent 1px),linear-gradient(to bottom,rgba(196,255,0,.045) 1px,transparent 1px);
+  -webkit-mask-image:radial-gradient(ellipse at 50% 40%,#000,transparent 75%);mask-image:radial-gradient(ellipse at 50% 40%,#000,transparent 75%)}
+.vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.75));pointer-events:none;z-index:60}
+.noise{position:absolute;inset:0;z-index:61;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.p{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--primary);box-shadow:0 0 14px var(--primary);opacity:0;animation:float linear infinite}
+@keyframes float{0%{transform:translateY(0);opacity:0}15%{opacity:.8}100%{transform:translateY(-1300px);opacity:0}}
+
+/* ───── HUD ───── */
+.brand{position:absolute;top:70px;left:60px;z-index:50}
+.brand img{height:96px;display:block}
+.tag{position:absolute;top:96px;right:72px;z-index:50;padding:12px 22px;border-radius:999px;border:1px solid rgba(196,255,0,.35);background:rgba(196,255,0,.08);backdrop-filter:blur(12px);
+  font:600 20px 'IBM Plex Mono';letter-spacing:.14em;color:var(--primary);text-transform:uppercase;display:flex;gap:10px;align-items:center}
+.tag::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--primary);box-shadow:0 0 12px var(--primary);animation:blink 2.4s infinite}
+@keyframes blink{50%{opacity:.25}}
+.bars{position:absolute;top:36px;left:72px;right:72px;z-index:55;display:flex;gap:8px}
+.bars span{flex:1;height:5px;border-radius:5px;background:rgba(255,255,255,.14);overflow:hidden}
+.bars span i{display:block;height:100%;width:0;background:var(--primary);box-shadow:0 0 10px var(--primary)}
+
+/* ───── Escenas ───── */
+.scene{position:absolute;inset:0;z-index:10;opacity:0;visibility:hidden}
+.copy{position:absolute;left:72px;right:72px;top:230px}
+.kicker{font:600 26px 'IBM Plex Mono';letter-spacing:.2em;text-transform:uppercase;color:var(--primary);margin-bottom:28px;display:block;animation:rise 1s cubic-bezier(.16,1,.3,1) both}
+h2{font-weight:800;text-transform:uppercase;letter-spacing:-.025em;line-height:1.02;font-size:92px}
+h2 .l{display:block;overflow:hidden;padding-bottom:6px}
+h2 .l>span{display:inline-block;animation:wordUp 1.1s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--d,0s)}
+h2 em{font-style:normal;color:var(--primary);text-shadow:0 0 50px rgba(196,255,0,.45)}
+h2.sm{font-size:72px}
+.sub{margin-top:34px;font-size:36px;line-height:1.35;color:var(--text2);font-weight:500;max-width:880px;animation:rise 1.1s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--d,.8s)}
+.sub b{color:var(--text);font-weight:700}
+@keyframes wordUp{from{transform:translateY(110%) rotate(3deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes rise{from{transform:translateY(50px);opacity:0}to{transform:none;opacity:1}}
+@keyframes pop{from{transform:scale(.6) translateY(40px);opacity:0}to{transform:none;opacity:1}}
+@keyframes bob{50%{transform:translateY(-18px) rotate(var(--r,0deg))}}
+
+.glass{position:absolute;border-radius:36px;background:var(--glass);border:1px solid var(--glass-border);
+  backdrop-filter:blur(26px) saturate(150%);-webkit-backdrop-filter:blur(26px) saturate(150%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 -1px 0 rgba(255,255,255,.04),0 40px 90px rgba(0,0,0,.6),0 0 60px rgba(196,255,0,.06)}
+.glass::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.14) 48%,transparent 62%);background-size:260% 100%;animation:sheen 7s ease-in-out infinite}
+@keyframes sheen{from{background-position:130% 0}to{background-position:-60% 0}}
+.cb{position:absolute;width:30px;height:30px;border:4px solid var(--primary);pointer-events:none;filter:drop-shadow(0 0 8px rgba(196,255,0,.6))}
+.cb.tl{top:20px;left:20px;border-right:0;border-bottom:0}.cb.tr{top:20px;right:20px;border-left:0;border-bottom:0}
+.cb.bl{bottom:20px;left:20px;border-right:0;border-top:0}.cb.br{bottom:20px;right:20px;border-left:0;border-top:0}
+.world{position:absolute;left:0;right:0;top:820px;height:900px;perspective:1800px;perspective-origin:50% 40%}
+.world>.rig{position:absolute;inset:0;transform-style:preserve-3d}
+
+/* S1 */
+.q{padding:30px 40px;border-radius:30px;font-weight:700;font-size:44px;display:flex;align-items:center;gap:22px;white-space:nowrap;animation:pop 1.3s cubic-bezier(.16,1,.3,1) both,bob 7s ease-in-out infinite;animation-delay:var(--d),calc(var(--d) + 1.3s)}
+.q .qm{width:70px;height:70px;border-radius:20px;background:rgba(196,255,0,.14);border:1px solid rgba(196,255,0,.4);color:var(--primary);display:grid;place-items:center;font:700 40px 'IBM Plex Mono'}
+.s1 .rig{animation:sway 12s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotateY(-14deg) rotateX(6deg)}to{transform:rotateY(14deg) rotateX(-4deg)}}
+
+/* S2 · stack isométrico */
+.iso{position:absolute;left:50%;top:430px;width:0;height:0;transform-style:preserve-3d}
+.slab{position:absolute;width:560px;height:560px;left:-280px;top:-280px;border-radius:34px;
+  border:1.5px solid rgba(196,255,0,.35);background-color:rgba(10,14,6,.55);
+  background-image:linear-gradient(to right,rgba(196,255,0,.10) 1px,transparent 1px),linear-gradient(to bottom,rgba(196,255,0,.10) 1px,transparent 1px),linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.04));
+  background-size:56px 56px,56px 56px,100% 100%}
+.beam{position:absolute;width:3px;left:0;top:0;transform-origin:0 0;background:linear-gradient(to top,rgba(196,255,0,.9),rgba(196,255,0,.1));box-shadow:0 0 12px rgba(196,255,0,.8)}
+.tile{position:absolute;width:176px;height:124px;left:-88px;top:-62px;border-radius:24px;padding:16px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;
+  background:linear-gradient(145deg,rgba(255,255,255,.2),rgba(255,255,255,.06)),rgba(12,16,8,.75);border:1px solid rgba(255,255,255,.22);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 24px 40px rgba(0,0,0,.55),0 0 30px rgba(196,255,0,.18)}
+.tile svg{width:38px;height:38px;stroke:var(--primary);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(196,255,0,.7))}
+.tile b{font:700 20px 'Sora';letter-spacing:-.01em;white-space:nowrap}
+.lbl{position:absolute;left:-60px;top:-18px;width:120px;height:36px;display:grid;place-items:center;border-radius:12px;font:700 17px 'IBM Plex Mono';letter-spacing:.16em;color:#000;background:var(--primary);box-shadow:0 0 24px rgba(196,255,0,.7)}
+.axis{position:absolute;left:0;top:0;width:6px;transform-origin:0 0;background:linear-gradient(to top,transparent,rgba(196,255,0,.9),transparent);filter:blur(1px)}
+.tname{position:absolute;left:0;right:0;top:1395px;text-align:center}
+.tname .k{font:600 22px 'IBM Plex Mono';letter-spacing:.2em;color:var(--primary);text-transform:uppercase;opacity:0}
+.tname .n{font-size:64px;font-weight:800;text-transform:uppercase;letter-spacing:-.02em;margin-top:10px;opacity:0}
+.chips{position:absolute;left:72px;right:72px;top:1545px;display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+.chip{padding:14px 24px;border-radius:999px;border:1px solid var(--glass-border);background:rgba(255,255,255,.07);backdrop-filter:blur(14px);font:600 22px 'IBM Plex Mono';letter-spacing:.04em;color:var(--text2);animation:pop 1s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--d)}
+.chip.hi{border-color:rgba(196,255,0,.6);background:rgba(196,255,0,.14);color:var(--primary);box-shadow:0 0 30px rgba(196,255,0,.3)}
+
+/* S3 */
+.panel{left:90px;right:90px;top:70px;height:790px;padding:56px;transform-origin:center;animation:panelIn 1.6s cubic-bezier(.16,1,.3,1) both,tilt 11s ease-in-out 1.6s infinite alternate}
+@keyframes panelIn{from{opacity:0;transform:rotateY(-50deg) rotateX(20deg) translateY(160px) scale(.8)}to{opacity:1;transform:rotateY(-12deg) rotateX(7deg)}}
+@keyframes tilt{from{transform:rotateY(-12deg) rotateX(7deg)}to{transform:rotateY(8deg) rotateX(3deg)}}
+.panel .top{display:flex;justify-content:space-between;align-items:center;font:600 22px 'IBM Plex Mono';letter-spacing:.14em;text-transform:uppercase}
+.panel .top .pc2{color:var(--primary)}.panel .top .ev{color:var(--muted)}
+.track{margin-top:26px;height:14px;border-radius:14px;background:rgba(255,255,255,.08);overflow:hidden}
+.track i{display:block;height:100%;width:0;border-radius:14px;background:linear-gradient(90deg,var(--primary-dark),var(--primary-light));box-shadow:0 0 24px var(--primary)}
+.panel h3{margin-top:44px;font-size:48px;font-weight:800;text-transform:uppercase;letter-spacing:-.02em;line-height:1.08;min-height:110px}
+.opts{margin-top:30px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.opt{position:relative;padding:26px 28px;border-radius:24px;border:1px solid rgba(255,255,255,.12);background:rgba(8,8,8,.45);font-weight:700;font-size:28px;display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:110px}
+.opt .ck{width:36px;height:36px;border-radius:10px;border:2px solid rgba(255,255,255,.25);display:grid;place-items:center;flex:none}
+.opt .ck svg{width:22px;height:22px;stroke:#000;stroke-width:3.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* S4 */
+.sheet{left:80px;right:80px;top:20px;height:880px;padding:50px 52px;overflow:hidden;animation:sheetIn 1.8s cubic-bezier(.16,1,.3,1) both,tilt2 12s ease-in-out 1.8s infinite alternate}
+@keyframes sheetIn{from{opacity:0;transform:rotateX(40deg) rotateY(-30deg) translateY(200px) scale(.7)}to{opacity:1;transform:rotateX(8deg) rotateY(-9deg)}}
+@keyframes tilt2{from{transform:rotateX(8deg) rotateY(-9deg)}to{transform:rotateX(2deg) rotateY(8deg)}}
+.sheet .hd{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:28px}
+.sheet .hd small{font:600 19px 'IBM Plex Mono';letter-spacing:.14em;color:var(--primary);text-transform:uppercase;display:block;margin-bottom:10px}
+.sheet .hd h5{font-size:36px;font-weight:800;text-transform:uppercase;line-height:1.08;letter-spacing:-.01em}
+.stamp{padding:10px 20px;border-radius:12px;border:1px solid rgba(196,255,0,.4);background:rgba(196,255,0,.12);color:var(--primary);font:700 22px 'IBM Plex Mono';letter-spacing:.12em;text-transform:uppercase;animation:stamp .9s cubic-bezier(.16,1,.3,1) both;animation-delay:5.2s}
+@keyframes stamp{from{transform:scale(2.4) rotate(-12deg);opacity:0}to{transform:none;opacity:1}}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:28px 30px;margin-top:30px}
+.f{animation:rise 1s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--d)}
+.f label{display:block;font:600 17px 'IBM Plex Mono';letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:8px}
+.f p{font-size:25px;font-weight:700;line-height:1.25}
+.f p.g{color:var(--text2);font-weight:600}
+.f.w{grid-column:1/-1}
+.tags{display:flex;flex-wrap:wrap;gap:10px}
+.tags span{font:600 17px 'IBM Plex Mono';color:var(--primary);background:rgba(196,255,0,.07);border:1px solid rgba(196,255,0,.25);padding:6px 14px;border-radius:10px}
+.arch{margin-top:34px;padding:28px;border-radius:24px;background:rgba(5,5,5,.7);border:1px solid rgba(255,255,255,.08);animation:rise 1.1s cubic-bezier(.16,1,.3,1) both;animation-delay:3.4s}
+.arch .t{font:700 19px 'IBM Plex Mono';letter-spacing:.12em;color:var(--primary);text-transform:uppercase;margin-bottom:14px}
+.arch .code{font:700 25px/1.4 'IBM Plex Mono';min-height:70px;color:var(--text)}
+.arch .code::after{content:"▌";color:var(--primary);animation:blink 1.2s infinite}
+.scan{position:absolute;left:0;right:0;height:140px;top:-140px;background:linear-gradient(to bottom,transparent,rgba(196,255,0,.22),transparent);animation:scan 3.4s ease-in-out 1.6s 2;pointer-events:none}
+@keyframes scan{to{top:100%}}
+.badge{position:absolute;padding:20px 30px;border-radius:26px;font-weight:700;font-size:30px;display:flex;align-items:center;gap:16px;animation:pop 1.2s cubic-bezier(.16,1,.3,1) both,bob 7s ease-in-out infinite;animation-delay:var(--d),calc(var(--d) + 1.2s)}
+.badge .ok{width:48px;height:48px;border-radius:50%;background:var(--primary);display:grid;place-items:center;box-shadow:0 0 24px var(--primary)}
+.badge .ok svg{width:26px;height:26px;stroke:#000;stroke-width:3.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* S5 */
+.phone{position:absolute;left:50%;top:0;width:560px;height:1020px;margin-left:-280px;border-radius:84px;padding:18px;background:linear-gradient(160deg,#2a2a2a,#0a0a0a);border:2px solid rgba(255,255,255,.18);
+  box-shadow:0 60px 120px rgba(0,0,0,.8),0 0 120px rgba(196,255,0,.15),inset 0 0 0 3px #000;animation:phoneIn 1.8s cubic-bezier(.16,1,.3,1) both,phoneTilt 11s ease-in-out 1.8s infinite alternate;transform-style:preserve-3d}
+@keyframes phoneIn{from{opacity:0;transform:rotateY(60deg) rotateX(20deg) translateY(300px) scale(.7)}to{opacity:1;transform:rotateY(-18deg) rotateX(6deg) rotateZ(2deg)}}
+@keyframes phoneTilt{from{transform:rotateY(-18deg) rotateX(6deg) rotateZ(2deg)}to{transform:rotateY(14deg) rotateX(3deg) rotateZ(-1deg)}}
+.screen{position:relative;width:100%;height:100%;border-radius:68px;background:#070b07;overflow:hidden;display:flex;flex-direction:column}
+.screen::before{content:"";position:absolute;top:18px;left:50%;width:150px;height:38px;margin-left:-75px;border-radius:30px;background:#000;z-index:5}
+.chat-h{padding:76px 28px 20px;display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.08)}
+.chat-h .av{width:60px;height:60px;border-radius:50%;background:#0a0a0a;border:1px solid rgba(196,255,0,.5);display:grid;place-items:center}
+.chat-h .av img{height:36px}
+.chat-h b{display:block;font-size:24px}.chat-h small{font:500 15px 'IBM Plex Mono';color:var(--primary)}
+.chat{flex:1;padding:24px 22px;display:flex;flex-direction:column;gap:16px;justify-content:flex-start;background-image:radial-gradient(rgba(196,255,0,.06) 1px,transparent 1px);background-size:26px 26px}
+.msg{max-width:92%;padding:20px 22px;border-radius:24px;font-size:20px;line-height:1.4;opacity:0}
+.msg.me{align-self:flex-end;background:linear-gradient(180deg,rgba(196,255,0,.95),rgba(169,255,0,.9));color:#0a0a0a;border-bottom-right-radius:6px;font-weight:600}
+.msg.me .mh{font:700 16px 'IBM Plex Mono';letter-spacing:.08em;margin-bottom:8px;display:block}
+.msg.me div{font:600 17px/1.5 'IBM Plex Mono'}
+.msg.them{align-self:flex-start;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);border-bottom-left-radius:6px}
+.typing{align-self:flex-start;padding:18px 22px;border-radius:22px;background:rgba(255,255,255,.1);display:flex;gap:8px;opacity:0}
+.typing i{width:12px;height:12px;border-radius:50%;background:#aaa;animation:ty 1.4s infinite}
+.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+@keyframes ty{50%{transform:translateY(-8px);background:var(--primary)}}
+.float-note{z-index:20;padding:22px 30px;border-radius:26px;font-weight:700;font-size:30px;display:flex;align-items:center;gap:16px;position:absolute;animation:pop 1.2s cubic-bezier(.16,1,.3,1) both,bob 7s ease-in-out infinite;animation-delay:var(--d),calc(var(--d) + 1.2s)}
+
+/* S6 */
+.cta{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 72px}
+.logo3d{margin-top:260px;width:900px;height:380px;perspective:1200px}
+.logo3d .in{position:relative;width:100%;height:100%;display:grid;place-items:center;border-radius:60px;transform-style:preserve-3d;animation:logoIn 2s cubic-bezier(.16,1,.3,1) both,logoSpin 10s ease-in-out 2s infinite alternate}
+.logo3d img{position:relative;width:820px;transform:translateZ(60px);filter:drop-shadow(0 0 40px rgba(196,255,0,.45))}
+.halo{position:absolute;width:900px;height:420px;border-radius:50%;background:radial-gradient(ellipse,rgba(196,255,0,.28),transparent 68%);filter:blur(30px);animation:pulse 4s ease-in-out infinite}
+@keyframes logoIn{from{opacity:0;transform:rotateY(-90deg) scale(.5)}to{opacity:1;transform:rotateY(-14deg) rotateX(6deg)}}
+@keyframes logoSpin{from{transform:rotateY(-14deg) rotateX(6deg)}to{transform:rotateY(14deg) rotateX(-4deg)}}
+.cta h2{margin-top:70px;font-size:74px}
+.cta .sub{margin:30px auto 0;text-align:center}
+.btn{margin-top:60px;display:inline-flex;align-items:center;gap:20px;padding:36px 60px;border-radius:30px;background:linear-gradient(180deg,var(--primary-light),var(--primary));color:#000;font-weight:800;font-size:36px;text-transform:uppercase;letter-spacing:.06em;
+  box-shadow:0 14px 50px rgba(196,255,0,.45);animation:pop 1.2s cubic-bezier(.16,1,.3,1) both,btnPulse 3s ease-in-out infinite;animation-delay:2.2s,3.4s;position:relative;overflow:hidden}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.7) 50%,transparent 65%);transform:translateX(-120%);animation:shine 3.6s ease-in-out 3.1s infinite}
+@keyframes shine{to{transform:translateX(120%)}}
+@keyframes btnPulse{50%{box-shadow:0 14px 90px rgba(196,255,0,.75);transform:scale(1.04)}}
+.btn svg{width:40px;height:40px;stroke:#000;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.url{margin-top:44px;font:600 30px 'IBM Plex Mono';letter-spacing:.12em;color:var(--primary);animation:rise 1.1s cubic-bezier(.16,1,.3,1) both;animation-delay:2.9s}
+
+#ui{position:fixed;right:18px;bottom:18px;z-index:99;display:flex;gap:8px;font:600 12px 'IBM Plex Mono'}
+#ui button{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:8px 12px;cursor:pointer}
+body.rec #ui{display:none}
+</style>
+</head>
+<body>
+<div id="viewport">
+<div id="stage">
+
+  <div class="bg">
+    <div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
+    <div class="grid"></div><div class="floor"></div>
+    <div id="particles"></div>
+  </div>
+
+
+  <!-- S1 -->
+  <section class="scene s1" id="s1">
+    <div class="copy">
+      <span class="kicker">// ¿te suena?</span>
+      <h2>
+        <span class="l"><span style="--d:.15s">Tienes la idea.</span></span>
+        <span class="l"><span style="--d:.4s">Pero no sabes</span></span>
+        <span class="l"><span style="--d:.65s"><em>por dónde</em></span></span>
+        <span class="l"><span style="--d:.9s"><em>empezar.</em></span></span>
+      </h2>
+    </div>
+    <div class="world"><div class="rig">
+      <div class="glass q" style="--d:1s;--r:-2deg;left:60px;top:40px"><span class="qm">?</span>¿Qué tecnología uso?</div>
+      <div class="glass q" style="--d:1.5s;--r:2deg;left:240px;top:250px"><span class="qm">$</span>¿Cuánto me va a costar?</div>
+      <div class="glass q" style="--d:2s;--r:-2deg;left:90px;top:460px"><span class="qm">⏱</span>¿Cuánto tardará?</div>
+      <div class="glass q" style="--d:2.5s;--r:2deg;left:300px;top:670px"><span class="qm">@</span>¿A quién le pregunto?</div>
+    </div></div>
+  </section>
+
+  <!-- S2 -->
+  <section class="scene s2" id="s2">
+    <div class="copy">
+      <span class="kicker">// cero plantillas</span>
+      <h2>
+        <span class="l"><span style="--d:.1s">Nos adaptamos</span></span>
+        <span class="l"><span style="--d:.4s">a <em>tu proyecto.</em></span></span>
+      </h2>
+      <p class="sub" style="--d:.9s">No al revés. Elige lo que quieres construir y <b>armamos el plan alrededor de ti.</b></p>
+    </div>
+    <div class="world" style="top:610px;height:900px"><div class="rig"><div class="iso" id="iso"></div></div></div>
+    <div class="tname"><div class="k" id="tk">// proyecto</div><div class="n" id="tn"></div></div>
+    <div class="chips" id="chips2"></div>
+  </section>
+
+  <!-- S3 -->
+  <section class="scene s3" id="s3">
+    <div class="copy">
+      <span class="kicker">// evaluador de proyecto</span>
+      <h2>
+        <span class="l"><span style="--d:.1s">6 pasos.</span></span>
+        <span class="l"><span style="--d:.4s"><em>Cero tecnicismos.</em></span></span>
+      </h2>
+      <p class="sub" style="--d:.9s">Tú cuentas qué necesitas. <b>Nosotros lo traducimos a ingeniería.</b></p>
+    </div>
+    <div class="world" style="top:820px"><div class="rig">
+      <div class="glass panel" id="panel">
+        <i class="cb tl"></i><i class="cb tr"></i><i class="cb bl"></i><i class="cb br"></i>
+        <div class="top"><span class="pc2" id="pstep">Paso 1 de 6</span><span class="ev">project_evaluator_v2.0</span></div>
+        <div class="track"><i id="pfill"></i></div>
+        <h3 id="ptitle"></h3>
+        <div class="opts" id="popts"></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- S4 -->
+  <section class="scene s4" id="s4">
+    <div class="copy">
+      <span class="kicker">// diagnóstico a tu medida</span>
+      <h2 class="sm">
+        <span class="l"><span style="--d:.1s">Nos aseguramos</span></span>
+        <span class="l"><span style="--d:.4s">de entender <em>lo que</em></span></span>
+        <span class="l"><span style="--d:.7s"><em>realmente necesitas.</em></span></span>
+      </h2>
+    </div>
+    <div class="world" style="top:790px;height:1000px"><div class="rig">
+      <div class="glass sheet">
+        <i class="cb tl"></i><i class="cb tr"></i><i class="cb bl"></i><i class="cb br"></i>
+        <div class="scan"></div>
+        <div class="hd">
+          <div><small>// diagnostics_sheet_v2.0</small><h5>Ficha de diagnóstico<br>técnico</h5></div>
+          <span class="stamp">✓ Evaluado</span>
+        </div>
+        <div class="fields">
+          <div class="f" style="--d:1s"><label>Proyecto</label><p>Plataforma Web / SaaS</p></div>
+          <div class="f" style="--d:1.2s"><label>Presupuesto</label><p>US$3,000 – US$10,000</p></div>
+          <div class="f" style="--d:1.4s"><label>Dolor operacional</label><p class="g">Perdemos tiempo en tareas manuales</p></div>
+          <div class="f" style="--d:1.6s"><label>Plazos</label><p class="g">Lanzamiento rápido (MVP)</p></div>
+          <div class="f w" style="--d:1.8s"><label>Componentes</label><div class="tags"><span>Control de usuarios</span><span>Panel admin</span><span>Pagos</span><span>Cloud</span></div></div>
+        </div>
+        <div class="arch">
+          <div class="t">// recomendación_de_arquitectura</div>
+          <div class="code" id="code"></div>
+        </div>
+      </div>
+      <div class="glass badge" style="--d:2.6s;right:20px;top:-62px"><span class="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>Stack recomendado</div>
+      <div class="glass badge" style="--d:3.4s;left:10px;bottom:-30px"><span class="ok"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>Plazos reales</div>
+    </div></div>
+  </section>
+
+  <!-- S5 -->
+  <section class="scene s5" id="s5">
+    <div class="copy">
+      <span class="kicker">// directo a tu móvil</span>
+      <h2>
+        <span class="l"><span style="--d:.1s">Y te llega</span></span>
+        <span class="l"><span style="--d:.4s">directo a <em>WhatsApp.</em></span></span>
+      </h2>
+      <p class="sub" style="--d:.9s">Un ingeniero real revisa tu ficha. <b>Sin formularios eternos ni bots.</b></p>
+    </div>
+    <div class="world" style="top:790px;height:1050px"><div class="rig">
+      <div class="phone"><div class="screen">
+        <div class="chat-h"><div class="av"><img src="logo-mark.png" alt=""></div><div><b>Korsen · Ingeniería</b><small>● en línea</small></div></div>
+        <div class="chat">
+          <div class="msg me" id="m1"><span class="mh">📝 FICHA DE DIAGNÓSTICO KORSEN</span><div>• Proyecto: Plataforma SaaS<br>• Componentes: Usuarios, Panel, Pagos<br>• Plazo: MVP (6-8 sem.)<br>• Presupuesto: US$3k–10k</div></div>
+          <div class="typing" id="ty"><i></i><i></i><i></i></div>
+          <div class="msg them" id="m2">¡Hola! Ya revisé tu ficha 👌 Tengo claro por dónde empezar. ¿Hablamos de tu proyecto?</div>
+        </div>
+      </div></div>
+      <div class="glass float-note" style="--d:2.4s;left:30px;top:120px">⚡ Respuesta personal</div>
+      <div class="glass float-note" style="--d:3.4s;right:30px;top:700px">✔ Ficha completa</div>
+    </div></div>
+  </section>
+
+  <!-- S6 -->
+  <section class="scene s6" id="s6">
+    <div class="cta">
+      <div class="logo3d"><div class="in"><div class="halo"></div><img src="logo-wordmark.png" alt="korsen.dev"></div></div>
+      <h2>
+        <span class="l"><span style="--d:.9s">Tu proyecto,</span></span>
+        <span class="l"><span style="--d:1.2s"><em>bien definido</em></span></span>
+        <span class="l"><span style="--d:1.5s">desde el minuto uno.</span></span>
+      </h2>
+      <p class="sub" style="--d:1.9s">Empieza tu diagnóstico. <b>Nosotros nos adaptamos.</b></p>
+      <div class="btn">Haz tu diagnóstico <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="url">korsen.dev/diagnostico</div>
+    </div>
+  </section>
+
+  <div class="vignette"></div><div class="noise"></div>
+</div>
+</div>
+<div id="ui"><button id="bPlay">Play / Pausa [espacio]</button><button id="bRestart">Reiniciar [R]</button></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const params=new URLSearchParams(location.search);
+if(params.has('rec'))document.body.classList.add('rec');
+function fit(){const s=Math.min(innerWidth/1080,innerHeight/1920);$('#stage').style.transform=`translate(-50%,-50%) scale(${s})`}
+addEventListener('resize',fit);fit();
+
+/* ═════ Línea de tiempo (segundos) ═════ */
+const SLOW=0.62;                       // las animaciones CSS se reproducen a 62% -> más pausadas
+const SC=[['s1',0,6.5],['s2',6.5,17.5],['s3',17.5,31],['s4',31,42.5],['s5',42.5,53.5],['s6',53.5,61.5]].map(([id,s,e])=>({id,s,e,el:document.getElementById(id)}));
+const TOTAL=61.5, FADE=.6;
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const easeOut=x=>1-Math.pow(1-clamp(x),3);
+const easeIO=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const css=(d)=>d/SLOW;                 // delay CSS -> segundos reales
+
+/* ═════ Contenido dinámico ═════ */
+const pw=$('#particles');
+let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+for(let i=0;i<26;i++){const p=document.createElement('div');p.className='p';
+  p.style.left=rnd()*100+'%';p.style.top=(900+rnd()*1100)+'px';
+  p.style.animationDuration=(9+rnd()*9)+'s';p.style.animationDelay=(-rnd()*12)+'s';
+  p.style.scale=(.5+rnd()*1.5);pw.appendChild(p)}
+
+const IC={
+ layers:'<path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/>',
+ globe:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20"/>',
+ phone:'<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>',
+ card:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>',
+ db:'<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/>',
+ cloud:'<path d="M17.5 19H9a7 7 0 1 1 6.7-9h1.8a4.5 4.5 0 1 1 0 9z"/>',
+ lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+ chart:'<path d="M3 3v18h18"/><path d="m7 15 4-5 3 3 5-7"/>',
+ bolt:'<path d="M13 2 3 14h9l-1 8 10-12h-9z"/>',
+ cart:'<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l3 12h11l2-8H6"/>',
+ bot:'<rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><path d="M8 16h.01M16 16h.01"/>'};
+
+
+const PT=[
+ {n:'Software a medida',sc:[1,1],L:[[['layers','Panel'],['lock','Roles'],['chart','Reportes']],[['db','ERP'],['layers','CRM'],['bolt','Flujos']],[['db','SQL'],['lock','Backups'],['cloud','Cloud']]]},
+ {n:'Plataforma SaaS',sc:[1.1,.94],L:[[['globe','Portal'],['chart','Dashboard'],['lock','Login']],[['layers','Multi-cliente'],['card','Cobros'],['bolt','Webhooks']],[['db','Postgres'],['cloud','AWS'],['lock','Seguridad']]]},
+ {n:'App móvil',sc:[.8,1.12],L:[[['phone','iOS'],['phone','Android'],['bolt','Push']],[['globe','API'],['lock','Auth'],['layers','Sync']],[['db','Datos'],['cloud','Cloud'],['chart','Métricas']]]},
+ {n:'E-commerce',sc:[1.05,1],L:[[['cart','Tienda'],['card','Checkout'],['chart','Ventas']],[['card','Stripe'],['layers','Stock'],['globe','Envíos']],[['db','Pedidos'],['cloud','CDN'],['lock','Facturas']]]},
+ {n:'Inteligencia artificial',sc:[.95,1.06],L:[[['bot','Chat IA'],['globe','Web'],['chart','Insights']],[['bot','LLM'],['bolt','Agentes'],['layers','RAG']],[['db','Vectores'],['cloud','GPU'],['lock','Privado']]]}];
+const LAYER_NAMES=['INTERFAZ','LÓGICA','DATOS'];
+const S2_EXP=1.7, S2_T0=3.4, S2_DUR=1.5, S2_GAP=215;
+const iso=$('#iso');
+const ISVG=n=>`<svg viewBox="0 0 24 24">${IC[n]}</svg>`;
+const slabs=[],tiles=[],lbls=[],beams=[];
+for(let i=0;i<3;i++){const d=document.createElement('div');d.className='slab';iso.appendChild(d);slabs.push(d);
+  const l=document.createElement('div');l.className='lbl';l.textContent=LAYER_NAMES[i];iso.appendChild(l);lbls.push(l);
+  tiles.push([0,1,2].map(()=>{const t=document.createElement('div');t.className='tile';iso.appendChild(t);t.dataset.k='-1';return t}))}
+for(let g=0;g<2;g++)for(const [cx,cy] of [[-280,-280],[280,-280],[-280,280],[280,280]]){const b=document.createElement('div');b.className='beam';iso.appendChild(b);beams.push({el:b,g,cx,cy})}
+const axis=document.createElement('div');axis.className='axis';iso.appendChild(axis);
+$('#chips2').innerHTML=PT.map((t,i)=>`<span class="chip" style="--d:${3.4+i*.2}s">${t.n}</span>`).join('');
+const chipEls=[...document.querySelectorAll('#chips2 .chip')];
+const STEPS=[
+ ['Selecciona el tipo de solución',['Software a medida','Plataforma SaaS','App móvil','E-commerce'],[1]],
+ ['Componentes y módulos requeridos',['Control de usuarios','Panel admin','Pasarela de pagos','Cloud escalable'],[0,1,2]],
+ ['¿Cuál es el problema principal?',['Sistema lento o caído','Tareas manuales y Excel','Herramientas desconectadas','Idea sin estructura'],[1]],
+ ['Plazos estimados de entrega',['MVP · 6-8 semanas','Estándar · 3-5 meses','Desarrollo continuo','A evaluar'],[0]],
+ ['Presupuesto estimado',['US$1k – 3k','US$3k – 10k','US$10k – 25k','US$25k+'],[1]],
+ ['Completa tus datos',['Nombre','Email','WhatsApp','Tu idea'],[0,1,2,3]]];
+const S3_T0=2.8, S3_DUR=1.7;
+const CHECK='<svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>';
+const opts=[...Array(4)].map(()=>{const d=document.createElement('div');d.className='opt';d.innerHTML='<span></span><span class="ck">'+CHECK+'</span>';$('#popts').appendChild(d);return d});
+let shownStep=-1;
+const CODE='Next.js + Node.js (TypeScript) + PostgreSQL + Vercel / AWS';
+const S4_TYPE0=7.2, CPS=20;
+const S5_M1=2.8, S5_TY0=5.6, S5_M2=7.8;
+
+/* ═════ Rueda 3D ═════ */
+function ringAngle(ls){return -25-ls*17}
+function ringFront(ls){const a=ringAngle(ls);let best=0,bv=-2;for(let i=0;i<6;i++){const c=Math.cos((i*60+a)*Math.PI/180);if(c>bv){bv=c;best=i}}return best}
+
+/* ═════ Eventos de sonido (para el mix) ═════ */
+const EV=[];const ev=(t,type,v=1,p=0)=>EV.push({t:+t.toFixed(3),type,v,p});
+(function(){
+  const S=id=>SC.find(s=>s.id===id).s;
+  SC.slice(1).forEach(s=>ev(s.s-.25,'swoosh',.9));
+  ev(.05,'riser',.6);[.15,.4,.65,.9].forEach((d,i)=>ev(css(d)+.1,'tick',.5,i));
+  [1,1.5,2,2.5].forEach((d,i)=>ev(css(d)+.1,'pop',.9,i));
+  let b=S('s2');ev(b+.05,'whoosh',.7);[.1,.4].forEach((d,i)=>ev(b+css(d)+.1,'tick',.5,i));ev(b+css(.9),'tick',.4,3);
+  ev(b+.9,'riser',.6);ev(b+S2_EXP+.35,'impact',.55);
+  PT.forEach((t,k)=>{const u=b+S2_T0+k*S2_DUR;ev(u,'swipe',.55,k);[0,1,2].forEach(j=>ev(u+.28+j*.07,'pop',.55,j+k));if(k>0)ev(u+.1,'tick',.7,k)});
+  ev(b+S2_T0+4*S2_DUR+.8,'chime',.7,1);
+  b=S('s3');ev(b+.1,'whoosh',.8);ev(b+css(.1)+.1,'tick',.5,0);ev(b+css(.4)+.1,'tick',.5,1);
+  STEPS.forEach((st,k)=>{const u0=b+S3_T0+k*S3_DUR;ev(u0,'swipe',.6,k);
+    for(let j=0;j<4;j++)ev(u0+.18+.12*j,'tick',.4,j+k%2);
+    st[2].forEach((o,j)=>ev(u0+.85+.3*j,'click',.9,j+k));
+  });
+  ev(b+S3_T0+6*S3_DUR-.5,'chime',.8,0);
+  b=S('s4');ev(b+.1,'whoosh',.8);
+  [1,1.2,1.4,1.6,1.8].forEach((d,i)=>ev(b+css(d)+.1,'tick',.5,i));
+  ev(b+css(1.6),'scan',.6);
+  [2.6,3.4].forEach((d,i)=>{ev(b+css(d)+.15,'pop',.8,i+2);ev(b+css(d)+.35,'chime',.55,i+1)});
+  ev(b+css(3.4)+.05,'whoosh',.4);
+  for(let i=0;i<CODE.length;i++)ev(b+S4_TYPE0+i/CPS,'key',.55,i);
+  ev(b+css(5.2),'stamp',1);
+  b=S('s5');ev(b+.1,'whoosh',.9);[.1,.4].forEach((d,i)=>ev(b+css(d)+.1,'tick',.5,i));ev(b+css(.9),'tick',.4,3);
+  ev(b+S5_M1,'send',1);ev(b+S5_TY0,'bubble',.6);ev(b+S5_TY0+.25,'bubble',.6,1);ev(b+S5_TY0+.5,'bubble',.6,2);
+  ev(b+S5_M2,'receive',1);
+  [2.4,3.4].forEach((d,i)=>ev(b+css(d)+.15,'pop',.8,i+1));
+  b=S('s6');ev(b+.4,'riser',.7);ev(b+1.55,'impact',1);
+  [.9,1.2,1.5].forEach((d,i)=>ev(b+css(d)+.1,'tick',.5,i));ev(b+css(1.9),'tick',.4,3);
+  ev(b+css(2.2)+.15,'pop',1,4);ev(b+css(2.2)+.35,'chime',.8,2);ev(b+css(2.9),'tick',.4,5);
+  ev(b+css(3.1)+.2,'shimmer',.6);
+  window.EVENTS=EV;
+})();
+
+/* ═════ Render determinista ═════ */
+function setTime(t){
+  t=clamp(t,0,TOTAL);
+  for(const a of document.getAnimations()){
+    const tg=a.effect&&a.effect.target;if(!tg)continue;
+    const sc=tg.closest&&tg.closest('.scene');
+    const lt=sc?(t-SC.find(s=>s.el===sc).s):t;
+    a.pause();a.currentTime=lt*1000*SLOW;
+  }
+  SC.forEach((s,i)=>{
+    const ls=t-s.s, el=s.el;
+    if(ls<0){el.style.visibility='hidden';el.style.opacity=0;return}
+    if(t>s.e+FADE){el.style.visibility='hidden';el.style.opacity=0;return}
+    el.style.visibility='visible';
+    const x=t>s.e?(t-s.e)/FADE:0, e=easeIO(x);
+    const ei=easeOut(ls/1.1);const oi=i===0?1:clamp((ls-.3)/.5);el.style.opacity=oi*(1-e);el.style.transform=`translateY(${(1-ei)*90-e*110}px) scale(${.965+.035*ei-.04*e})`;el.style.filter=x>0?`blur(${14*e}px)`:(ei<1?`blur(${(1-ei)*8}px)`:'none');
+    el.style.zIndex=10+i;
+    if(s.id==='s2')dynS2(ls);
+    if(s.id==='s3')dynS3(ls);
+    if(s.id==='s4')dynS4(ls);
+    if(s.id==='s5')dynS5(ls);
+  });
+}
+function dynS2(ls){
+  const RX=58,RZ=-34-7*Math.sin(ls*.5)+ls*.4;
+  const rise=easeOut(ls/1.4);
+  iso.style.transform=`translateY(${(1-rise)*260}px) rotateX(${RX}deg) rotateZ(${RZ}deg) scale(${(.82+.18*rise)*.8})`;
+  iso.style.opacity=rise;
+  const ex=easeIO((ls-S2_EXP)/1.3);
+  const gap=40+(S2_GAP-40)*ex;
+  const kk=ls<S2_T0?0:clamp(Math.floor((ls-S2_T0)/S2_DUR),0,4);
+  const u=ls-S2_T0-kk*S2_DUR;
+  const prev=PT[Math.max(0,kk-1)].sc,curr=PT[kk].sc,m=ls<S2_T0?0:easeIO(u/.7);
+  const scx=prev[0]+(curr[0]-prev[0])*m, scy=prev[1]+(curr[1]-prev[1])*m;
+  const pulse=ls<S2_T0?0:Math.exp(-Math.max(0,u)/.5);
+  for(let i=0;i<3;i++){
+    const z=(1-i)*gap;
+    slabs[i].style.transform=`translateZ(${z}px) scale(${scx},${scy})`;
+    slabs[i].style.borderColor=`rgba(196,255,0,${.3+.5*pulse})`;
+    slabs[i].style.boxShadow=`0 0 ${40+90*pulse}px rgba(196,255,0,${.12+.35*pulse})`;
+    const lx=-280*scx-95,ly=-10;
+    lbls[i].style.transform=`translate3d(${lx}px,${ly}px,${z+14}px) rotateZ(${-RZ}deg) rotateX(${-RX}deg)`;
+    lbls[i].style.opacity=ex;
+    for(let j=0;j<3;j++){
+      const t=tiles[i][j];
+      const cu=u-(i*3+j)*.05;
+      let show=kk,f=1;
+      if(ls<S2_T0){f=0}
+      else if(kk===0){f=easeOut((cu-.1)/.5)}
+      else if(cu<.22){show=kk-1;f=1-easeIO(cu/.22)}
+      else{f=easeOut((cu-.22)/.4)}
+      if(t.dataset.k!==String(show)){t.dataset.k=show;const c=PT[show].L[i][j];t.innerHTML=ISVG(c[0])+'<b>'+c[1]+'</b>'}
+      const x=(j-1)*190*scx, y=-20*scy;
+      const lift=70+30*Math.sin(ls*1.2+i+j)*ex;
+      t.style.opacity=f*ex;
+      t.style.transform=`translate3d(${x}px,${y}px,${z+lift*ex}px) rotateZ(${-RZ}deg) rotateX(${-RX}deg) scale(${.4+.6*f})`;
+    }
+  }
+  beams.forEach(b=>{const zt=(1-b.g)*gap, zb=(-b.g)*gap, h=zt-zb;
+    b.el.style.height=Math.max(0,h)+'px';b.el.style.opacity=ex;
+    b.el.style.transform=`translate3d(${b.cx*scx}px,${b.cy*scy}px,${zb}px) rotateX(90deg)`});
+  axis.style.height=(2*gap+260)+'px';axis.style.opacity=ex*.9;
+  axis.style.transform=`translate3d(-3px,0,${-gap-80}px) rotateX(90deg)`;
+  const nm=PT[kk].n;if($('#tn').textContent!==nm&&ls>=S2_T0)$('#tn').textContent=nm;
+  $('#tn').style.opacity=ls<S2_T0?0:easeOut(u/.4);
+  $('#tn').style.transform=`translateY(${ls<S2_T0?20:(1-easeOut(u/.45))*24}px)`;
+  $('#tk').style.opacity=ls<S2_T0?0:.8;
+  chipEls.forEach((c,i)=>c.classList.toggle('hi',ls>=S2_T0&&i===kk));
+}
+function dynS3(ls){
+  const started=ls>=S3_T0;
+  const k=clamp(Math.floor((ls-S3_T0)/S3_DUR),0,5), u=ls-S3_T0-k*S3_DUR;
+  const title=$('#ptitle'),lbl=$('#pstep'),fill=$('#pfill');
+  const key=started?k:-2;
+  if(key!==shownStep){
+    shownStep=key;const st=STEPS[Math.max(0,k)];
+    title.textContent=started?st[0]:'';
+    lbl.textContent=`Paso ${Math.max(0,k)+1} de 6`;
+    opts.forEach((o,j)=>o.firstChild.textContent=started?st[1][j]:'');
+  }
+  if(!started){opts.forEach(o=>o.style.opacity=0);title.style.opacity=0;fill.style.width='0%';return}
+  const st=STEPS[k];
+  const ex=k<5?easeOut((u-(S3_DUR-.35))/.35):0;
+  const tin=easeOut(u/.45);
+  title.style.opacity=tin*(1-ex);title.style.transform=`translateX(${(1-tin)*40}px)`;
+  fill.style.width=(((k+easeIO(u/.7))/6)*100)+'%';
+  opts.forEach((o,j)=>{
+    const ap=easeOut((u-.15-.12*j)/.5);
+    const selIdx=st[2].indexOf(j);
+    const sp=selIdx<0?0:easeOut((u-.85-.3*selIdx)/.35);
+    o.style.opacity=ap*(1-ex);
+    o.style.transform=`translateY(${(1-ap)*34}px) scale(${1+.03*sp})`;
+    o.style.borderColor=`rgba(${Math.round(255-59*sp)},255,${Math.round(255-255*sp)},${.12+.88*sp})`;
+    o.style.background=`linear-gradient(0deg,rgba(196,255,0,${.12*sp}),rgba(196,255,0,${.12*sp})),rgba(8,8,8,.45)`;
+    o.style.color=sp>.5?'#C4FF00':'#F7F7F7';
+    o.style.boxShadow=`0 0 ${40*sp}px rgba(196,255,0,${.22*sp})`;
+    const ck=o.lastChild;ck.style.background=`rgba(196,255,0,${sp})`;ck.style.borderColor=`rgba(${Math.round(255-59*sp)},255,${Math.round(255-255*sp)},${.25+.75*sp})`;
+    ck.firstChild.style.opacity=sp;
+  });
+}
+function dynS4(ls){
+  const n=clamp(Math.floor((ls-S4_TYPE0)*CPS),0,CODE.length);
+  $('#code').textContent=CODE.slice(0,n);
+}
+function dynS5(ls){
+  const m1=$('#m1'),m2=$('#m2'),ty=$('#ty');
+  const p1=easeOut((ls-S5_M1)/.8), p2=easeOut((ls-S5_M2)/.8);
+  m1.style.opacity=p1;m1.style.transform=`translateY(${(1-p1)*40}px) scale(${.9+.1*p1})`;
+  const tin=easeOut((ls-S5_TY0)/.3), tout=easeOut((ls-S5_M2+.25)/.25);
+  ty.style.opacity=Math.max(0,tin-tout);ty.style.display=(ls>S5_M2+.3)?'none':'flex';
+  m2.style.opacity=p2;m2.style.transform=`translateY(${(1-p2)*40}px) scale(${.9+.1*p2})`;
+}
+window.__setTime=setTime;window.__TOTAL=TOTAL;
+
+/* ═════ Reproductor en vivo (preview) ═════ */
+let playing=true,t0=null,cur=parseFloat(params.get('t')||0);
+function loop(now){
+  if(playing){if(t0===null)t0=now-cur*1000;cur=(now-t0)/1000;if(cur>=TOTAL){cur=0;t0=now}}
+  else t0=now-cur*1000;
+  setTime(cur);requestAnimationFrame(loop);
+}
+$('#bPlay').onclick=()=>{playing=!playing};
+$('#bRestart').onclick=()=>{cur=0;t0=null};
+addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();playing=!playing}if(e.key==='r'||e.key==='R'){cur=0;t0=null}});
+document.fonts.ready.then(()=>{window.__ready=true;if(!params.has('manual'))requestAnimationFrame(loop)});
+</script>
+</body>
+</html>

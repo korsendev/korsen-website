@@ -1,0 +1,8 @@
+seg/p0.mp4 0 0
+seg/p0.mp4 100 9
+seg/p0.mp4 200 18
+seg/p0.mp4 300 29
+seg/p0.mp4 400 40
+seg/p0.mp4 500 50
+seg/p0.mp4 600 61
+seg/p0.mp4 700 72
