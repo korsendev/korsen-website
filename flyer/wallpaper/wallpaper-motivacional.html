@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+:root{
+  --primary:#c6fd0e;--primary-light:#d4ff42;
+  --bg:#050505;--surface:#0a0a0a;--surface-light:#151515;
+  --text:#ffffff;--text-2:#c5c5c5;--muted:#8b8b8b;--border:#1f1f1f;
+  --glow:rgba(198,253,14,.25);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;background:var(--bg)}
+body{font-family:'Space Grotesk',sans-serif;color:var(--text);position:relative;overflow:hidden;-webkit-font-smoothing:antialiased}
+.grid{position:absolute;inset:0;background-size:32px 32px;
+  background-image:linear-gradient(to right,rgba(198,253,14,.045) 1px,transparent 1px),linear-gradient(to bottom,rgba(198,253,14,.045) 1px,transparent 1px);
+  -webkit-mask-image:radial-gradient(ellipse 75% 80% at 50% 50%,#000 20%,transparent 100%)}
+.glow{position:absolute;left:50%;top:50%;width:1300px;height:900px;transform:translate(-50%,-50%);
+  background:radial-gradient(ellipse,rgba(198,253,14,.11),transparent 65%)}
+.frame{position:absolute;inset:64px;border:1px solid rgba(198,253,14,.45);border-radius:18px;
+  background:linear-gradient(135deg,rgba(20,20,20,.55),rgba(10,10,10,.7))}
+.c{position:absolute;width:44px;height:44px;border:4px solid var(--primary);pointer-events:none}
+.tl{top:92px;left:92px;border-right:none;border-bottom:none}
+.tr{top:92px;right:92px;border-left:none;border-bottom:none}
+.bl{bottom:92px;left:92px;border-right:none;border-top:none}
+.br{bottom:92px;right:92px;border-left:none;border-top:none}
+.mono{font-family:'JetBrains Mono',monospace}
+.top{position:absolute;top:128px;left:140px;right:140px;display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;font-weight:700;font-size:34px;letter-spacing:-.02em}
+.brand img{width:64px;height:64px;object-fit:contain;margin-right:8px}
+.brand span{color:var(--primary)}
+.tag{font-size:16px;letter-spacing:.2em;color:var(--muted);font-weight:500}
+.center{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 200px}
+.k{font-size:22px;letter-spacing:.25em;color:var(--primary);font-weight:700}
+h1{font-weight:700;font-size:120px;line-height:1.08;letter-spacing:-.04em;text-transform:uppercase;margin-top:30px}
+h1 em{font-style:normal;color:var(--primary);text-shadow:0 0 60px var(--glow)}
+.sub{font-size:32px;line-height:1.45;color:var(--text-2);font-weight:500;margin-top:40px;max-width:1000px}
+.bar{width:6px;position:absolute;left:140px;top:380px;bottom:380px;background:var(--primary);border-radius:0 4px 4px 0;box-shadow:0 0 30px var(--glow)}
+.foot{position:absolute;bottom:128px;left:140px;right:140px;display:flex;justify-content:space-between;align-items:center}
+.pill{background:linear-gradient(180deg,var(--primary-light),var(--primary));color:var(--bg);font-weight:700;font-size:22px;padding:14px 28px;border-radius:999px;box-shadow:0 4px 20px rgba(198,253,14,.25)}
+.url{font-size:20px;color:var(--muted);text-align:right;line-height:1.6;font-weight:500}
+.url b{color:var(--primary);font-weight:700}
+</style></head><body>
+<div class="grid"></div><div class="glow"></div>
+<div class="frame"></div>
+<div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+<div class="top"><div class="brand"><img src="../logo.png">korsen<span>.dev</span></div><div class="tag mono">// SISTEMA ACTIVO</div></div>
+<div class="center">
+  <div class="k mono">// CONSTRUYE HOY</div>
+  <h1>Lo que automatizas hoy,<br><em>te libera mañana.</em></h1>
+  <p class="sub">Cada proceso que dejas en manos de la tecnología es tiempo que recuperas para lo que importa.</p>
+</div>
+<div class="foot"><div class="pill">Tecnología que funciona</div><div class="url mono"><b>korsen.dev</b><br>team@korsen.dev</div></div>
+</body></html>
