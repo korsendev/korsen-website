@@ -93,7 +93,10 @@ export const FOOTER = {
   ],
   contactTitle: "Contacto",
   legal: "© 2026 MAYNODE · antes Korsen Dev · Todos los derechos reservados",
-  legalLinks: ["Privacidad", "Términos"],
+  legalLinks: [
+    { label: "Privacidad", href: "/privacidad" },
+    { label: "Términos", href: "/terminos" },
+  ],
 } as const
 
 export const WHATSAPP = {

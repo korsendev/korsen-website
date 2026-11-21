@@ -53,7 +53,13 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col gap-3 border-t border-[var(--mn-border-2)] pt-6 text-xs text-[var(--mn-text-3)] sm:flex-row sm:items-center sm:justify-between">
           <p className="mn-code">{FOOTER.legal}</p>
-          <p className="mn-code">{FOOTER.legalLinks.join(" · ")}</p>
+          <p className="mn-code flex gap-4">
+            {FOOTER.legalLinks.map((l) => (
+              <Link key={l.href} href={l.href} className="transition-colors hover:text-[var(--mn-lime)]">
+                {l.label}
+              </Link>
+            ))}
+          </p>
         </div>
       </div>
     </footer>

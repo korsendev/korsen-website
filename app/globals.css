@@ -391,11 +391,3 @@ html[data-bar-closed] .mn-bar { display: none; }
 .mn-chip { background: rgba(255, 255, 255, 0.03); border-color: rgba(255, 255, 255, 0.15); color: var(--mn-lime); text-transform: uppercase; letter-spacing: 0.14em; font-size: 11px; backdrop-filter: blur(12px); box-shadow: 0 0 15px rgba(196, 255, 0, 0.05); }
 
 .mn-glow { filter: blur(60px); opacity: 0.1; }
-
-/* Hero: el logo de nodos ocupa la parte baja; el relleno inferior reserva su altura */
-.mn-hero-pad { padding-bottom: calc(50.5vw + 32px); }
-.mn-hero-logo { width: 170vw; aspect-ratio: 3 / 1; }
-@media (min-width: 640px) {
-  .mn-hero-pad { padding-bottom: calc(min(386px, 37.2vw) + 72px); }
-  .mn-hero-logo { width: min(1300px, 125vw); }
-}
