@@ -4,7 +4,7 @@ import { SectionHeader } from "@/components/section-header"
 import { Button } from "@/components/ui/button"
 import { ABOUT } from "@/lib/content/about"
 
-export function About({ as = "h2", id = "quienes-somos" }: { as?: "h1" | "h2"; id?: string }) {
+export function About({ as = "h2", id = "quienes-somos", cta = true }: { as?: "h1" | "h2"; id?: string; cta?: boolean }) {
   return (
     <Section id={id} bg={<div className="mn-columns pointer-events-none absolute inset-0 opacity-60" aria-hidden />}>
       <SectionHeader label={ABOUT.label} title={ABOUT.title} accent={ABOUT.accent} as={as} />
@@ -25,11 +25,13 @@ export function About({ as = "h2", id = "quienes-somos" }: { as?: "h1" | "h2"; i
               </p>
             ))}
           </div>
-          <div className="mt-10">
-            <Button href={ABOUT.cta.href} variant="ghost">
-              {ABOUT.cta.label}
-            </Button>
-          </div>
+          {cta ? (
+            <div className="mt-10">
+              <Button href={ABOUT.cta.href} variant="ghost">
+                {ABOUT.cta.label}
+              </Button>
+            </div>
+          ) : null}
         </Reveal>
       </div>
     </Section>

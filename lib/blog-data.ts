@@ -25,7 +25,7 @@ Cuando un cliente potencial entra a tu sitio web o aplicación móvil y experime
 - **Pérdida de confianza:** Una experiencia lenta proyecta una imagen de informalidad y falta de capacidad operativa.
 - **Penalización en Google:** Los motores de búsqueda relegan las páginas lentas, encareciendo tu costo de adquisición de clientes en campañas de marketing.
 
-## Cómo solucionamos esto en Korsen
+## Cómo solucionamos esto en MAYNODE
 No utilizamos plantillas sobrecargadas ni soluciones prefabricadas que ralentizan tu servidor.
 - **Arquitectura de carga progresiva:** Estructuramos el código para que el contenido crítico de venta sea visible en menos de 1 segundo.
 - **Optimización de infraestructura:** Configuramos redes de distribución de contenido (CDN) para servir tu plataforma desde el nodo más cercano a tu cliente.
@@ -36,7 +36,7 @@ Optimizar la velocidad de tu sistema es la forma más rápida y económica de au
   },
   {
     slug: "automatizacion-ia-costos-operativos",
-    title: "Cómo la automatización con IA reduce un 40% de los costos operativos en tu empresa",
+    title: "Cómo la automatización con IA reduce los costos operativos en tu empresa",
     date: "Julio 15, 2026",
     readTime: "5 min de lectura",
     excerpt: "Descubre cómo integrar agentes de Inteligencia Artificial en tus flujos de trabajo para eliminar tareas repetitivas y liberar a tu equipo.",
@@ -75,8 +75,8 @@ Si tu sistema actual presenta estos problemas, estás sufriendo las consecuencia
 - **Caídas de servicio recurrentes:** La plataforma deja de funcionar cuando entran más de 20 usuarios en simultáneo.
 - **Dependencia de procesos manuales:** Tienes que conciliar datos manualmente entre diferentes hojas de cálculo porque tus sistemas no se pueden integrar entre sí.
 
-## La filosofía de desarrollo de Korsen
-En Korsen, construimos software enfocado a resistir el crecimiento de tu negocio:
+## La filosofía de desarrollo de MAYNODE
+En MAYNODE, construimos software enfocado a resistir el crecimiento de tu negocio:
 - **Arquitectura limpia y modular:** Diseñamos el software en capas independientes, permitiendo que tu sistema evolucione y cambie sin necesidad de rehacerlo desde cero.
 - **Código auditable y seguro:** Protegemos tus bases de datos y la información de tus clientes bajo estándares modernos de seguridad.
 - **Preparado para escalar:** Creamos plataformas capaces de soportar picos de tráfico elevados sin interrupciones de servicio.

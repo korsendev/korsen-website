@@ -203,13 +203,6 @@ export const SOLUCION_LANDING = {
   resultLabel: "Resultado",
   faqLabel: "Preguntas",
   timeKicker: "Tiempo típico",
-  methodTitle: "Un método corto, entregas reales",
-  methodSteps: [
-    { n: "01", name: "Discovery", text: "Entendemos tu operación y definimos el problema real." },
-    { n: "02", name: "Architecture", text: "Diseñamos la estructura técnica y el plan." },
-    { n: "03", name: "Build", text: "Sprints de 1 semana con entregas funcionales." },
-    { n: "04", name: "Launch", text: "Despliegue en producción sin interrupciones." },
-  ],
   caseCta: "Ver proyectos",
 } as const
 

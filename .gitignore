@@ -25,3 +25,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# media pesada (videos) fuera del repo
+*.mp4
+*.mov

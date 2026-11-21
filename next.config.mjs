@@ -1,18 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  images: {
-    unoptimized: true,
-  },
   async redirects() {
     return [
-      { source: "/cotizar/:topic", destination: "/?cotizar=:topic", permanent: false },
-      { source: "/cotizar", destination: "/", permanent: false },
+      // Rutas heredadas de la etapa anterior
+      { source: "/cotizar/:topic", destination: "/diagnostico?tema=:topic", permanent: false },
+      { source: "/cotizar", destination: "/diagnostico", permanent: false },
+      { source: "/soluciones-y-tecnologias", destination: "/servicios", permanent: true },
+      { source: "/casos/:slug", destination: "/proyectos", permanent: true },
+      // Dominio anterior: todo korsen.dev (y www) redirige con 301 a maynode.dev
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "(www\.)?korsen\.dev" }],
+        destination: "https://maynode.dev/:path*",
+        permanent: true,
+      },
     ]
   },
 }
