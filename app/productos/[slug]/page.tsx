@@ -29,6 +29,7 @@ export default async function ProductoPage({ params }: Props) {
   return (
     <>
       <PageHero
+        crumbs={[{ label: "Productos", href: "/productos" }, { label: "BOSQRA" }]}
         label={C.label}
         title={C.title}
         accent={C.accent}

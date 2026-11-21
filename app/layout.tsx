@@ -9,9 +9,13 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { WhatsAppButton } from "@/components/whatsapp-button"
 
+/** Antes de pintar: recuerda el cierre de la barra y activa el modo ligero en equipos modestos. */
+const LITE_SCRIPT = `try{var n=navigator,m=n.deviceMemory,c=n.hardwareConcurrency,k=n.connection,s=k&&(k.saveData||/(^|-)2g$/.test(k.effectiveType||""));if((m&&m<=4)||(c&&c<=4)||s)document.documentElement.classList.add("lite")}catch(e){}`
+const INIT_SCRIPT = TRANSITION_BAR_INIT + LITE_SCRIPT
+
+// Fuente variable: un solo archivo para todos los pesos
 const sora = Sora({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
   variable: "--font-sora",
   display: "swap",
 })
@@ -55,13 +59,14 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: "#050505",
   colorScheme: "dark",
+  viewportFit: "cover",
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es" className={`${sora.variable} ${plex.variable} ${jetbrains.variable}`}>
       <body>
-        <script dangerouslySetInnerHTML={{ __html: TRANSITION_BAR_INIT }} />
+        <script dangerouslySetInnerHTML={{ __html: INIT_SCRIPT }} />
         <noscript>
           <style>{`.mn-rv{opacity:1!important;transform:none!important}`}</style>
         </noscript>

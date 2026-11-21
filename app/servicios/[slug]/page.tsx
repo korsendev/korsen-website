@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
+import { AdjacentNav } from "@/components/adjacent-nav"
 import { CtaFinal } from "@/components/cta-final"
 import { PageHero } from "@/components/page-hero"
 import { Reveal } from "@/components/reveal"
@@ -39,6 +40,9 @@ export default async function ServicioPage({ params }: Props) {
   const s = getServicio(slug)
   if (!s) notFound()
   const { title, accent } = splitAccent(s.title)
+  const idx = SERVICIOS.findIndex((x) => x.slug === s.slug)
+  const prevS = SERVICIOS[(idx - 1 + SERVICIOS.length) % SERVICIOS.length]
+  const nextS = SERVICIOS[(idx + 1) % SERVICIOS.length]
   const related = s.related.map((r) => getSolucion(r)).filter((r): r is NonNullable<typeof r> => Boolean(r))
   const cols = related.length
   const half = Math.ceil(s.services.length / 2)
@@ -46,6 +50,7 @@ export default async function ServicioPage({ params }: Props) {
   return (
     <>
       <PageHero
+        crumbs={[{ label: "Servicios", href: "/servicios" }, { label: s.title }]}
         label={`SERVICIO ${s.n}`}
         title={title}
         accent={accent}
@@ -120,6 +125,10 @@ export default async function ServicioPage({ params }: Props) {
       </Section>
 
       <CtaFinal />
+      <AdjacentNav
+        prev={{ label: "Servicio anterior", title: prevS.title, href: `/servicios/${prevS.slug}` }}
+        next={{ label: "Siguiente servicio", title: nextS.title, href: `/servicios/${nextS.slug}` }}
+      />
     </>
   )
 }

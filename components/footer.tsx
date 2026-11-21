@@ -16,10 +16,10 @@ export function Footer() {
             {FOOTER.columns.map((col) => (
               <nav key={col.title} aria-label={col.title}>
                 <h2 className="mn-kicker mb-5">{col.title}</h2>
-                <ul className="space-y-3">
+                <ul className="space-y-0.5">
                   {col.links.map((l) => (
                     <li key={l.href}>
-                      <Link href={l.href} className="text-sm text-[var(--mn-text-2)] transition-colors hover:text-[var(--mn-text)]">
+                      <Link href={l.href} className="mn-tap text-sm text-[var(--mn-text-2)] transition-colors hover:text-[var(--mn-text)]">
                         {l.label}
                       </Link>
                     </li>

@@ -1,5 +1,28 @@
 /** @type {import('next').NextConfig} */
+const securityHeaders = [
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
+]
+
 const nextConfig = {
+  poweredByHeader: false,
+  compress: true,
+  async headers() {
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      // Activos de marca: caché larga con revalidación en segundo plano
+      {
+        source: "/brand/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" }],
+      },
+      {
+        source: "/productos/:path*.jpg",
+        headers: [{ key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" }],
+      },
+    ]
+  },
   async redirects() {
     return [
       // Rutas heredadas de la etapa anterior

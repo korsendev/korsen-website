@@ -17,12 +17,14 @@ export function HeroPipeline() {
   const [reduce, setReduce] = useState(false)
 
   useEffect(() => {
-    setReduce(window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+    setReduce(window.matchMedia("(prefers-reduced-motion: reduce)").matches || document.documentElement.classList.contains("lite"))
   }, [])
 
   useEffect(() => {
     if (paused || reduce) return
-    const id = window.setInterval(() => setActive((a) => (a + 1) % PHASES.length), 3400)
+    const id = window.setInterval(() => {
+      if (!document.hidden) setActive((a) => (a + 1) % PHASES.length)
+    }, 3400)
     return () => window.clearInterval(id)
   }, [paused, reduce])
 

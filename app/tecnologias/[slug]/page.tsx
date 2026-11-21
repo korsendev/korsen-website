@@ -35,6 +35,7 @@ export default async function TecnologiaPage({ params }: Props) {
   return (
     <>
       <PageHero
+        crumbs={[{ label: "Servicios", href: "/servicios" }, { label: t.title }]}
         label={C.label}
         title={C.titlePrefix}
         accent={t.title}

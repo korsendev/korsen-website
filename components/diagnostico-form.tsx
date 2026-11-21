@@ -84,9 +84,9 @@ function Options({ name, options, register, error, legend }: { name: FieldPath<F
         {options.map((o) => (
           <label key={o.value} className="group relative block cursor-pointer">
             <input type="radio" value={o.value} {...register(name)} className="peer sr-only" />
-            <span className="flex min-h-[56px] items-center gap-3 rounded-[var(--mn-r-lg)] border border-[var(--mn-border-2)] bg-[var(--mn-surface-2)] px-4 py-3 text-[15px] transition-colors peer-checked:border-[var(--mn-lime)] peer-checked:bg-[var(--mn-lime-10)] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[var(--mn-lime)] hover:border-[var(--mn-lime-45)]">
-              <span className="grid h-4 w-4 flex-none place-items-center rounded-full border border-[var(--mn-text-3)] group-has-[:checked]:border-[var(--mn-lime)]">
-                <span className="h-2 w-2 rounded-full bg-[var(--mn-lime)] opacity-0 group-has-[:checked]:opacity-100" />
+            <span className="flex min-h-[56px] items-center gap-3 rounded-[var(--mn-r-lg)] border border-[var(--mn-border-2)] bg-[var(--mn-surface-2)] px-4 py-3 text-[15px] transition-colors peer-checked:border-[var(--mn-lime)] peer-checked:bg-[var(--mn-lime-10)] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[var(--mn-lime)] hover:border-[var(--mn-lime-45)] peer-checked:[&_.dot]:opacity-100 peer-checked:[&_.ring]:border-[var(--mn-lime)]">
+              <span className="ring grid h-4 w-4 flex-none place-items-center rounded-full border border-[var(--mn-text-3)]">
+                <span className="dot h-2 w-2 rounded-full bg-[var(--mn-lime)] opacity-0" />
               </span>
               {o.label}
             </span>

@@ -5,7 +5,7 @@ import { MnCard } from "@/components/ui/mn-card"
 import { COVERAGE as C } from "@/lib/content/coverage"
 
 /** Los cuatro mapas a la vez: 2×2 desde tablet; mapa arriba y texto debajo. */
-export function Coverage({ id = "cobertura", as = "h2" }: { id?: string; as?: "h1" | "h2" }) {
+export function Coverage({ id = "cobertura", as = "h2", priority = false }: { id?: string; as?: "h1" | "h2"; priority?: boolean }) {
   return (
     <Section id={id} bg={<div className="mn-glow -left-[300px] top-1/3" aria-hidden />}>
       <SectionHeader label={C.label} title={C.title} intro={C.intro} as={as} />
@@ -20,7 +20,7 @@ export function Coverage({ id = "cobertura", as = "h2" }: { id?: string; as?: "h
                     <div className="mn-nodegrid pointer-events-none absolute inset-0 rounded-[var(--mn-r-card)] opacity-60" aria-hidden />
                     <div className="relative flex aspect-[6/5] items-center justify-center p-5 sm:aspect-auto sm:h-[320px] sm:p-6">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={r.map} alt={r.alt} loading="lazy" decoding="async" width={300} height={250} className="h-full w-full object-contain" />
+                      <img src={r.map} alt={r.alt} loading={priority && i < 2 ? "eager" : "lazy"} fetchPriority={priority && i < 2 ? "high" : "auto"} decoding="async" width={300} height={250} className="h-full w-full object-contain" />
                     </div>
                     <div className="relative mt-auto border-t border-[var(--mn-border-1)] p-6 sm:p-7">
                       <div>

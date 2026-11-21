@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function CoberturaPage() {
   return (
     <>
-      <Coverage as="h1" />
+      <Coverage as="h1" priority />
       <CtaFinal />
     </>
   )

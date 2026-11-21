@@ -10,7 +10,7 @@ export function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={WHATSAPP.tooltip}
-      className="group fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-[var(--mn-lime)] text-[var(--mn-lime-ink)] shadow-[var(--mn-glow-btn)] transition-colors hover:bg-[var(--mn-lime-hover)] sm:bottom-7 sm:right-7"
+      className="group mn-safe-bottom fixed right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-[var(--mn-lime)] text-[var(--mn-lime-ink)] shadow-[var(--mn-glow-btn)] transition-colors hover:bg-[var(--mn-lime-hover)] sm:right-7"
     >
       <MessageCircle size={26} strokeWidth={1.75} aria-hidden />
       <span

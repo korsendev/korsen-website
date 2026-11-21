@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
+import { AdjacentNav } from "@/components/adjacent-nav"
 import { CtaFinal } from "@/components/cta-final"
 import { FaqList } from "@/components/faq"
 import { PageHero } from "@/components/page-hero"
@@ -34,10 +35,14 @@ export default async function SolucionPage({ params }: Props) {
   const s = getSolucion(slug)
   if (!s) notFound()
   const project = getProjectByName(s.caseName)
+  const idx = SOLUCIONES.findIndex((x) => x.slug === s.slug)
+  const prevS = SOLUCIONES[(idx - 1 + SOLUCIONES.length) % SOLUCIONES.length]
+  const nextS = SOLUCIONES[(idx + 1) % SOLUCIONES.length]
 
   return (
     <>
       <PageHero
+        crumbs={[{ label: "Soluciones", href: "/soluciones" }, { label: s.title }]}
         label={`SOLUCIÓN ${s.n}`}
         title={s.h1}
         accent={s.accent}
@@ -145,6 +150,10 @@ export default async function SolucionPage({ params }: Props) {
       </Section>
 
       <CtaFinal />
+      <AdjacentNav
+        prev={{ label: "Solución anterior", title: prevS.title, href: `/soluciones/${prevS.slug}` }}
+        next={{ label: "Siguiente solución", title: nextS.title, href: `/soluciones/${nextS.slug}` }}
+      />
     </>
   )
 }
