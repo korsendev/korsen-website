@@ -8,6 +8,7 @@ import { TransitionBar, TRANSITION_BAR_INIT } from "@/components/transition-bar"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { WhatsAppButton } from "@/components/whatsapp-button"
+import { SiteJsonLd } from "@/components/json-ld"
 
 /** Antes de pintar: recuerda el cierre de la barra y activa el modo ligero en equipos modestos. */
 const LITE_SCRIPT = `try{var n=navigator,m=n.deviceMemory,c=n.hardwareConcurrency,k=n.connection,s=k&&(k.saveData||/(^|-)2g$/.test(k.effectiveType||""));if((m&&m<=4)||(c&&c<=4)||s)document.documentElement.classList.add("lite")}catch(e){}`
@@ -41,19 +42,22 @@ export const metadata: Metadata = {
   authors: [{ name: SITE.name, url: SITE.url }],
   creator: SITE.name,
   publisher: SITE.name,
+  // Sin título/descripción/URL aquí: cada página aporta los suyos y el tema los hereda de su <title>
   openGraph: {
-    title: META.titleDefault,
-    description: META.description,
-    url: SITE.url,
     siteName: SITE.name,
     locale: META.locale,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: META.titleDefault,
-    description: META.description,
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+  },
+  formatDetection: { telephone: false, email: false, address: false },
+  category: "technology",
 }
 
 export const viewport: Viewport = {
@@ -76,6 +80,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         >
           Saltar al contenido
         </a>
+        <SiteJsonLd />
         <TransitionBar />
         <Header />
         <main id="contenido">{children}</main>
