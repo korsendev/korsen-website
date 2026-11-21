@@ -200,7 +200,7 @@
 - **Panel "Qué resuelve" — título:** Todo el aserradero en una sola app
 - **Texto:** Producción, inventario, ventas y cobros conectados en tiempo real, desde el patio hasta la factura.
 - **Lista:** Ventas en segundos con factura automática (NCF e ITBIS). · Inventario en pies tablares por especie y medida. · Crédito de clientes, abonos y cuentas por cobrar. · Asistente de IA que responde por ti.
-- **Enlace:** ↗ bosqra.vercel.app · **→** Solicitar demo
+- **Enlace:** ↗ bosqra.app · **→** Solicitar demo
 
 ### 1.13 Modelos de contratación
 - **■** 11 · MODELOS DE CONTRATACIÓN
@@ -418,7 +418,7 @@ Estructura: Hero (línea + descripción) → Servicios (lista 2 columnas) → En
   - **H1:** Cada pie tablar [lima]cuenta.[/lima]
   - **Lead:** El sistema de gestión hecho para la industria maderera. Producción, inventario, ventas y cobros en una sola app para Android, iOS y web.
   - **Beneficios:** Ventas en segundos con factura automática (NCF e ITBIS) · Inventario en pies tablares por especie y medida · Crédito de clientes, abonos y cuentas por cobrar · Asistente de IA que responde por ti
-  - **→** Solicitar demo · **○** ↗ bosqra.vercel.app
+  - **→** Solicitar demo · **○** ↗ bosqra.app
 
 ---
 
