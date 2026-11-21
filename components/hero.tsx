@@ -1,5 +1,4 @@
-import Image from "next/image"
-import { HeroWidgets } from "@/components/hero-widgets"
+import { HeroNetwork } from "@/components/hero-network"
 import { Button } from "@/components/ui/button"
 import { Chip } from "@/components/ui/chip"
 import { HERO } from "@/lib/content/hero"
@@ -9,21 +8,13 @@ export function Hero() {
     <section className="mn-grain relative overflow-hidden pb-[clamp(72px,9vw,140px)] pt-[clamp(64px,9vw,150px)]">
       <div className="mn-columns pointer-events-none absolute inset-0" aria-hidden />
       <div className="mn-glow -right-[300px] -top-[260px]" aria-hidden />
-      <Image
-        src="/brand/maynode-isotipo.svg"
-        alt=""
-        width={208}
-        height={118}
-        unoptimized
-        aria-hidden
-        className="pointer-events-none absolute -right-[8%] bottom-[-6%] w-[min(900px,70vw)] select-none opacity-[0.045]"
-      />
-      <div className="mn-container relative grid items-center gap-16 lg:grid-cols-[minmax(0,1fr)_auto]">
+      <HeroNetwork className="pointer-events-none absolute right-[-30%] top-[4%] aspect-square w-[110%] opacity-30 sm:right-[-15%] sm:w-[80%] lg:hidden" />
+      <div className="mn-container relative grid items-center gap-16 lg:grid-cols-[minmax(0,1.25fr)_minmax(340px,0.75fr)]">
         <div>
           <div className="mn-reveal">
             <Chip>{HERO.chip}</Chip>
           </div>
-          <h1 className="mn-display mt-8 max-w-[14ch] sm:max-w-[16ch] lg:max-w-[11ch] xl:max-w-[13ch]">
+          <h1 className="mn-display mt-8 max-w-[14ch] sm:max-w-[16ch] lg:max-w-none">
             {HERO.titleBefore} <span className="mn-accent">{HERO.accent}</span> {HERO.titleAfter}
           </h1>
           <p className="mn-lead mt-8" style={{ maxWidth: "58ch" }}>
@@ -49,7 +40,9 @@ export function Hero() {
             MAYNODE · {HERO.signature}
           </p>
         </div>
-        <HeroWidgets />
+        <div className="relative hidden lg:block">
+          <HeroNetwork className="-mx-[20%] aspect-square w-[140%] max-w-none" />
+        </div>
       </div>
     </section>
   )
