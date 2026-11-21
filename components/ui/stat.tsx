@@ -9,10 +9,11 @@ type Props = {
   /** Unidad pequeña tras el valor (ej. "días") */
   unit?: string
   label: string
+  size?: "lg" | "md"
 }
 
 /** Cifra grande con conteo de 0 al valor en 1.2 s al entrar en pantalla. */
-export function Stat({ value, plus, unit, label }: Props) {
+export function Stat({ value, plus, unit, label, size = "lg" }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   const target = typeof value === "number" ? value : null
   const [n, setN] = useState<number | null>(target)
@@ -46,7 +47,7 @@ export function Stat({ value, plus, unit, label }: Props) {
   }, [target])
 
   return (
-    <div ref={ref} className="mn-stat">
+    <div ref={ref} className={size === "md" ? "mn-stat mn-stat--md" : "mn-stat"}>
       <div className="mn-stat__n">
         <span>{target === null ? value : n}</span>
         {plus ? <span className="plus">+</span> : null}

@@ -250,16 +250,20 @@ body { min-width: 320px; overflow-x: hidden; }
 .mn-sec-head > .mn-lead { margin-top: 14px; max-width: 980px; }
 .mn-sec-body { margin-top: clamp(40px, 5vw, 64px); }
 
-/* Rejillas: filas de altura uniforme (design-system §5) */
+/* Rejillas: filas de altura uniforme (design-system §5). Sin huecos: el número de
+   columnas siempre divide el total de tarjetas. */
 .mn-grid { display: grid; gap: var(--mn-gap); grid-auto-rows: 1fr; grid-template-columns: 1fr; }
 @media (min-width: 640px) {
   .mn-grid--2, .mn-grid--3, .mn-grid--4, .mn-grid--5 { grid-template-columns: repeat(2, 1fr); }
-  .mn-grid--5 { grid-template-columns: repeat(3, 1fr); }
 }
 @media (min-width: 1024px) {
-  .mn-grid--3 { grid-template-columns: repeat(3, 1fr); }
+  .mn-grid--3, .mn-grid--3x { grid-template-columns: repeat(3, 1fr); }
   .mn-grid--4 { grid-template-columns: repeat(4, 1fr); }
   .mn-grid--5 { grid-template-columns: repeat(5, 1fr); }
+  .mn-grid--cols { grid-template-columns: repeat(var(--cols, 3), 1fr); }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .mn-grid--cols { grid-template-columns: repeat(var(--cols-md, 1), 1fr); }
 }
 @media (max-width: 639px) { .mn-grid--m2 { grid-template-columns: repeat(2, 1fr); } }
 
@@ -300,6 +304,7 @@ body { min-width: 320px; overflow-x: hidden; }
 
 .mn-stat { padding-left: 28px; border-left: 1px solid var(--mn-border-2); }
 .mn-stat__n { font-weight: 800; letter-spacing: -.05em; line-height: .95; font-size: clamp(56px, 8vw, 112px); }
+.mn-stat--md .mn-stat__n { font-size: clamp(40px, 5vw, 72px); }
 .mn-stat__n .plus { color: var(--mn-lime); }
 
 .mn-checklist { list-style: none; margin: 0; padding: 0; }
