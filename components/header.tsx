@@ -1,333 +1,125 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
+import { useEffect, useState } from "react"
+import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Menu, X, ChevronDown } from "lucide-react"
-import Image from "next/image"
-import { getAllCotizarTopics } from "@/lib/cotizar-topics"
-import {
-  PATH_SOLUCIONES_TECNOLOGIAS,
-  pathSolucionLanding,
-  pathTecnologiaLanding,
-} from "@/lib/site-paths"
-
-const menuContentClass =
-  "min-w-[250px] rounded-2xl border border-white/[0.08] bg-background/95 backdrop-blur-2xl p-2 shadow-[0_10px_30px_rgba(0,0,0,0.5),0_0_12px_rgba(198,253,14,0.05)] z-[100] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
-
-const menuItemClass =
-  "block w-full rounded-xl px-4 py-2 text-sm text-foreground/90 outline-none cursor-pointer hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary transition-all"
+import { HEADER_CTA, NAV, SITE } from "@/lib/content/global"
+import { cn } from "@/lib/utils"
 
 export function Header() {
   const pathname = usePathname()
-  const isHome = pathname === "/"
-  const onSolucionesPage = pathname === PATH_SOLUCIONES_TECNOLOGIAS
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [mobileSolOpen, setMobileSolOpen] = useState(false)
-  const [mobileTechOpen, setMobileTechOpen] = useState(false)
-
-  const { servicios, tecnologias } = getAllCotizarTopics()
+  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  const scrollToSection = (sectionId: string) => {
-    if (isHome) {
-      const element = document.getElementById(sectionId)
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" })
-      }
+  useEffect(() => setOpen(false), [pathname])
+
+  useEffect(() => {
+    if (!open) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false)
+    window.addEventListener("keydown", onKey)
+    return () => {
+      document.body.style.overflow = prev
+      window.removeEventListener("keydown", onKey)
     }
-    setIsMobileMenuOpen(false)
-    setMobileSolOpen(false)
-    setMobileTechOpen(false)
-  }
+  }, [open])
 
-  const sectionHref = (sectionId: string) => (isHome ? `#${sectionId}` : `/#${sectionId}`)
-
-  const ofertaHref = (fragment: string) =>
-    onSolucionesPage ? `#${fragment}` : `${PATH_SOLUCIONES_TECNOLOGIAS}#${fragment}`
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`)
 
   return (
-    <header
-      className={`fixed left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-6xl z-50 transition-all duration-500 ease-in-out ${
-        isScrolled
-          ? "top-4 bg-background/85 backdrop-blur-xl border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.6),0_0_24px_rgba(198,253,14,0.03)] py-1.5"
-          : "top-4 sm:top-6 bg-background/40 backdrop-blur-md border border-white/[0.05] py-2.5"
-      } ${isMobileMenuOpen ? "rounded-3xl" : "rounded-full"}`}
-    >
-      <div className="px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-12">
-          <Link href="/" className="flex items-center hover:opacity-85 transition-opacity" onClick={() => setIsMobileMenuOpen(false)}>
-            <div className="relative h-9 w-28 overflow-hidden flex items-center justify-center">
-              <Image
-                src="/logo-korsen.png"
-                alt="Korsen"
-                fill
-                className="object-contain scale-[1.8] transform"
-                priority
-              />
+    <header className="sticky top-0 z-50 h-[76px]">
+      <div
+        aria-hidden
+        className={cn(
+          "absolute inset-0 -z-10 border-b backdrop-blur-[16px] transition-colors",
+          scrolled || open ? "border-[var(--mn-border-1)] bg-[rgba(5,5,5,0.88)]" : "border-transparent bg-[rgba(5,5,5,0.72)]",
+        )}
+      />
+      <div className="mn-container flex h-full items-center justify-between gap-6">
+        <Link href="/" aria-label="MAYNODE — Inicio" className="flex shrink-0 items-center">
+          <Image src="/brand/maynode-logo.svg" alt="MAYNODE" width={66} height={36} priority unoptimized className="h-9 w-auto" />
+        </Link>
+
+        <nav aria-label="Principal" className="hidden xl:block">
+          <ul className="flex items-center gap-6">
+            {NAV.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                  className={cn(
+                    "relative py-2 text-sm font-medium transition-colors hover:text-[var(--mn-text)]",
+                    isActive(item.href) ? "text-[var(--mn-text)]" : "text-[var(--mn-text-2)]",
+                  )}
+                >
+                  {item.label}
+                  {isActive(item.href) ? <span className="absolute inset-x-0 -bottom-0.5 h-0.5 bg-[var(--mn-lime)]" /> : null}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="flex items-center gap-3">
+          <Button href={HEADER_CTA.href} compact arrow className="hidden sm:inline-flex">
+            {HEADER_CTA.label}
+          </Button>
+          <button
+            type="button"
+            className="grid h-11 w-11 place-items-center rounded-xl border border-[var(--mn-border-2)] text-[var(--mn-text)] xl:hidden"
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={open}
+            aria-controls="menu-movil"
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <X size={20} strokeWidth={1.75} /> : <Menu size={20} strokeWidth={1.75} />}
+          </button>
+        </div>
+      </div>
+
+      {open ? (
+        <div id="menu-movil" className="fixed inset-x-0 bottom-0 top-[76px] z-40 overflow-y-auto bg-[var(--mn-bg)] xl:hidden" style={{ top: "76px" }}>
+          <div className="mn-container flex min-h-full flex-col py-8">
+            <nav aria-label="Móvil">
+              <ul>
+                {NAV.map((item) => (
+                  <li key={item.href} className="border-b border-[var(--mn-border-1)]">
+                    <Link
+                      href={item.href}
+                      aria-current={isActive(item.href) ? "page" : undefined}
+                      className={cn("block py-4 text-2xl font-extrabold uppercase tracking-tight", isActive(item.href) ? "text-[var(--mn-lime)]" : "text-[var(--mn-text)]")}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <Button href={HEADER_CTA.href} arrow className="mt-8 w-full justify-center sm:hidden">
+              {HEADER_CTA.label}
+            </Button>
+            <div className="mt-auto pt-10 font-semibold leading-relaxed text-[var(--mn-text)]">
+              <a href={`mailto:${SITE.email}`} className="block hover:text-[var(--mn-lime)]">
+                {SITE.email}
+              </a>
+              <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} className="block hover:text-[var(--mn-lime)]">
+                {SITE.phone}
+              </a>
             </div>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-            {isHome ? (
-              <button
-                type="button"
-                onClick={() => scrollToSection("inicio")}
-                className="px-3.5 py-1.5 rounded-full text-sm font-medium text-foreground/80 hover:text-primary transition-all hover:bg-white/[0.03]"
-              >
-                Inicio
-              </button>
-            ) : (
-              <Link href="/" className="px-3.5 py-1.5 rounded-full text-sm font-medium text-foreground/80 hover:text-primary transition-all hover:bg-white/[0.03]">
-                Inicio
-              </Link>
-            )}
-
-            <Link
-              href={ofertaHref("servicios")}
-              className="px-3.5 py-1.5 rounded-full text-sm font-medium text-foreground/80 hover:text-primary transition-all hover:bg-white/[0.03]"
-            >
-              Servicios
-            </Link>
-
-            <DropdownMenu.Root>
-              <DropdownMenu.Trigger className="flex items-center gap-1 px-3.5 py-1.5 rounded-full text-sm font-medium text-foreground/80 hover:text-primary transition-all hover:bg-white/[0.03] outline-none data-[state=open]:text-primary data-[state=open]:bg-white/[0.03]">
-                Soluciones
-                <ChevronDown className="h-4 w-4 opacity-70" aria-hidden />
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Portal>
-                <DropdownMenu.Content className={menuContentClass} sideOffset={12} align="start">
-                  <DropdownMenu.Item asChild>
-                    <Link href={ofertaHref("servicios")} className={menuItemClass}>
-                      Ver todas las soluciones
-                    </Link>
-                  </DropdownMenu.Item>
-                  <div className="my-1 h-px bg-white/5" />
-                  {servicios.map((s) => (
-                    <DropdownMenu.Item key={s.slug} asChild>
-                      <Link href={pathSolucionLanding(s.slug)} className={menuItemClass}>
-                        {s.title}
-                      </Link>
-                    </DropdownMenu.Item>
-                  ))}
-                </DropdownMenu.Content>
-              </DropdownMenu.Portal>
-            </DropdownMenu.Root>
-
-            <DropdownMenu.Root>
-              <DropdownMenu.Trigger className="flex items-center gap-1 px-3.5 py-1.5 rounded-full text-sm font-medium text-foreground/80 hover:text-primary transition-all hover:bg-white/[0.03] outline-none data-[state=open]:text-primary data-[state=open]:bg-white/[0.03]">
-                Tecnologías
-                <ChevronDown className="h-4 w-4 opacity-70" aria-hidden />
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Portal>
-                <DropdownMenu.Content className={menuContentClass} sideOffset={12} align="start">
-                  <DropdownMenu.Item asChild>
-                    <Link href={ofertaHref("tecnologias")} className={menuItemClass}>
-                      Ver todas las tecnologías
-                    </Link>
-                  </DropdownMenu.Item>
-                  <div className="my-1 h-px bg-white/5" />
-                  {tecnologias.map((t) => (
-                    <DropdownMenu.Item key={t.slug} asChild>
-                      <Link href={pathTecnologiaLanding(t.slug)} className={menuItemClass}>
-                        {t.title}
-                      </Link>
-                    </DropdownMenu.Item>
-                  ))}
-                </DropdownMenu.Content>
-              </DropdownMenu.Portal>
-            </DropdownMenu.Root>
-
-            <Link
-              href="/productos"
-              className="px-3.5 py-1.5 rounded-full text-sm font-medium text-foreground/80 hover:text-primary transition-all hover:bg-white/[0.03]"
-            >
-              Productos
-            </Link>
-            <Link
-              href="/proyectos"
-              className="px-3.5 py-1.5 rounded-full text-sm font-medium text-foreground/80 hover:text-primary transition-all hover:bg-white/[0.03]"
-            >
-              Proyectos
-            </Link>
-            <Link
-              href="/nosotros"
-              className="px-3.5 py-1.5 rounded-full text-sm font-medium text-foreground/80 hover:text-primary transition-all hover:bg-white/[0.03]"
-            >
-              Nosotros
-            </Link>
-            <Link
-              href="/blog"
-              className="px-3.5 py-1.5 rounded-full text-sm font-medium text-foreground/80 hover:text-primary transition-all hover:bg-white/[0.03]"
-            >
-              Blog
-            </Link>
-            
-            <div className="h-5 w-px bg-white/10 mx-2" />
-
-            <Button variant="outline" size="sm" asChild className="rounded-full border-primary/35 hover:bg-primary/10 hover:text-primary shrink-0 transition-all duration-300">
-              <Link href="/diagnostico">Cotizar</Link>
-            </Button>
-            <Button size="sm" asChild className="rounded-full bg-primary hover:bg-primary-light text-primary-foreground shrink-0 shadow-[0_0_15px_rgba(198,253,14,0.15)] hover:shadow-[0_0_25px_rgba(198,253,14,0.3)] transition-all duration-300">
-              <Link href={sectionHref("contacto")}>Contacto</Link>
-            </Button>
-          </nav>
-
-          {/* Mobile menu button */}
-          <div className="lg:hidden">
-            <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="rounded-full">
-              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </Button>
           </div>
         </div>
-
-        {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden pb-4 pt-3 border-t border-white/5 mt-3">
-            <div className="px-2 space-y-1 max-h-[min(65vh,460px)] overflow-y-auto">
-              {isHome ? (
-                <button
-                  type="button"
-                  onClick={() => scrollToSection("inicio")}
-                  className="block w-full px-4 py-2 rounded-xl text-foreground/90 hover:text-primary hover:bg-primary/10 text-left text-sm transition-all"
-                >
-                  Inicio
-                </button>
-              ) : (
-                <Link
-                  href="/"
-                  className="block w-full px-4 py-2 rounded-xl text-foreground/90 hover:text-primary hover:bg-primary/10 text-left text-sm transition-all"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Inicio
-                </Link>
-              )}
-              <Link
-                href={ofertaHref("servicios")}
-                className="block w-full px-4 py-2 rounded-xl text-foreground/90 hover:text-primary hover:bg-primary/10 text-left text-sm transition-all"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Servicios
-              </Link>
-
-              {/* Mobile solutions list */}
-              <button
-                type="button"
-                className="flex w-full items-center justify-between px-4 py-2 rounded-xl text-foreground/90 hover:text-primary hover:bg-primary/10 text-left text-sm transition-all"
-                onClick={() => setMobileSolOpen((o) => !o)}
-              >
-                Soluciones
-                <ChevronDown className={`h-4 w-4 transition-transform ${mobileSolOpen ? "rotate-180" : ""}`} />
-              </button>
-              {mobileSolOpen && (
-                <div className="pl-3 border-l border-white/10 ml-5 space-y-1 py-1">
-                  <Link
-                    href={ofertaHref("servicios")}
-                    className="block py-1.5 px-3 text-xs text-muted-foreground hover:text-primary rounded-lg hover:bg-white/5 transition-all"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Ver todas
-                  </Link>
-                  {servicios.map((s) => (
-                    <Link
-                      key={s.slug}
-                      href={pathSolucionLanding(s.slug)}
-                      className="block py-1.5 px-3 text-xs text-muted-foreground hover:text-primary rounded-lg hover:bg-white/5 transition-all"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      {s.title}
-                    </Link>
-                  ))}
-                </div>
-              )}
-
-              {/* Mobile technologies list */}
-              <button
-                type="button"
-                className="flex w-full items-center justify-between px-4 py-2 rounded-xl text-foreground/90 hover:text-primary hover:bg-primary/10 text-left text-sm transition-all"
-                onClick={() => setMobileTechOpen((o) => !o)}
-              >
-                Tecnologías
-                <ChevronDown className={`h-4 w-4 transition-transform ${mobileTechOpen ? "rotate-180" : ""}`} />
-              </button>
-              {mobileTechOpen && (
-                <div className="pl-3 border-l border-white/10 ml-5 space-y-1 py-1 max-h-48 overflow-y-auto">
-                  <Link
-                    href={ofertaHref("tecnologias")}
-                    className="block py-1.5 px-3 text-xs text-muted-foreground hover:text-primary rounded-lg hover:bg-white/5 transition-all"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Ver todas
-                  </Link>
-                  {tecnologias.map((t) => (
-                    <Link
-                      key={t.slug}
-                      href={pathTecnologiaLanding(t.slug)}
-                      className="block py-1.5 px-3 text-xs text-muted-foreground hover:text-primary rounded-lg hover:bg-white/5 transition-all"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      {t.title}
-                    </Link>
-                  ))}
-                </div>
-              )}
-
-              <Link
-                href="/productos"
-                className="block w-full px-4 py-2 rounded-xl text-foreground/90 hover:text-primary hover:bg-primary/10 text-left text-sm transition-all"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Productos
-              </Link>
-              <Link
-                href="/proyectos"
-                className="block w-full px-4 py-2 rounded-xl text-foreground/90 hover:text-primary hover:bg-primary/10 text-left text-sm transition-all"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Proyectos
-              </Link>
-              <Link
-                href="/nosotros"
-                className="block w-full px-4 py-2 rounded-xl text-foreground/90 hover:text-primary hover:bg-primary/10 text-left text-sm transition-all"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Nosotros
-              </Link>
-              <Link
-                href="/blog"
-                className="block w-full px-4 py-2 rounded-xl text-foreground/90 hover:text-primary hover:bg-primary/10 text-left text-sm transition-all"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Blog
-              </Link>
-
-              <div className="h-px bg-white/5 my-2" />
-
-              <Button variant="outline" asChild className="w-full mt-1 border-primary/40 rounded-full">
-                <Link href="/diagnostico" onClick={() => setIsMobileMenuOpen(false)}>
-                  Cotizar
-                </Link>
-              </Button>
-              <Button asChild className="w-full mt-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full">
-                <Link href={sectionHref("contacto")} onClick={() => setIsMobileMenuOpen(false)}>
-                  Contacto
-                </Link>
-              </Button>
-            </div>
-          </div>
-        )}
-      </div>
+      ) : null}
     </header>
   )
 }

@@ -1,81 +1,87 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Analytics } from "@vercel/analytics/next"
-import { Space_Grotesk, Sora, IBM_Plex_Mono } from "next/font/google"
+import { Sora, IBM_Plex_Mono, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
-import { Suspense } from "react"
+import { META, SITE } from "@/lib/content/global"
+import { TransitionBar, TRANSITION_BAR_INIT } from "@/components/transition-bar"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
+import { WhatsAppButton } from "@/components/whatsapp-button"
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-space-grotesk",
-  display: "swap",
-})
+/** Antes de pintar: recuerda el cierre de la barra y activa el modo ligero en equipos modestos. */
+const LITE_SCRIPT = `try{var n=navigator,m=n.deviceMemory,c=n.hardwareConcurrency,k=n.connection,s=k&&(k.saveData||/(^|-)2g$/.test(k.effectiveType||""));if((m&&m<=4)||(c&&c<=4)||s)document.documentElement.classList.add("lite")}catch(e){}`
+const INIT_SCRIPT = TRANSITION_BAR_INIT + LITE_SCRIPT
 
+// Fuente variable: un solo archivo para todos los pesos
 const sora = Sora({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   variable: "--font-sora",
   display: "swap",
 })
-
-const ibmPlexMono = IBM_Plex_Mono({
+const plex = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-ibm-plex-mono",
+  weight: ["400", "500"],
+  variable: "--font-plex",
+  display: "swap",
+})
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["500", "700"],
+  variable: "--font-jetbrains",
   display: "swap",
 })
 
 export const metadata: Metadata = {
-  title: "korsen.dev | Software Studio Premium",
-  description:
-    "Convertimos problemas de negocio en software que produce resultados. Desarrollo de software a medida, plataformas web escalables y automatizaciones inteligentes con Inteligencia Artificial.",
-  generator: "korsen.dev",
-  keywords: ["desarrollo de software", "software a medida", "plataformas web", "automatización", "inteligencia artificial", "desarrollo web", "aplicaciones móviles", "Korsen", "korsen.dev"],
-  authors: [{ name: "korsen.dev", url: "https://www.korsen.dev" }],
-  creator: "korsen.dev",
-  publisher: "korsen.dev",
-  icons: {
-    icon: "/logokorsen.png",
-    shortcut: "/logokorsen.png",
-    apple: "/logokorsen.png",
-  },
+  metadataBase: new URL(SITE.url),
+  title: { default: META.titleDefault, template: META.titleTemplate },
+  description: META.description,
+  keywords: [...META.keywords],
+  applicationName: SITE.name,
+  authors: [{ name: SITE.name, url: SITE.url }],
+  creator: SITE.name,
+  publisher: SITE.name,
   openGraph: {
-    title: "korsen.dev | Software Studio Premium",
-    description: "Convertimos problemas de negocio en software que produce resultados. Desarrollo de software a medida, plataformas web escalables y automatizaciones inteligentes con Inteligencia Artificial.",
-    url: "https://www.korsen.dev/",
-    siteName: "korsen.dev",
-    images: [
-      {
-        url: "/previewweb.png",
-        width: 1200,
-        height: 630,
-        alt: "korsen.dev - Software que produce resultados",
-      },
-    ],
-    locale: "es_ES",
+    title: META.titleDefault,
+    description: META.description,
+    url: SITE.url,
+    siteName: SITE.name,
+    locale: META.locale,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "korsen.dev | Software Studio Premium",
-    description: "Convertimos problemas de negocio en software que produce resultados. Desarrollo de software a medida, plataformas web escalables y automatizaciones inteligentes con Inteligencia Artificial.",
-    images: ["/previewweb.png"],
+    title: META.titleDefault,
+    description: META.description,
   },
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export const viewport: Viewport = {
+  themeColor: "#050505",
+  colorScheme: "dark",
+  viewportFit: "cover",
+}
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es" className={`dark ${spaceGrotesk.variable} ${sora.variable} ${ibmPlexMono.variable}`}>
-      <body className={`antialiased`}>
-        <Suspense>
-          {children}
-          <Analytics />
-        </Suspense>
+    <html lang="es" className={`${sora.variable} ${plex.variable} ${jetbrains.variable}`}>
+      <body>
+        <script dangerouslySetInnerHTML={{ __html: INIT_SCRIPT }} />
+        <noscript>
+          <style>{`.mn-rv{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+        <a
+          href="#contenido"
+          className="sr-only z-[60] rounded-lg bg-[var(--mn-lime)] px-4 py-2 font-semibold text-[var(--mn-lime-ink)] focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        >
+          Saltar al contenido
+        </a>
+        <TransitionBar />
+        <Header />
+        <main id="contenido">{children}</main>
+        <Footer />
+        <WhatsAppButton />
+        <Analytics />
       </body>
     </html>
   )

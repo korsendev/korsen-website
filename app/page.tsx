@@ -1,30 +1,41 @@
-import { PageWrapper } from "@/components/page-wrapper"
 import { Hero } from "@/components/hero"
-import { Problems } from "@/components/problems"
-import { Services } from "@/components/services"
-import { Portfolio } from "@/components/portfolio"
-import { Products } from "@/components/products"
-import { Process } from "@/components/process"
-import { Technologies } from "@/components/technologies"
-import { RecentPosts } from "@/components/recent-posts"
+import { Stats } from "@/components/stats"
+import { About } from "@/components/about"
+import { Diagnosis } from "@/components/diagnosis"
+import { Solutions } from "@/components/solutions"
+import { ServiceLines } from "@/components/service-lines"
+import { Ecosystem } from "@/components/ecosystem"
+import { Method } from "@/components/method"
+import { Projects } from "@/components/projects"
+import { Industries } from "@/components/industries"
+import { Stack } from "@/components/stack"
+import { Bosqra } from "@/components/bosqra"
+import { Engagement } from "@/components/engagement"
+import { Support } from "@/components/support"
+import { Coverage } from "@/components/coverage"
 import { Faq } from "@/components/faq"
-import { Contact } from "@/components/contact"
 import { CtaFinal } from "@/components/cta-final"
 
 export default function Home() {
   return (
-    <PageWrapper showBgEffects={false}>
+    <>
       <Hero />
-      <Problems />
-      <Services />
-      <Portfolio />
-      <Products />
-      <Process />
-      <Technologies />
-      <RecentPosts />
+      <Stats />
+      <About />
+      <Diagnosis />
+      <Solutions />
+      <ServiceLines />
+      <Ecosystem />
+      <Method />
+      <Projects />
+      <Industries />
+      <Stack />
+      <Bosqra />
+      <Engagement />
+      <Support />
+      <Coverage />
       <Faq />
-      <Contact />
       <CtaFinal />
-    </PageWrapper>
+    </>
   )
 }

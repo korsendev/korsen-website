@@ -1,87 +1,110 @@
 export type BlogPost = {
   slug: string
   title: string
+  /** Fecha legible en español */
   date: string
+  /** Fecha ISO para metadatos */
+  isoDate: string
   readTime: string
   excerpt: string
   category: string
+  /** Solución de MAYNODE relacionada con el tema del artículo */
+  related: { slug: string; title: string }
   content: string
 }
 
 export const blogPosts: BlogPost[] = [
   {
     slug: "optimizacion-velocidad-ventas",
-    title: "Por qué la velocidad de tu plataforma está afectando tus ventas (y cómo lo solucionamos)",
-    date: "Agosto 1, 2026",
+    title: "Por qué la velocidad de tu web afecta tus ventas",
+    date: "1 de agosto de 2026",
+    isoDate: "2026-08-01",
     readTime: "4 min de lectura",
-    excerpt: "Cada segundo de retraso en tu web cuesta clientes. Analizamos el impacto financiero del rendimiento y cómo optimizarlo para convertir más.",
+    excerpt: "Una web lenta pierde visitas antes de que lean tu oferta. Qué revisamos primero y cómo se corrige.",
     category: "Rendimiento",
+    related: { slug: "capta-clientes-en-internet", title: "Capta clientes en internet" },
     content: `
-En el entorno digital, la velocidad no es solo un indicador técnico; es un pilar crítico de la conversión comercial. Múltiples estudios demuestran que cada segundo adicional que tarda en cargar una plataforma web reduce la tasa de conversión en un 7%. Si tu plataforma es lenta, estás perdiendo dinero activamente.
+Una persona que llega a tu web desde el teléfono decide en segundos si se queda. Si la página tarda en mostrar algo útil, se va, y la visita que pagaste con publicidad o ganaste en Google no se convierte en contacto.
 
-## El impacto financiero de la lentitud
-Cuando un cliente potencial entra a tu sitio web o aplicación móvil y experimenta lentitud:
-- **Abandono inmediato:** El 53% de los usuarios abandona una página móvil si tarda más de 3 segundos en cargar.
-- **Pérdida de confianza:** Una experiencia lenta proyecta una imagen de informalidad y falta de capacidad operativa.
-- **Penalización en Google:** Los motores de búsqueda relegan las páginas lentas, encareciendo tu costo de adquisición de clientes en campañas de marketing.
+## Qué pasa cuando tu web es lenta
+- **Se pierden visitas:** quien no ve contenido rápido vuelve atrás, sobre todo en móvil y con conexiones lentas.
+- **Se pierde confianza:** una web que tarda proyecta una operación poco cuidada.
+- **Se pierde posicionamiento:** los buscadores tienen en cuenta la velocidad y la experiencia móvil al ordenar los resultados.
 
-## Cómo solucionamos esto en Korsen
-No utilizamos plantillas sobrecargadas ni soluciones prefabricadas que ralentizan tu servidor.
-- **Arquitectura de carga progresiva:** Estructuramos el código para que el contenido crítico de venta sea visible en menos de 1 segundo.
-- **Optimización de infraestructura:** Configuramos redes de distribución de contenido (CDN) para servir tu plataforma desde el nodo más cercano a tu cliente.
-- **Código limpio de alta precisión:** Eliminamos scripts innecesarios y optimizamos las consultas de base de datos para que la respuesta de tu servidor sea inmediata.
+## Qué revisamos primero
+- **Imágenes pesadas:** fotos sin comprimir ni dimensionar para cada pantalla.
+- **Scripts de terceros:** chats, analítica y píxeles que se cargan antes que el contenido.
+- **Servidor y caché:** dónde está alojada la web y si se sirve desde un punto cercano a tu cliente.
+- **Código innecesario:** plantillas que cargan funciones que tu sitio no usa.
 
-Optimizar la velocidad de tu sistema es la forma más rápida y económica de aumentar tus ventas sin necesidad de incrementar tu presupuesto de marketing.
+## Cómo lo trabajamos en MAYNODE
+Medimos el rendimiento y la accesibilidad antes de tocar nada, corregimos primero lo que más pesa y volvemos a medir. También probamos en móviles de gama baja, porque ahí es donde una web lenta se nota más.
+
+Un sitio corporativo a la medida lo entregamos en 7 días, ya pensado para cargar rápido, conectado a WhatsApp y con analítica para medir resultados.
     `,
   },
   {
     slug: "automatizacion-ia-costos-operativos",
-    title: "Cómo la automatización con IA reduce un 40% de los costos operativos en tu empresa",
-    date: "Julio 15, 2026",
-    readTime: "5 min de lectura",
-    excerpt: "Descubre cómo integrar agentes de Inteligencia Artificial en tus flujos de trabajo para eliminar tareas repetitivas y liberar a tu equipo.",
+    title: "Cómo la automatización con IA libera tiempo en tu empresa",
+    date: "15 de julio de 2026",
+    isoDate: "2026-07-15",
+    readTime: "4 min de lectura",
+    excerpt: "Qué tareas repetitivas se pueden automatizar hoy, cómo empezar por una sola y qué debe seguir en manos de una persona.",
     category: "Automatización",
+    related: { slug: "atiende-y-vende-con-ia", title: "Atiende y vende con IA" },
     content: `
-Muchas empresas en crecimiento saturan a su personal con tareas administrativas repetitivas: responder correos rutinarios, transcribir facturas manuales, coordinar inventarios o clasificar prospectos. La integración de agentes de Inteligencia Artificial permite automatizar estas operaciones lógicas con precisión quirúrgica.
+En muchas empresas el equipo dedica horas a tareas que se repiten todos los días: responder los mismos mensajes, pasar datos de una factura a un sistema, clasificar contactos o actualizar reportes. Son tareas necesarias, pero no requieren criterio humano cada vez.
 
-## ¿Qué puede automatizar la IA en tu negocio?
-Los agentes de IA no son simples chats conversacionales; son sistemas capaces de interpretar datos lógicos y ejecutar acciones:
-- **Procesamiento de facturas y pedidos:** Un agente puede leer un correo entrante con un PDF adjunto, extraer la información relevante, validar los datos en tu base de datos y cargarlos en tu ERP o CRM de forma automática.
-- **Atención al cliente de primer nivel:** Responder consultas técnicas, consultar estados de envío o cotizar servicios básicos en tiempo real las 24 horas del día.
-- **Clasificación y asignación de prospectos:** Evaluar la factibilidad de los leads entrantes y derivar automáticamente a los ejecutivos de venta los clientes calificados con mayor potencial de compra.
+## Qué se puede automatizar
+- **Facturas y pedidos:** leer un documento recibido, extraer los datos y cargarlos en tu sistema de gestión.
+- **Atención de primer nivel:** responder las preguntas frecuentes por WhatsApp o web a cualquier hora, y resumir cada conversación.
+- **Seguimiento de clientes:** convertir cada mensaje en un contacto con responsable, etapa y recordatorios automáticos.
+- **Reportes:** generar y enviar los informes que hoy se arman a mano.
 
-## El retorno de inversión (ROI)
-Al implementar flujos de automatización lógica en tu empresa:
-- Reduces los tiempos de procesamiento de horas a segundos.
-- Eliminas el error humano en tareas críticas de digitación de datos.
-- Permites que tu equipo humano se concentre en tareas estratégicas de ventas y fidelización.
+## Cómo empezar
+1. **Mapea el proceso:** anota qué se hace, quién lo hace y cuánto tiempo toma.
+2. **Elige un solo flujo:** el más repetitivo y con reglas claras.
+3. **Pruébalo con datos reales:** y ajusta antes de ampliarlo.
+4. **Mide el resultado:** tiempo ahorrado, mensajes respondidos o errores corregidos.
 
-El objetivo de la automatización no es reemplazar a tu equipo, sino multiplicar su capacidad operativa y reducir la fricción de tu negocio.
+## Qué sigue en manos de una persona
+La automatización responde lo frecuente y deja a tu equipo lo importante: una queja delicada, una negociación o una decisión con consecuencias. Por eso los asistentes que construimos pasan la conversación a una persona, con el resumen de lo ocurrido, cuando el caso lo requiere.
+
+El objetivo no es reemplazar a tu equipo, sino darle tiempo para vender, atender mejor y mejorar la operación.
     `,
   },
   {
     slug: "costo-oculto-software-barato",
-    title: "El costo oculto del software barato: Por qué los sistemas deficientes frenan tu crecimiento",
-    date: "Junio 28, 2026",
-    readTime: "6 min de lectura",
-    excerpt: "Comprar software basándose únicamente en el menor precio suele costar el triple a largo plazo. Analizamos los riesgos de la deuda técnica.",
+    title: "El costo oculto del software barato",
+    date: "28 de junio de 2026",
+    isoDate: "2026-06-28",
+    readTime: "5 min de lectura",
+    excerpt: "Elegir solo por precio suele salir caro después. Las señales de un sistema que frena tu crecimiento y qué preguntar antes de contratar.",
     category: "Estrategia",
+    related: { slug: "centraliza-tu-negocio", title: "Centraliza tu negocio" },
     content: `
-Para una empresa, invertir en software es como construir los cimientos de su edificio de oficinas. Optar por la solución más barata del mercado, construida sin estándares profesionales de arquitectura, suele traducirse en caídas constantes del sistema, brechas de seguridad y lentitud al intentar agregar nuevas funcionalidades.
+El software no es un gasto más: es la base sobre la que opera tu negocio. Cuando se elige solo por el precio más bajo, lo habitual es pagar la diferencia después, en caídas, parches y semanas perdidas.
 
-## Los síntomas del software deficiente
-Si tu sistema actual presenta estos problemas, estás sufriendo las consecuencias de un desarrollo deficiente:
-- **El negocio está atado de manos:** Solicitar un cambio simple (como agregar un método de pago o exportar un reporte) tarda meses o el proveedor indica que 'no es posible'.
-- **Caídas de servicio recurrentes:** La plataforma deja de funcionar cuando entran más de 20 usuarios en simultáneo.
-- **Dependencia de procesos manuales:** Tienes que conciliar datos manualmente entre diferentes hojas de cálculo porque tus sistemas no se pueden integrar entre sí.
+## Las señales de un sistema que te frena
+- **Cambiar algo simple tarda meses:** agregar un método de pago o exportar un reporte se vuelve un proyecto, o el proveedor dice que no es posible.
+- **Falla cuando el negocio crece:** el sistema se vuelve lento o se cae cuando aumenta el número de usuarios.
+- **Todo se concilia a mano:** los datos viven en hojas de cálculo porque los sistemas no se conectan entre sí.
+- **Nadie conoce el sistema por dentro:** no hay documentación y todo depende de una sola persona.
 
-## La filosofía de desarrollo de Korsen
-En Korsen, construimos software enfocado a resistir el crecimiento de tu negocio:
-- **Arquitectura limpia y modular:** Diseñamos el software en capas independientes, permitiendo que tu sistema evolucione y cambie sin necesidad de rehacerlo desde cero.
-- **Código auditable y seguro:** Protegemos tus bases de datos y la información de tus clientes bajo estándares modernos de seguridad.
-- **Preparado para escalar:** Creamos plataformas capaces de soportar picos de tráfico elevados sin interrupciones de servicio.
+## Qué preguntar antes de contratar
+- ¿El código y los accesos serán míos al terminar?
+- ¿Hay documentación y manual de usuario?
+- ¿Cómo se protegen los datos y se hacen los respaldos?
+- ¿Quién me atiende después del lanzamiento y en cuánto tiempo responde?
+- ¿Se puede conectar con las herramientas que ya uso?
 
-Construir software de alta precisión técnica no es un gasto, es una inversión en la estabilidad y el futuro de tu operación comercial.
+## Cómo lo hacemos en MAYNODE
+- **Tu sistema es tuyo:** al cierre entregamos el código, la documentación y los accesos.
+- **Seguridad desde el diseño:** buenas prácticas OWASP, cifrado en tránsito y en reposo, respaldos automáticos y control de accesos por rol.
+- **Calidad en cada entrega:** pruebas automatizadas y revisión de código.
+- **Soporte con tiempos definidos:** planes con respuesta desde 1 hora, 24/7.
+
+Un buen sistema no es el más caro ni el más barato: es el que seguirá funcionando cuando tu negocio sea el doble de grande.
     `,
   },
 ]
