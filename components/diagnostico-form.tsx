@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { useSearchParams } from "next/navigation"
 import { useForm, type FieldPath } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -104,7 +103,6 @@ function Options({ name, options, register, error, legend }: { name: FieldPath<F
 }
 
 export function DiagnosticoForm() {
-  const params = useSearchParams()
   const [step, setStep] = useState(0)
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle")
   const [waUrl, setWaUrl] = useState("")
@@ -119,11 +117,11 @@ export function DiagnosticoForm() {
   } = useForm<FormValues>({ resolver: zodResolver(schema), mode: "onTouched", defaultValues: { budget: "" } })
 
   useEffect(() => {
-    const tema = params.get("tema")
+    const tema = new URLSearchParams(window.location.search).get("tema")
     if (!tema) return
     const need = C.topicMap[tema] ?? (C.needs.some((n) => n.value === tema) ? tema : undefined)
     if (need) setValue("need", need)
-  }, [params, setValue])
+  }, [setValue])
 
   useEffect(() => {
     headingRef.current?.focus({ preventScroll: true })

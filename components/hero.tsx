@@ -11,10 +11,10 @@ export function Hero() {
         <div className="mn-reveal">
           <Chip>{HERO.chip}</Chip>
         </div>
-        <h1 className="mn-display mn-reveal mt-8 max-w-[14ch] sm:max-w-[16ch] lg:max-w-[13ch]" style={{ animationDelay: "60ms" }}>
+        <h1 className="mn-display mt-8 max-w-[14ch] sm:max-w-[16ch] lg:max-w-[13ch]">
           {HERO.titleBefore} <span className="mn-accent">{HERO.accent}</span> {HERO.titleAfter}
         </h1>
-        <p className="mn-lead mn-reveal mt-8" style={{ animationDelay: "120ms", maxWidth: "58ch" }}>
+        <p className="mn-lead mt-8" style={{ maxWidth: "58ch" }}>
           {HERO.lead}
         </p>
         <div className="mn-reveal mt-10 flex flex-wrap items-center gap-4" style={{ animationDelay: "180ms" }}>
