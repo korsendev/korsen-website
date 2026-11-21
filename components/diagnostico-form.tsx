@@ -13,7 +13,7 @@ import { buildWhatsAppUrl } from "@/lib/whatsapp"
 import { cn } from "@/lib/utils"
 
 const V = C.validation
-const required = z.string({ required_error: V.required }).trim().min(1, V.required)
+const required = z.string({ error: V.required }).trim().min(1, V.required)
 
 const schema = z.object({
   need: required,
