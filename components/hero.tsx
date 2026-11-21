@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { HeroWidgets } from "@/components/hero-widgets"
 import { Button } from "@/components/ui/button"
 import { Chip } from "@/components/ui/chip"
@@ -8,6 +9,15 @@ export function Hero() {
     <section className="mn-grain relative overflow-hidden pb-[clamp(72px,9vw,140px)] pt-[clamp(64px,9vw,150px)]">
       <div className="mn-columns pointer-events-none absolute inset-0" aria-hidden />
       <div className="mn-glow -right-[300px] -top-[260px]" aria-hidden />
+      <Image
+        src="/brand/maynode-isotipo.svg"
+        alt=""
+        width={208}
+        height={118}
+        unoptimized
+        aria-hidden
+        className="pointer-events-none absolute -right-[8%] bottom-[-6%] w-[min(900px,70vw)] select-none opacity-[0.045]"
+      />
       <div className="mn-container relative grid items-center gap-16 lg:grid-cols-[minmax(0,1fr)_auto]">
         <div>
           <div className="mn-reveal">

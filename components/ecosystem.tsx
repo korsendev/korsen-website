@@ -26,7 +26,7 @@ export function Ecosystem({ id = "ecosistema" }: { id?: string }) {
           <li>
             <Reveal delay={180}>
               <div
-                className="mn-card justify-end"
+                className="mn-card h-full justify-end"
                 style={{ background: "var(--mn-lime)", borderColor: "var(--mn-lime)", color: "var(--mn-lime-ink)", minHeight: 200 }}
               >
                 <span className="mn-enlace mb-auto" style={{ background: "var(--mn-lime-ink)", height: 12, width: 36 }} aria-hidden />

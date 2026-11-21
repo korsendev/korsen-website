@@ -13,7 +13,7 @@ export function Industries() {
           {C.items.map((it, i) => (
             <li key={it.name}>
               <Reveal delay={(i % 5) * 50}>
-                <MnCard className="!p-5 sm:!p-6">
+                <MnCard>
                   <span className="mn-ghostnum" style={{ fontSize: 30 }} aria-hidden>
                     {String(i + 1).padStart(2, "0")}
                   </span>

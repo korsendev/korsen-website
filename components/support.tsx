@@ -18,12 +18,10 @@ export function Support({ id = "soporte" }: { id?: string }) {
               <li key={p.name}>
                 <Reveal delay={i * 60}>
                   <MnCard hl={!!badge}>
-                    <div className="flex min-h-[28px] items-center justify-between gap-3">
-                      <h3 className="mn-h2" style={{ fontSize: 28 }}>
-                        {p.name}
-                      </h3>
-                      {badge ? <Badge>★ {badge}</Badge> : null}
-                    </div>
+                    <div className="min-h-[26px]">{badge ? <Badge>★ {badge}</Badge> : null}</div>
+                    <h3 className="mn-h2 mt-4" style={{ fontSize: 28 }}>
+                      {p.name}
+                    </h3>
                     <dl className="mt-6">
                       {C.rows.map((row, r) => (
                         <div key={row} className="grid grid-cols-[96px_1fr] items-baseline gap-4 border-t border-[var(--mn-border-1)] py-3 first:border-t-0 first:pt-0">
