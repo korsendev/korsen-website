@@ -1,94 +1,59 @@
-import Link from "next/link"
-import { Mail, Phone } from "lucide-react"
 import Image from "next/image"
-import { PATH_SOLUCIONES_TECNOLOGIAS } from "@/lib/site-paths"
+import Link from "next/link"
+import { FOOTER, SITE } from "@/lib/content/global"
 
 export function Footer() {
   return (
-    <footer className="bg-card border-t border-border">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div className="col-span-1 md:col-span-2">
-            <div className="mb-4">
-              <div className="relative h-12 w-36 overflow-hidden flex items-center justify-start">
-                <Image
-                  src="/logo-korsen.png"
-                  alt="Korsen"
-                  fill
-                  className="object-contain object-left scale-[1.8] origin-left transform"
-                />
-              </div>
-            </div>
-            <p className="text-muted-foreground mb-4 max-w-md text-pretty">
-              Transformamos ideas en soluciones digitales escalables. Creando software de alta precisión técnica desde 2019.
-            </p>
-            <div className="space-y-2">
-              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                <Mail className="w-4 h-4" />
-                <span>team@korsen.dev</span>
-              </div>
-              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                <Phone className="w-4 h-4" />
-                <span>+44 7848 445738</span>
-              </div>
-            </div>
+    <footer className="border-t border-[var(--mn-border-2)] bg-[var(--mn-surface-1)]">
+      <div className="mn-container py-16 sm:py-20">
+        <div className="grid gap-12 lg:grid-cols-[1.1fr_2.9fr] lg:gap-16">
+          <div>
+            <Image src="/brand/maynode-logo.svg" alt="MAYNODE" width={160} height={87} unoptimized className="h-auto w-[160px]" />
+            <p className="mn-body mt-6 max-w-[34ch]">{FOOTER.phrase}</p>
           </div>
 
-          {/* Services */}
-          <div>
-            <h3 className="font-semibold mb-4">Servicios</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <Link href={PATH_SOLUCIONES_TECNOLOGIAS} className="hover:text-primary transition-colors">
-                  Soluciones y tecnologías
-                </Link>
-              </li>
-              <li>Desarrollo Web</li>
-              <li>Apps Móviles</li>
-              <li>Software a Medida</li>
-              <li>Consultoría Tech</li>
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h3 className="font-semibold mb-4">Empresa</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <Link href="/productos" className="hover:text-primary transition-colors">
-                  Productos
-                </Link>
-              </li>
-              <li>
-                <Link href="/#proyectos" className="hover:text-primary transition-colors">
-                  Proyectos
-                </Link>
-              </li>
-              <li>
-                <Link href="/#contacto" className="hover:text-primary transition-colors">
-                  Contacto
-                </Link>
-              </li>
-            </ul>
+          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {FOOTER.columns.map((col) => (
+              <nav key={col.title} aria-label={col.title}>
+                <h2 className="mn-kicker mb-5">{col.title}</h2>
+                <ul className="space-y-3">
+                  {col.links.map((l) => (
+                    <li key={l.href}>
+                      <Link href={l.href} className="text-sm text-[var(--mn-text-2)] transition-colors hover:text-[var(--mn-text)]">
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ))}
+            <div>
+              <h2 className="mn-kicker mb-5">{FOOTER.contactTitle}</h2>
+              <ul className="space-y-3 text-sm font-semibold">
+                <li>
+                  <Link href="/" className="transition-colors hover:text-[var(--mn-lime)]">
+                    {SITE.domain}
+                  </Link>
+                </li>
+                <li>
+                  <a href={`mailto:${SITE.email}`} className="break-all transition-colors hover:text-[var(--mn-lime)]">
+                    {SITE.email}
+                  </a>
+                </li>
+                <li>
+                  <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} className="transition-colors hover:text-[var(--mn-lime)]">
+                    {SITE.phone}
+                  </a>
+                </li>
+                <li className="font-normal text-[var(--mn-text-2)]">{SITE.location}</li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <div className="border-t border-border mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-muted-foreground">© 2026 Korsen. Todos los derechos reservados.</p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Privacidad
-              </Link>
-              <Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Términos
-              </Link>
-              <Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Cookies
-              </Link>
-            </div>
-          </div>
+        <div className="mt-14 flex flex-col gap-3 border-t border-[var(--mn-border-2)] pt-6 text-xs text-[var(--mn-text-3)] sm:flex-row sm:items-center sm:justify-between">
+          <p className="mn-code">{FOOTER.legal}</p>
+          <p className="mn-code">{FOOTER.legalLinks.join(" · ")}</p>
         </div>
       </div>
     </footer>

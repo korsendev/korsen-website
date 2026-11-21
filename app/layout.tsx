@@ -4,6 +4,10 @@ import { Analytics } from "@vercel/analytics/next"
 import { Sora, IBM_Plex_Mono, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
 import { META, SITE } from "@/lib/content/global"
+import { TransitionBar, TRANSITION_BAR_INIT } from "@/components/transition-bar"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
+import { WhatsAppButton } from "@/components/whatsapp-button"
 
 const sora = Sora({
   subsets: ["latin"],
@@ -40,13 +44,11 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     locale: META.locale,
     type: "website",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: META.ogAlt }],
   },
   twitter: {
     card: "summary_large_image",
     title: META.titleDefault,
     description: META.description,
-    images: ["/opengraph-image"],
   },
 }
 
@@ -59,10 +61,21 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="es" className={`${sora.variable} ${plex.variable} ${jetbrains.variable}`}>
       <body>
+        <script dangerouslySetInnerHTML={{ __html: TRANSITION_BAR_INIT }} />
         <noscript>
           <style>{`.mn-rv{opacity:1!important;transform:none!important}`}</style>
         </noscript>
-        {children}
+        <a
+          href="#contenido"
+          className="sr-only z-[60] rounded-lg bg-[var(--mn-lime)] px-4 py-2 font-semibold text-[var(--mn-lime-ink)] focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        >
+          Saltar al contenido
+        </a>
+        <TransitionBar />
+        <Header />
+        <main id="contenido">{children}</main>
+        <Footer />
+        <WhatsAppButton />
         <Analytics />
       </body>
     </html>

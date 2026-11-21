@@ -330,3 +330,5 @@ select.mn-input { appearance: none; background-image: linear-gradient(45deg, tra
 .mn-prose li { color: var(--mn-text-2); padding: 8px 0 8px 22px; position: relative; max-width: 68ch; }
 .mn-prose li::before { content: "›"; position: absolute; left: 0; color: var(--mn-lime); font-weight: 700; }
 .mn-prose strong { color: var(--mn-text); }
+
+html[data-bar-closed] .mn-bar { display: none; }
