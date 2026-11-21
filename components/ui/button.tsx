@@ -1,62 +1,68 @@
-import * as React from 'react'
-import { Slot } from '@radix-ui/react-slot'
-import { cva, type VariantProps } from 'class-variance-authority'
+import Link from "next/link"
+import type { ComponentProps, ReactNode } from "react"
+import { cn } from "@/lib/utils"
 
-import { cn } from '@/lib/utils'
+type Variant = "primary" | "ghost" | "link"
 
-const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-  {
-    variants: {
-      variant: {
-        default:
-          'bg-primary text-primary-foreground shadow-xs hover:bg-primary/90',
-        destructive:
-          'bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
-        outline:
-          'border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50',
-        secondary:
-          'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',
-        ghost:
-          'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
-        link: 'text-primary underline-offset-4 hover:underline',
-      },
-      size: {
-        default: 'h-9 px-4 py-2 has-[>svg]:px-3',
-        sm: 'h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5',
-        lg: 'h-10 rounded-md px-6 has-[>svg]:px-4',
-        icon: 'size-9',
-      },
-    },
-    defaultVariants: {
-      variant: 'default',
-      size: 'default',
-    },
-  },
-)
-
-function Button({
-  className,
-  variant,
-  size,
-  asChild = false,
-  type = 'button',
-  ...props
-}: React.ComponentProps<'button'> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
-  const c = cn(buttonVariants({ variant, size }), className)
-  if (asChild) {
-    return (
-      <Slot
-        data-slot="button"
-        className={c}
-        {...(props as React.ComponentPropsWithoutRef<typeof Slot>)}
-      />
-    )
-  }
-  return <button data-slot="button" type={type} className={c} {...props} />
+type Common = {
+  variant?: Variant
+  compact?: boolean
+  /** Muestra la flecha: → en primario/fantasma, ↗ en enlace externo */
+  arrow?: boolean
+  className?: string
+  children: ReactNode
 }
 
-export { Button, buttonVariants }
+type AsLink = Common & { href: string } & Omit<ComponentProps<"a">, "href" | "children" | "className">
+type AsButton = Common & { href?: undefined } & Omit<ComponentProps<"button">, "children" | "className">
+
+function classes(variant: Variant, compact?: boolean, className?: string) {
+  return cn(
+    "mn-btn",
+    variant === "primary" && "mn-btn--primary",
+    variant === "ghost" && "mn-btn--ghost",
+    variant === "link" && "mn-btn--link",
+    compact && variant !== "link" && "mn-btn--compact",
+    className,
+  )
+}
+
+export function Button(props: AsLink | AsButton) {
+  const { variant = "primary", compact, arrow, className, children, ...rest } = props
+  const cls = classes(variant, compact, className)
+
+  if ("href" in rest && typeof rest.href === "string") {
+    const { href, ...anchor } = rest as { href: string } & Omit<ComponentProps<"a">, "href">
+    const external = /^(https?:|mailto:|tel:)/.test(href)
+    const mark = arrow ? (
+      <span className="mn-arrow" aria-hidden>
+        {variant === "link" || external ? "↗" : "→"}
+      </span>
+    ) : null
+    if (external) {
+      return (
+        <a href={href} className={cls} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" {...anchor}>
+          {children}
+          {mark}
+        </a>
+      )
+    }
+    return (
+      <Link href={href} className={cls} {...anchor}>
+        {children}
+        {mark}
+      </Link>
+    )
+  }
+
+  return (
+    <button type="button" className={cls} {...(rest as ComponentProps<"button">)}>
+      {children}
+      {arrow ? (
+        <span className="mn-arrow" aria-hidden>
+          →
+        </span>
+      ) : null}
+    </button>
+  )
+}
