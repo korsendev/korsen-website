@@ -4,7 +4,7 @@ import { Chip } from "@/components/ui/chip"
 import { HERO } from "@/lib/content/hero"
 
 /**
- * Hero centrado: la esfera de nodos ocupa el fondo, al centro, y todo el contenido
+ * Hero centrado: el logo de nodos ocupa el fondo, bajo el texto, y todo el contenido
  * (chip, titular, intro, botones y datos) se alinea al centro sobre ella.
  */
 export function Hero() {
@@ -13,16 +13,9 @@ export function Hero() {
       <div className="mn-columns pointer-events-none absolute inset-0" aria-hidden />
       <div className="mn-glow left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" aria-hidden />
 
-      {/* Esfera centrada detrás del texto */}
-      <HeroNetwork className="pointer-events-none absolute left-1/2 top-1/2 aspect-square w-[min(1100px,150vw)] -translate-x-1/2 -translate-y-[52%] opacity-60 sm:opacity-80" />
-      {/* Viñeta para que el texto se lea sobre los nodos */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{ background: "radial-gradient(ellipse 60% 55% at 50% 48%, rgba(5,5,5,0.62) 0%, rgba(5,5,5,0.2) 55%, transparent 100%)" }}
-        aria-hidden
-      />
-
-      <div className="mn-container relative flex flex-col items-center pb-[clamp(72px,9vw,128px)] pt-[clamp(72px,9vw,128px)]">
+      <div className="mn-container relative flex flex-col items-center mn-hero-pad pt-[clamp(64px,8vw,112px)]">
+        {/* Logo MAYNODE formado por nodos, bajo los botones y sobre la franja lima */}
+        <HeroNetwork className="pointer-events-none mn-hero-logo absolute bottom-0 left-1/2 -translate-x-1/2" />
         <div className="mn-reveal flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
           <Chip>{HERO.chip}</Chip>
           <span className="mn-kicker">{HERO.signature}</span>
@@ -46,14 +39,15 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="relative border-t border-[var(--mn-border-2)] bg-[rgba(5,5,5,0.6)] backdrop-blur-sm">
-        <ul className="mn-container mn-code grid text-[13px] sm:grid-cols-3">
+      {/* Franja lima inferior */}
+      <div className="relative border-t border-[var(--mn-lime)] bg-[var(--mn-lime)] text-[var(--mn-lime-ink)] shadow-[0_-20px_60px_rgba(196,255,0,0.18)]">
+        <ul className="mn-container mn-code grid text-[13px] font-bold uppercase tracking-[0.06em] sm:grid-cols-3">
           {HERO.facts.map((f, i) => (
             <li
               key={f}
-              className={`flex items-center justify-center gap-3 py-5 text-[var(--mn-text-2)] ${i > 0 ? "border-t border-[var(--mn-border-2)] sm:border-l sm:border-t-0" : ""}`}
+              className={`flex items-center justify-center gap-3 py-5 ${i > 0 ? "border-t border-[rgba(5,5,5,0.2)] sm:border-l sm:border-t-0" : ""}`}
             >
-              <span className="h-1.5 w-1.5 shrink-0 bg-[var(--mn-lime)]" aria-hidden />
+              <span className="h-1.5 w-1.5 shrink-0 bg-[var(--mn-lime-ink)]" aria-hidden />
               {f}
             </li>
           ))}
