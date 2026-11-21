@@ -1,0 +1,229 @@
+/* =====================================================================
+   MAYNODE® — Design tokens (Tailwind CSS v4 + CSS custom properties)
+   Reemplaza el bloque de tokens de app/globals.css por este archivo.
+   Uso:  @import "../docs/maynode/tokens.css";  (o pegar en globals.css)
+   Fuentes: cargar Sora, IBM Plex Mono y JetBrains Mono con next/font
+   (ver design-system.md §3) y exponerlas como --font-sora, --font-plex,
+   --font-jetbrains.
+   ===================================================================== */
+
+:root {
+  /* ---- Marca ---- */
+  --mn-lime: #c4ff00;          /* Lima MAYNODE: acento único */
+  --mn-lime-hover: #d9ff00;    /* hover / brillo */
+  --mn-lime-press: #a9ff00;    /* pressed */
+  --mn-lime-ink: #050505;      /* texto sobre lima */
+  --mn-lime-06: rgba(196, 255, 0, 0.06);
+  --mn-lime-10: rgba(196, 255, 0, 0.10);
+  --mn-lime-25: rgba(196, 255, 0, 0.25);
+  --mn-lime-45: rgba(196, 255, 0, 0.45);
+
+  /* ---- Fondos y superficies (oscuro por defecto) ---- */
+  --mn-bg: #050505;
+  --mn-surface-1: #0b0b0b;
+  --mn-surface-2: #111111;
+  --mn-surface-3: #1a1a1a;
+  --mn-chip: #151515;
+
+  /* ---- Bordes ---- */
+  --mn-border-1: #181818;      /* divisores internos */
+  --mn-border-2: #262626;      /* bordes de tarjeta */
+
+  /* ---- Texto ---- */
+  --mn-text: #f7f7f7;
+  --mn-text-2: #a6a6a6;        /* secundario / párrafos */
+  --mn-text-3: #737373;        /* etiquetas mono, metadatos */
+  --mn-ghost: #262626;         /* numerales grandes de fondo */
+
+  /* ---- Estado ---- */
+  --mn-success: #46e45f;
+  --mn-warning: #ffd60a;
+  --mn-danger: #ff4d4d;
+  --mn-info: #4da3ff;
+
+  /* ---- Radios ---- */
+  --mn-r-xs: 6px;              /* chips de duración, etiquetas */
+  --mn-r-sm: 8px;              /* tags tecnológicos */
+  --mn-r-md: 12px;             /* botones */
+  --mn-r-lg: 14px;             /* inputs, cajas de icono, cajas de resultado */
+  --mn-r-card: 18px;           /* tarjetas */
+  --mn-r-xl: 24px;             /* paneles destacados, modales */
+  --mn-r-full: 999px;          /* chips, badges */
+
+  /* ---- Espaciado (base 4) ---- */
+  --mn-gutter: clamp(20px, 7.5vw, 120px);  /* margen lateral de página */
+  --mn-section: clamp(88px, 12vw, 160px);  /* padding vertical de sección */
+  --mn-gap: 18px;                          /* gap entre tarjetas */
+  --mn-card-pad: clamp(24px, 2.2vw, 36px);
+
+  /* ---- Sombras / glow ---- */
+  --mn-glow-card: 0 0 60px rgba(196, 255, 0, 0.08);
+  --mn-glow-btn: 0 0 40px rgba(196, 255, 0, 0.35);
+  --mn-glow-dot: 0 0 10px #c4ff00;
+
+  /* ---- Movimiento ---- */
+  --mn-ease: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --mn-fast: 160ms;
+  --mn-base: 280ms;
+  --mn-slow: 600ms;
+}
+
+/* ---------- Tailwind v4: expone los tokens como utilidades ---------- */
+@theme inline {
+  --color-lime: var(--mn-lime);
+  --color-lime-hover: var(--mn-lime-hover);
+  --color-lime-press: var(--mn-lime-press);
+  --color-ink: var(--mn-bg);
+  --color-surface-1: var(--mn-surface-1);
+  --color-surface-2: var(--mn-surface-2);
+  --color-surface-3: var(--mn-surface-3);
+  --color-line-1: var(--mn-border-1);
+  --color-line-2: var(--mn-border-2);
+  --color-fg: var(--mn-text);
+  --color-fg-2: var(--mn-text-2);
+  --color-fg-3: var(--mn-text-3);
+  --color-success: var(--mn-success);
+  --color-warning: var(--mn-warning);
+  --color-danger: var(--mn-danger);
+
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-label: var(--font-plex), ui-monospace, monospace;
+  --font-code: var(--font-jetbrains), ui-monospace, monospace;
+
+  --radius-chip: var(--mn-r-xs);
+  --radius-tag: var(--mn-r-sm);
+  --radius-btn: var(--mn-r-md);
+  --radius-box: var(--mn-r-lg);
+  --radius-card: var(--mn-r-card);
+  --radius-panel: var(--mn-r-xl);
+}
+
+/* ------------------------------ Base ------------------------------ */
+html { background: var(--mn-bg); color-scheme: dark; }
+body {
+  background: var(--mn-bg);
+  color: var(--mn-text);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--mn-lime); color: var(--mn-lime-ink); }
+
+/* ----------------------------- Tipografía ----------------------------- */
+.mn-display {               /* H1 hero */
+  font-weight: 800; text-transform: uppercase;
+  font-size: clamp(44px, 7vw, 112px); line-height: 0.92; letter-spacing: -0.05em;
+}
+.mn-h1 {                    /* título de sección */
+  font-weight: 800; text-transform: uppercase;
+  font-size: clamp(34px, 4.4vw, 66px); line-height: 0.98; letter-spacing: -0.045em;
+}
+.mn-h2 {                    /* título de tarjeta grande */
+  font-weight: 800; text-transform: uppercase;
+  font-size: clamp(22px, 2vw, 34px); line-height: 1.05; letter-spacing: -0.035em;
+}
+.mn-h3 {                    /* título de tarjeta */
+  font-weight: 700; font-size: 20px; line-height: 1.2; letter-spacing: -0.01em;
+}
+.mn-lead { font-size: clamp(16px, 1.3vw, 19px); line-height: 1.55; color: var(--mn-text-2); max-width: 62ch; }
+.mn-body { font-size: 15px; line-height: 1.5; color: var(--mn-text-2); }
+.mn-label {                 /* etiqueta de sección ■ 01 · QUIÉNES SOMOS */
+  font-family: var(--font-plex), monospace; font-size: 12px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--mn-lime);
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.mn-label::before { content: ""; width: 10px; height: 10px; background: currentColor; }
+.mn-kicker {                /* micro-etiqueta dentro de tarjetas */
+  font-family: var(--font-plex), monospace; font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--mn-text-3);
+}
+.mn-accent { color: var(--mn-lime); }
+.mn-code { font-family: var(--font-jetbrains), monospace; }
+
+/* ----------------------------- Superficies ----------------------------- */
+.mn-card {                  /* tarjeta glass estándar */
+  position: relative; display: flex; flex-direction: column; min-height: 0;
+  padding: var(--mn-card-pad);
+  border-radius: var(--mn-r-card);
+  border: 1px solid var(--mn-border-2);
+  background: linear-gradient(160deg, rgba(24, 24, 24, 0.72), rgba(11, 11, 11, 0.72));
+  backdrop-filter: blur(14px);
+  transition: border-color var(--mn-base) var(--mn-ease), transform var(--mn-base) var(--mn-ease);
+}
+.mn-card:hover { border-color: #333; transform: translateY(-2px); }
+.mn-card--hl { border-color: var(--mn-lime-45); box-shadow: var(--mn-glow-card); }
+
+.mn-iconbox {               /* caja de icono 48–56px */
+  width: 52px; height: 52px; flex: none; display: grid; place-items: center;
+  border-radius: var(--mn-r-lg); background: rgba(196, 255, 0, 0.08);
+  border: 1px solid rgba(196, 255, 0, 0.3); color: var(--mn-lime);
+}
+.mn-result {                /* caja "Resultado" */
+  border-radius: var(--mn-r-lg); padding: 14px 16px;
+  background: rgba(196, 255, 0, 0.07); border: 1px solid var(--mn-lime-25);
+}
+.mn-ghostnum { font-weight: 800; letter-spacing: -0.05em; color: var(--mn-ghost); line-height: 1; }
+
+/* ------------------------------ Controles ------------------------------ */
+.mn-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  height: 52px; padding: 0 24px; border-radius: var(--mn-r-md);
+  font-weight: 600; font-size: 15px;
+  transition: background var(--mn-fast) var(--mn-ease), box-shadow var(--mn-base) var(--mn-ease), border-color var(--mn-fast);
+}
+.mn-btn--primary { background: var(--mn-lime); color: var(--mn-lime-ink); box-shadow: var(--mn-glow-btn); }
+.mn-btn--primary:hover { background: var(--mn-lime-hover); }
+.mn-btn--primary:active { background: var(--mn-lime-press); }
+.mn-btn--ghost { border: 1px solid var(--mn-border-2); color: var(--mn-text); background: transparent; }
+.mn-btn--ghost:hover { border-color: var(--mn-lime-45); }
+
+.mn-chip {                  /* chip de estado ● MAYNODE // ... */
+  display: inline-flex; align-items: center; gap: 10px; padding: 9px 16px;
+  border-radius: var(--mn-r-full); border: 1px solid rgba(196, 255, 0, 0.3); background: var(--mn-lime-06);
+  font-family: var(--font-plex), monospace; font-size: 12px; letter-spacing: 0.08em; color: var(--mn-text);
+}
+.mn-chip::before { content: ""; width: 7px; height: 7px; background: var(--mn-lime); box-shadow: var(--mn-glow-dot); }
+.mn-tag {                   /* tag tecnológico */
+  display: inline-flex; padding: 6px 10px; border-radius: var(--mn-r-sm);
+  background: var(--mn-chip); border: 1px solid var(--mn-border-2); font-size: 13px; font-weight: 500;
+}
+.mn-pill {                  /* entregable / duración (fondo lima) */
+  display: inline-flex; padding: 6px 10px; border-radius: var(--mn-r-xs);
+  background: var(--mn-lime); color: var(--mn-lime-ink);
+  font-family: var(--font-jetbrains), monospace; font-size: 13px; font-weight: 700;
+}
+.mn-input {
+  height: 52px; padding: 0 16px; border-radius: var(--mn-r-lg); width: 100%;
+  background: var(--mn-surface-2); border: 1px solid var(--mn-border-2); color: var(--mn-text);
+}
+.mn-input:focus { outline: none; border-color: var(--mn-lime); box-shadow: 0 0 0 4px var(--mn-lime-10); }
+
+/* ------------------------------ Fondos ------------------------------ */
+.mn-columns {               /* líneas verticales cada 160px */
+  background-image: repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 1px, transparent 1px 160px);
+}
+.mn-nodegrid {              /* grilla de nodos punteada */
+  background-image: radial-gradient(#1f1f1f 1.2px, transparent 1.2px);
+  background-size: 48px 48px;
+}
+.mn-glow {                  /* halo lima; posicionar con top/left */
+  position: absolute; width: 800px; height: 800px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, var(--mn-lime) 0%, transparent 65%); opacity: 0.14; filter: blur(10px);
+}
+.mn-grain::after {          /* grano sutil de película */
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.05; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+.mn-enlace {                /* la barra "enlace" del logo como divisor */
+  display: inline-block; width: 44px; height: 16px; background: var(--mn-lime);
+}
+
+/* ---------------------------- Movimiento ---------------------------- */
+@keyframes mn-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes mn-pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(196,255,0,.5); } 50% { box-shadow: 0 0 0 10px rgba(196,255,0,0); } }
+.mn-reveal { animation: mn-rise var(--mn-slow) var(--mn-ease) both; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
