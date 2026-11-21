@@ -4,6 +4,7 @@ import { Reveal } from "@/components/reveal"
 import { Section } from "@/components/section"
 import { Button } from "@/components/ui/button"
 import { MnCard } from "@/components/ui/mn-card"
+import { HERO } from "@/lib/content/hero"
 import { CONTACTO as C } from "@/lib/content/contacto"
 
 export const metadata: Metadata = {
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
 export default function ContactoPage() {
   return (
     <>
-      <PageHero label={C.label} title={C.title} accent={C.accent} intro={C.intro} />
-      <Section line={false} className="!pt-0">
+      <PageHero label={C.label} title={C.title} accent={C.accent} intro={C.intro} facts={HERO.facts} />
+      <Section line={false}>
         <ul className="mn-grid mn-grid--4">
           {C.channels.map((ch, i) => (
             <li key={ch.kicker}>

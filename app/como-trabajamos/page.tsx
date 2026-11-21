@@ -10,6 +10,7 @@ import { MnCard } from "@/components/ui/mn-card"
 import { Pill } from "@/components/ui/pill"
 import { Support } from "@/components/support"
 import { COMO_TRABAJAMOS as C } from "@/lib/content/como-trabajamos"
+import { HERO } from "@/lib/content/hero"
 import { METHOD } from "@/lib/content/method"
 
 export const metadata: Metadata = {
@@ -22,9 +23,9 @@ export default function ComoTrabajamosPage() {
   const pm = C.pm
   return (
     <>
-      <PageHero label={C.label} title={C.title} accent={C.accent} intro={C.intro} />
+      <PageHero label={C.label} title={C.title} accent={C.accent} intro={C.intro} facts={HERO.facts} />
 
-      <Section id="metodo" line={false} className="!pt-0">
+      <Section id="metodo" line={false}>
         <SectionHeader label={METHOD.label} title={METHOD.title} intro={METHOD.intro} />
         <div className="mn-sec-body">
           <MethodGrid />

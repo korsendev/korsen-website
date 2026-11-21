@@ -1,5 +1,6 @@
 import { HeroPipeline } from "@/components/hero-pipeline"
 import { Button } from "@/components/ui/button"
+import { FactsStrip } from "@/components/facts-strip"
 import { Chip } from "@/components/ui/chip"
 import { HERO } from "@/lib/content/hero"
 
@@ -43,20 +44,7 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Franja lima: compromisos de tiempo */}
-      <div className="relative border-t border-[var(--mn-lime)] bg-[var(--mn-lime)] text-[var(--mn-lime-ink)]">
-        <ul className="mn-container mn-code grid text-[13px] font-bold uppercase tracking-[0.06em] sm:grid-cols-3">
-          {HERO.facts.map((f, i) => (
-            <li
-              key={f}
-              className={`flex items-center justify-center gap-3 py-5 ${i > 0 ? "border-t border-[rgba(5,5,5,0.2)] sm:border-l sm:border-t-0" : ""}`}
-            >
-              <span className="h-1.5 w-1.5 shrink-0 bg-[var(--mn-lime-ink)]" aria-hidden />
-              {f}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <FactsStrip facts={HERO.facts} />
     </section>
   )
 }

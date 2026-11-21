@@ -9,7 +9,6 @@ import { SectionHeader } from "@/components/section-header"
 import { Button } from "@/components/ui/button"
 import { MnCard } from "@/components/ui/mn-card"
 import { Pill } from "@/components/ui/pill"
-import { ResultBox } from "@/components/ui/result-box"
 import { CTA } from "@/lib/content/global"
 import { METHOD } from "@/lib/content/method"
 import { SOLUCIONES, SOLUCION_LANDING as L, getSolucion } from "@/lib/content/soluciones"
@@ -43,6 +42,7 @@ export default async function SolucionPage({ params }: Props) {
         title={s.h1}
         accent={s.accent}
         intro={s.lead}
+        facts={["Propuesta en 48 h", `Caso: ${s.caseName}`, "Soporte 24/7"]}
         actions={
           <>
             <Button href={`/diagnostico?tema=${s.slug}`} arrow>
@@ -57,7 +57,27 @@ export default async function SolucionPage({ params }: Props) {
       />
 
       <Section id="problema" band>
-        <SectionHeader label={`${s.n} · ${L.problemLabel.toUpperCase()}`} title={L.problemLabel} intro={s.problem} />
+        <SectionHeader label={`${s.n} · ${L.problemLabel.toUpperCase()}`} title={L.problemLabel} />
+        <div className="mn-sec-body">
+          <div className="grid items-stretch gap-[var(--mn-gap)] lg:grid-cols-[1fr_auto_1fr]">
+            <MnCard>
+              <p className="mn-kicker">{L.problemLabel}</p>
+              <p className="mn-h3 mt-4 text-[20px] font-semibold leading-snug">{s.problem}</p>
+            </MnCard>
+            <div className="grid place-items-center text-[var(--mn-lime)]" aria-hidden>
+              <span className="mn-code rotate-90 text-3xl lg:rotate-0">→</span>
+            </div>
+            <MnCard hl>
+              <p className="mn-kicker" style={{ color: "var(--mn-lime)" }}>
+                {L.resultLabel}
+              </p>
+              <p className="mn-h2 mt-4" style={{ fontSize: 28 }}>
+                {s.result}
+              </p>
+              <p className="mn-body mt-auto pt-6">{s.time}</p>
+            </MnCard>
+          </div>
+        </div>
       </Section>
 
       <Section id="incluye">
@@ -77,9 +97,6 @@ export default async function SolucionPage({ params }: Props) {
               </li>
             ))}
           </ul>
-          <div className="mt-6 max-w-[640px]">
-            <ResultBox kicker={L.resultLabel}>{s.result}</ResultBox>
-          </div>
         </div>
       </Section>
 

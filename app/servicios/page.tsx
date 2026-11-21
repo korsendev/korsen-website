@@ -3,6 +3,7 @@ import { CtaFinal } from "@/components/cta-final"
 import { PageHero } from "@/components/page-hero"
 import { Section } from "@/components/section"
 import { ServiceGrid } from "@/components/service-lines"
+import { HERO } from "@/lib/content/hero"
 import { SERVICIOS_INDEX as C } from "@/lib/content/servicios"
 
 export const metadata: Metadata = {
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
 export default function ServiciosPage() {
   return (
     <>
-      <PageHero label={C.pageLabel} title={C.title} intro={C.intro} />
-      <Section line={false} className="!pt-0">
+      <PageHero label={C.pageLabel} title={C.title} intro={C.intro} facts={HERO.facts} />
+      <Section line={false}>
         <ServiceGrid />
       </Section>
       <CtaFinal />

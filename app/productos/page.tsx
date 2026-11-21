@@ -3,6 +3,7 @@ import { BosqraCard } from "@/components/bosqra"
 import { CtaFinal } from "@/components/cta-final"
 import { PageHero } from "@/components/page-hero"
 import { Section } from "@/components/section"
+import { HERO } from "@/lib/content/hero"
 import { PRODUCTOS as C } from "@/lib/content/bosqra"
 
 export const metadata: Metadata = {
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
 export default function ProductosPage() {
   return (
     <>
-      <PageHero label={C.label} title={C.title} accent={C.accent} intro={C.intro} />
-      <Section line={false} className="!pt-0">
+      <PageHero label={C.label} title={C.title} accent={C.accent} intro={C.intro} facts={HERO.facts} />
+      <Section line={false}>
         <BosqraCard />
       </Section>
       <CtaFinal />

@@ -50,6 +50,7 @@ export default async function ServicioPage({ params }: Props) {
         title={title}
         accent={accent}
         intro={s.lead}
+        facts={s.deliverables.map((d) => `Entregable · ${d}`)}
         actions={
           <Button href="/diagnostico" arrow>
             {CTA.primary}
@@ -71,12 +72,24 @@ export default async function ServicioPage({ params }: Props) {
 
       <Section id="entregables">
         <SectionHeader label={`${s.n} · ${D.deliverablesLabel.toUpperCase()}`} title={D.deliverablesTitle} />
-        <div className="mn-sec-body flex flex-wrap gap-3">
-          {s.deliverables.map((d) => (
-            <Pill key={d} className="!px-4 !py-3 !text-[15px]">
-              {d}
-            </Pill>
-          ))}
+        <div className="mn-sec-body">
+          <ul className="mn-grid mn-grid--3x">
+            {s.deliverables.map((d, i) => (
+              <li key={d}>
+                <Reveal delay={i * 60}>
+                  <MnCard>
+                    <span className="mn-ghostnum" style={{ fontSize: 44 }} aria-hidden>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <h3 className="mn-h3 mt-8 text-[22px]">{d}</h3>
+                    <div className="mn-card__foot">
+                      <Pill>Entregable</Pill>
+                    </div>
+                  </MnCard>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
         </div>
       </Section>
 
