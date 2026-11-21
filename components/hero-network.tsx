@@ -94,7 +94,7 @@ export function HeroNetwork({ className }: { className?: string }) {
       const sy = Math.sin(yaw)
       const cx = Math.cos(tiltX + ty * 0.0)
       const sx = Math.sin(tiltX)
-      const R = Math.min(w, h) * 0.36
+      const R = Math.min(w, h) * 0.3
 
       ctx.clearRect(0, 0, w, h)
 
