@@ -337,3 +337,54 @@ select.mn-input { appearance: none; background-image: linear-gradient(45deg, tra
 .mn-prose strong { color: var(--mn-text); }
 
 html[data-bar-closed] .mn-bar { display: none; }
+
+/* =====================================================================
+   Estilo Korsen aplicado a MAYNODE: rejilla técnica, esquinas, vidrio
+   ===================================================================== */
+:root { --mn-r-card: 24px; }
+
+.mn-section, .mn-columns {
+  background-image:
+    linear-gradient(to right, rgba(196, 255, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(196, 255, 0, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.mn-columns { opacity: 1; }
+.mn-section--band { background-color: var(--mn-surface-1); }
+
+/* Etiqueta tipo "// 01 · SECCIÓN" */
+.mn-label::before { content: "//"; width: auto; height: auto; background: none; font-weight: 500; }
+
+/* Tarjeta: vidrio oscuro con esquinas luminosas */
+.mn-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(11, 11, 11, 0.9);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+.mn-card:hover { border-color: rgba(196, 255, 0, 0.3); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55), 0 0 30px rgba(196, 255, 0, 0.08); }
+.mn-card::before {
+  content: ""; position: absolute; inset: 12px; pointer-events: none; opacity: 0.4;
+  --b: var(--mn-lime);
+  background:
+    linear-gradient(var(--b), var(--b)) 0 0 / 20px 3px no-repeat,
+    linear-gradient(var(--b), var(--b)) 0 0 / 3px 20px no-repeat,
+    linear-gradient(var(--b), var(--b)) 100% 0 / 20px 3px no-repeat,
+    linear-gradient(var(--b), var(--b)) 100% 0 / 3px 20px no-repeat,
+    linear-gradient(var(--b), var(--b)) 0 100% / 20px 3px no-repeat,
+    linear-gradient(var(--b), var(--b)) 0 100% / 3px 20px no-repeat,
+    linear-gradient(var(--b), var(--b)) 100% 100% / 20px 3px no-repeat,
+    linear-gradient(var(--b), var(--b)) 100% 100% / 3px 20px no-repeat;
+  transition: opacity var(--mn-base) var(--mn-ease), filter var(--mn-base) var(--mn-ease);
+}
+.mn-card:hover::before { opacity: 1; filter: drop-shadow(0 0 5px rgba(196, 255, 0, 0.5)); }
+.mn-card--hl { border-color: var(--mn-lime-45); box-shadow: var(--mn-glow-card), 0 12px 40px rgba(0, 0, 0, 0.5); }
+.mn-card--hl::before { opacity: 0.8; }
+
+/* Botón primario con degradado */
+.mn-btn--primary { background: linear-gradient(180deg, var(--mn-lime-hover) 0%, var(--mn-lime) 100%); font-weight: 700; box-shadow: 0 4px 12px rgba(196, 255, 0, 0.2); }
+.mn-btn--primary:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(196, 255, 0, 0.35); background: var(--mn-lime-hover); }
+
+/* Chip estilo Korsen */
+.mn-chip { background: rgba(255, 255, 255, 0.03); border-color: rgba(255, 255, 255, 0.15); color: var(--mn-lime); text-transform: uppercase; letter-spacing: 0.14em; font-size: 11px; backdrop-filter: blur(12px); box-shadow: 0 0 15px rgba(196, 255, 0, 0.05); }
+
+.mn-glow { filter: blur(60px); opacity: 0.1; }

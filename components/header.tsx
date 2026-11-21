@@ -52,7 +52,7 @@ export function Header() {
         </Link>
 
         <nav aria-label="Principal" className="hidden xl:block">
-          <ul className="flex items-center gap-8">
+          <ul className="flex items-center gap-6">
             {NAV.map((item) => (
               <li key={item.href}>
                 <Link
