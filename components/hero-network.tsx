@@ -90,6 +90,7 @@ export function HeroNetwork({ className }: { className?: string }) {
   const ref = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
+    const setup = (): (() => void) | undefined => {
     const canvas = ref.current
     if (!canvas) return
     const ctx = canvas.getContext("2d")
@@ -156,19 +157,37 @@ export function HeroNetwork({ className }: { className?: string }) {
         return { x: w / 2 + x * scale, y: h / 2 + y * scale, e, k, glow, bar: n.bar }
       })
 
-      // aristas
+      // aristas: dos trazos agrupados (M y barra) y solo las iluminadas por el barrido se dibujan aparte
+      const prog = reduce ? 1 : Math.min(Math.max((t - 0.5) / 2, 0), 1)
       ctx.lineWidth = 1
+      ctx.beginPath()
       for (const [a, b] of edges) {
         const pa = pos[a]
-        const pb = pos[b]
-        const e = Math.min(pa.e, pb.e)
-        if (e <= 0.02) continue
-        const g = Math.max(pa.glow, pb.glow)
-        const bar = pa.bar
-        ctx.strokeStyle = bar ? `rgba(${LIME},${(0.35 * e + g * 0.4).toFixed(3)})` : `rgba(${g > 0.15 ? LIME : "247,247,247"},${(0.13 * e + g * 0.5).toFixed(3)})`
-        ctx.beginPath()
+        if (pa.bar || pa.e < 0.02 || pos[b].e < 0.02) continue
         ctx.moveTo(pa.x, pa.y)
-        ctx.lineTo(pb.x, pb.y)
+        ctx.lineTo(pos[b].x, pos[b].y)
+      }
+      ctx.strokeStyle = `rgba(247,247,247,${(0.13 * prog).toFixed(3)})`
+      ctx.stroke()
+      ctx.beginPath()
+      for (const [a, b] of edges) {
+        const pa = pos[a]
+        if (!pa.bar || pa.e < 0.02 || pos[b].e < 0.02) continue
+        ctx.moveTo(pa.x, pa.y)
+        ctx.lineTo(pos[b].x, pos[b].y)
+      }
+      ctx.strokeStyle = `rgba(${LIME},${(0.4 * prog).toFixed(3)})`
+      ctx.stroke()
+      if (!reduce) {
+        ctx.beginPath()
+        for (const [a, b] of edges) {
+          const pa = pos[a]
+          const pb = pos[b]
+          if (Math.max(pa.glow, pb.glow) < 0.2 || Math.min(pa.e, pb.e) < 0.9) continue
+          ctx.moveTo(pa.x, pa.y)
+          ctx.lineTo(pb.x, pb.y)
+        }
+        ctx.strokeStyle = `rgba(${LIME},0.55)`
         ctx.stroke()
       }
 
@@ -191,16 +210,20 @@ export function HeroNetwork({ className }: { className?: string }) {
         ctx.fill()
       }
 
-      // nodos
-      for (const p of pos) {
-        if (p.e <= 0.02) continue
-        const r = ((p.bar ? 2.2 : 1.7) + p.glow * 2) * p.k * Math.max(w / 1100, 0.55)
-        ctx.shadowBlur = p.bar ? 14 : p.glow > 0.2 ? 14 : 3
-        ctx.shadowColor = `rgba(${LIME},0.9)`
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, r, 0, Math.PI * 2)
-        ctx.fillStyle = p.bar || p.glow > 0.25 ? `rgba(${LIME},${0.55 + p.e * 0.45})` : `rgba(247,247,247,${0.25 + p.e * 0.65})`
-        ctx.fill()
+      // nodos: sin sombra salvo la barra lima y los iluminados por el barrido
+      ctx.shadowColor = `rgba(${LIME},0.9)`
+      const unit = Math.max(w / 1100, 0.55)
+      for (const lit of [false, true]) {
+        ctx.shadowBlur = lit ? 12 : 0
+        for (const p of pos) {
+          if (p.e <= 0.02) continue
+          const hot = p.bar || p.glow > 0.25
+          if (hot !== lit) continue
+          ctx.beginPath()
+          ctx.arc(p.x, p.y, ((p.bar ? 2.2 : 1.7) + p.glow * 2) * p.k * unit, 0, Math.PI * 2)
+          ctx.fillStyle = hot ? `rgba(${LIME},${0.55 + p.e * 0.45})` : `rgba(247,247,247,${0.25 + p.e * 0.65})`
+          ctx.fill()
+        }
       }
       ctx.shadowBlur = 0
 
@@ -238,6 +261,17 @@ export function HeroNetwork({ className }: { className?: string }) {
       ro.disconnect()
       io.disconnect()
       window.removeEventListener("pointermove", onMove)
+    }
+    }
+
+    // Se inicia tras la carga para no bloquear el hilo principal
+    let cleanup: (() => void) | undefined
+    const id = window.setTimeout(() => {
+      cleanup = setup()
+    }, 900)
+    return () => {
+      window.clearTimeout(id)
+      cleanup?.()
     }
   }, [])
 
