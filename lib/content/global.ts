@@ -2,7 +2,7 @@
 
 export const SITE = {
   name: "MAYNODE",
-  url: "https://maynode.dev",
+  url: "https://www.maynode.dev",
   domain: "maynode.dev",
   email: "team@maynode.dev",
   phone: "+44 7848 445738",

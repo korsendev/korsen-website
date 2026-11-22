@@ -4,23 +4,23 @@ import { SectionHeader } from "@/components/section-header"
 import { MnCard } from "@/components/ui/mn-card"
 import { COVERAGE as C } from "@/lib/content/coverage"
 
-/** Los cuatro mapas a la vez: 2×2 desde tablet; mapa arriba y texto debajo. */
+/** Los cuatro mapas: 2×2 desde tablet; en móvil, mapa de altura fija y texto debajo. */
 export function Coverage({ id = "cobertura", as = "h2", priority = false }: { id?: string; as?: "h1" | "h2"; priority?: boolean }) {
   return (
     <Section id={id} bg={<div className="mn-glow -left-[300px] top-1/3" aria-hidden />}>
       <SectionHeader label={C.label} title={C.title} intro={C.intro} as={as} />
       <div className="mn-sec-body">
-        <ul className="grid gap-[var(--mn-gap)] md:grid-cols-2" style={{ gridAutoRows: "1fr" }}>
+        <ul className="mn-coverage grid grid-cols-[minmax(0,1fr)] gap-[var(--mn-gap)] md:grid-cols-2 md:auto-rows-fr">
           {C.regions.map((r, i) => {
             const active = "active" in r && r.active
             return (
-              <li key={r.name}>
+              <li key={r.name} className="min-w-0">
                 <Reveal delay={(i % 2) * 60}>
                   <MnCard hl={active} as="article" className="!p-0">
                     <div className="mn-nodegrid pointer-events-none absolute inset-0 rounded-[var(--mn-r-card)] opacity-60" aria-hidden />
-                    <div className="relative flex aspect-[6/5] items-center justify-center p-5 sm:aspect-auto sm:h-[320px] sm:p-6">
+                    <div className="relative flex h-[210px] items-center justify-center overflow-hidden p-4 sm:h-[320px] sm:p-6">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={r.map} alt={r.alt} loading={priority && i < 2 ? "eager" : "lazy"} fetchPriority={priority && i < 2 ? "high" : "auto"} decoding="async" width={300} height={250} className="h-full w-full object-contain" />
+                      <img src={r.map} alt={r.alt} loading={priority && i < 2 ? "eager" : "lazy"} fetchPriority={priority && i < 2 ? "high" : "auto"} decoding="async" width={300} height={250} className="block h-full w-full max-w-full object-contain" />
                     </div>
                     <div className="relative mt-auto border-t border-[var(--mn-border-1)] p-6 sm:p-7">
                       <div>

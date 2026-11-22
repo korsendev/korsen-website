@@ -6,7 +6,7 @@ import { MnCard } from "@/components/ui/mn-card"
 import { Pill } from "@/components/ui/pill"
 import { METHOD as C } from "@/lib/content/method"
 
-/** Cinco fases: filas anchas en escritorio, carrusel horizontal en tablet y móvil. */
+/** Cinco fases: filas anchas en escritorio, tarjetas apiladas en móvil y 2 columnas en tablet. */
 export function MethodGrid() {
   return (
     <ol className="mn-scroller" aria-label="Fases del método">

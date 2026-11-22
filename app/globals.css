@@ -252,31 +252,32 @@ body { min-width: 320px; overflow-x: hidden; }
 
 /* Rejillas: filas de altura uniforme (design-system §5). Sin huecos: el número de
    columnas siempre divide el total de tarjetas. */
-.mn-grid { display: grid; gap: var(--mn-gap); grid-auto-rows: 1fr; grid-template-columns: 1fr; }
+.mn-grid { display: grid; gap: var(--mn-gap); grid-auto-rows: 1fr; grid-template-columns: minmax(0, 1fr); }
+/* Móvil: cada tarjeta mide lo que su contenido (sin huecos por igualar alturas) */
+@media (max-width: 639px) { .mn-grid { grid-auto-rows: auto; } }
 @media (min-width: 640px) {
-  .mn-grid--2, .mn-grid--3, .mn-grid--4, .mn-grid--5 { grid-template-columns: repeat(2, 1fr); }
+  .mn-grid--2, .mn-grid--3, .mn-grid--4, .mn-grid--5 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (min-width: 1024px) {
-  .mn-grid--3, .mn-grid--3x { grid-template-columns: repeat(3, 1fr); }
-  .mn-grid--4 { grid-template-columns: repeat(4, 1fr); }
-  .mn-grid--5 { grid-template-columns: repeat(5, 1fr); }
-  .mn-grid--cols { grid-template-columns: repeat(var(--cols, 3), 1fr); }
+  .mn-grid--3, .mn-grid--3x { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mn-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .mn-grid--5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .mn-grid--cols { grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); }
 }
 @media (min-width: 640px) and (max-width: 1023px) {
-  .mn-grid--cols { grid-template-columns: repeat(var(--cols-md, 1), 1fr); }
+  .mn-grid--cols { grid-template-columns: repeat(var(--cols-md, 1), minmax(0, 1fr)); }
 }
-@media (max-width: 639px) { .mn-grid--m2 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 639px) {
+  .mn-grid--m2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; grid-auto-rows: 1fr; }
+  .mn-grid--m2 .mn-card { --mn-card-pad: 18px; }
+  .mn-grid--m2 .mn-h3 { font-size: 15px !important; overflow-wrap: anywhere; hyphens: auto; }
+  .mn-grid--m2 .mn-body { font-size: 13px !important; }
+}
 
-/* Carrusel horizontal (método en tablet y móvil) */
-.mn-scroller {
-  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(260px, 78%);
-  gap: var(--mn-gap); overflow-x: auto; scroll-snap-type: x mandatory;
-  padding-bottom: 12px; scrollbar-width: thin; scrollbar-color: var(--mn-border-2) transparent;
-}
-.mn-scroller > * { scroll-snap-align: start; }
-@media (min-width: 640px) { .mn-scroller { grid-auto-columns: minmax(300px, 44%); } }
+/* Fases del método: apiladas en móvil, 2 columnas en tablet, filas anchas en escritorio */
+.mn-scroller { display: grid; gap: var(--mn-gap); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 640px) and (max-width: 1023px) { .mn-scroller { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1024px) {
-  .mn-scroller { grid-auto-flow: row; grid-auto-columns: auto; grid-template-columns: 1fr; overflow: visible; scroll-snap-type: none; }
   .mn-method { display: grid !important; grid-template-columns: 72px minmax(200px, 280px) minmax(0, 1fr) minmax(200px, 260px); align-items: center; column-gap: 32px; }
   .mn-method .mn-method__id { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
   .mn-method .mn-card__foot { margin-top: 0; padding-top: 0; border-top: 0 !important; border-left: 1px solid var(--mn-border-1); padding-left: 28px; }
