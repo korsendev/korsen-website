@@ -73,7 +73,7 @@ export default async function SolucionPage({ params }: Props) {
               <span className="mn-code rotate-90 text-3xl lg:rotate-0">→</span>
             </div>
             <MnCard hl>
-              <p className="mn-kicker" style={{ color: "var(--mn-lime)" }}>
+              <p className="mn-kicker" style={{ color: "var(--mn-accent)" }}>
                 {L.resultLabel}
               </p>
               <p className="mn-h2 mt-4" style={{ fontSize: 28 }}>
