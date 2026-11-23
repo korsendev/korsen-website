@@ -8,7 +8,8 @@ export function Footer() {
       <div className="mn-container py-16 sm:py-20">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_2.9fr] lg:gap-16">
           <div>
-            <Image src="/brand/maynode-logo.svg" alt="MAYNODE" width={160} height={87} unoptimized className="h-auto w-[160px]" />
+            <Image src="/brand/maynode-logo.svg" alt="MAYNODE" width={160} height={87} unoptimized className="mn-logo--dark h-auto w-[160px]" />
+            <Image src="/brand/maynode-logo-negro.svg" alt="MAYNODE" width={160} height={87} unoptimized className="mn-logo--light h-auto w-[160px]" />
             <p className="mn-body mt-6 max-w-[34ch]">{FOOTER.phrase}</p>
           </div>
 
@@ -31,17 +32,17 @@ export function Footer() {
               <h2 className="mn-kicker mb-5">{FOOTER.contactTitle}</h2>
               <ul className="space-y-3 text-sm font-semibold">
                 <li>
-                  <Link href="/" className="transition-colors hover:text-[var(--mn-lime)]">
+                  <Link href="/" className="transition-colors hover:text-[var(--mn-accent)]">
                     {SITE.domain}
                   </Link>
                 </li>
                 <li>
-                  <a href={`mailto:${SITE.email}`} className="break-all transition-colors hover:text-[var(--mn-lime)]">
+                  <a href={`mailto:${SITE.email}`} className="break-all transition-colors hover:text-[var(--mn-accent)]">
                     {SITE.email}
                   </a>
                 </li>
                 <li>
-                  <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} className="transition-colors hover:text-[var(--mn-lime)]">
+                  <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} className="transition-colors hover:text-[var(--mn-accent)]">
                     {SITE.phone}
                   </a>
                 </li>
@@ -55,7 +56,7 @@ export function Footer() {
           <p className="mn-code">{FOOTER.legal}</p>
           <p className="mn-code flex gap-4">
             {FOOTER.legalLinks.map((l) => (
-              <Link key={l.href} href={l.href} className="transition-colors hover:text-[var(--mn-lime)]">
+              <Link key={l.href} href={l.href} className="transition-colors hover:text-[var(--mn-accent)]">
                 {l.label}
               </Link>
             ))}

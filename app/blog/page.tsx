@@ -30,7 +30,7 @@ export default function BlogPage() {
                   <p className="mn-body mt-3">{post.excerpt}</p>
                   <div className="mn-card__foot flex items-center justify-between gap-3 border-t border-[var(--mn-border-1)]">
                     <span className="mn-kicker">{post.date}</span>
-                    <span className="mn-code text-[13px] text-[var(--mn-lime)]">{C.readMore} →</span>
+                    <span className="mn-code text-[13px] text-[var(--mn-accent)]">{C.readMore} →</span>
                   </div>
                 </MnCard>
               </Reveal>

@@ -18,7 +18,7 @@ export function ServiceGrid() {
               <h3 className="mn-h3 mt-8">{s.title}</h3>
               <p className="mn-body mt-3">{s.short}</p>
               <div className="mn-card__foot">
-                <span className="mn-code text-[13px] text-[var(--mn-lime)]">{C.cardLink} →</span>
+                <span className="mn-code text-[13px] text-[var(--mn-accent)]">{C.cardLink} →</span>
               </div>
             </MnCard>
           </Reveal>

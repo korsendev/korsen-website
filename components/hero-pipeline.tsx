@@ -86,7 +86,7 @@ export function HeroPipeline() {
                       {on ? <span className="absolute inset-[-6px] rounded-full border border-[var(--mn-lime)]/40" style={{ animation: "mn-pulse 2s infinite" }} /> : null}
                     </span>
                     <span className="min-w-0">
-                      <span className={cn("mn-code block text-[11px] tracking-[0.1em]", on ? "text-[var(--mn-lime)]" : "text-[var(--mn-text-3)]")}>{p.n}</span>
+                      <span className={cn("mn-code block text-[11px] tracking-[0.1em]", on ? "text-[var(--mn-accent)]" : "text-[var(--mn-text-3)]")}>{p.n}</span>
                       <span className={cn("mt-1 block text-[15px] font-extrabold uppercase tracking-[-0.01em] transition-colors", on ? "text-[var(--mn-text)]" : "text-[var(--mn-text-2)] group-hover:text-[var(--mn-text)]")}>
                         {p.name}
                       </span>

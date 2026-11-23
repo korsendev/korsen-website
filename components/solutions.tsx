@@ -29,7 +29,7 @@ export function SolutionsGrid() {
                   <span className="mn-kicker block">{C.caseKicker}</span>
                   <span className="mt-0.5 block truncate text-sm font-semibold">{s.caseName}</span>
                 </span>
-                <span className="mn-code shrink-0 text-[13px] text-[var(--mn-lime)]">{C.cardLink} →</span>
+                <span className="mn-code shrink-0 text-[13px] text-[var(--mn-accent)]">{C.cardLink} →</span>
               </div>
             </MnCard>
           </Reveal>
