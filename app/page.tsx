@@ -1,4 +1,7 @@
+import type { Metadata } from "next"
 import { Hero } from "@/components/hero"
+import { FAQ } from "@/lib/content/faq"
+import { JsonLd, faqLd } from "@/lib/seo"
 import { Stats } from "@/components/stats"
 import { About } from "@/components/about"
 import { Diagnosis } from "@/components/diagnosis"
@@ -16,9 +19,12 @@ import { Coverage } from "@/components/coverage"
 import { Faq } from "@/components/faq"
 import { CtaFinal } from "@/components/cta-final"
 
+export const metadata: Metadata = { alternates: { canonical: "/" } }
+
 export default function Home() {
   return (
     <>
+      <JsonLd data={faqLd(FAQ.items)} />
       <Hero />
       <Stats />
       <About />
