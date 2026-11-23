@@ -13,9 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...TECNOLOGIAS.map((t) => `/tecnologias/${t.slug}`),
     ...blogPosts.map((p) => `/blog/${p.slug}`),
   ]
+  /** Solo se declara fecha donde es real: la de publicación de cada artículo. */
+  const posted = new Map(blogPosts.map((p) => [`/blog/${p.slug}`, new Date(p.isoDate)]))
   return [...fixed, ...dynamic].map((path) => ({
     url: `${SITE.url}${path}`,
+    lastModified: posted.get(path),
     changeFrequency: path === "" ? "weekly" : "monthly",
-    priority: path === "" ? 1 : path.split("/").length > 2 ? 0.6 : 0.8,
+    priority: path === "" ? 1 : path === "/diagnostico" || path === "/contacto" ? 0.9 : path.split("/").length > 2 ? 0.6 : 0.8,
   }))
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { JsonLd, serviceLd } from "@/lib/seo"
 import { notFound } from "next/navigation"
 import { CtaFinal } from "@/components/cta-final"
 import { PageHero } from "@/components/page-hero"
@@ -34,6 +35,7 @@ export default async function TecnologiaPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={serviceLd({ path: `/tecnologias/${t.slug}`, name: `Desarrollo con ${t.title}`, description: t.lead, serviceType: `Desarrollo de software con ${t.title}` })} />
       <PageHero
         crumbs={[{ label: "Servicios", href: "/servicios" }, { label: t.title }]}
         label={C.label}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { JsonLd, serviceLd } from "@/lib/seo"
 import { notFound } from "next/navigation"
 import { AdjacentNav } from "@/components/adjacent-nav"
 import { CtaFinal } from "@/components/cta-final"
@@ -49,6 +50,7 @@ export default async function ServicioPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={serviceLd({ path: `/servicios/${s.slug}`, name: s.title, description: s.lead, serviceType: s.title })} />
       <PageHero
         crumbs={[{ label: "Servicios", href: "/servicios" }, { label: s.title }]}
         label={`SERVICIO ${s.n}`}

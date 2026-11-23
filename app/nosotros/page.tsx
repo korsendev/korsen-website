@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { JsonLd, pageLd } from "@/lib/seo"
 import { About } from "@/components/about"
 import { Coverage } from "@/components/coverage"
 import { CtaFinal } from "@/components/cta-final"
@@ -22,6 +23,7 @@ export default function NosotrosPage() {
   const b = C.brand
   return (
     <>
+      <JsonLd data={pageLd({ type: "AboutPage", path: "/nosotros", name: C.seoTitle, description: C.seoDescription })} />
       <About as="h1" id="hero" cta={false} />
       <Stats />
 

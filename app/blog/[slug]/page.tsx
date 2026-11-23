@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { ORG_ID, WEBSITE_ID } from "@/lib/seo"
 import { notFound } from "next/navigation"
 import { AdjacentNav } from "@/components/adjacent-nav"
 import { Breadcrumbs } from "@/components/breadcrumbs"
@@ -100,9 +101,13 @@ export default async function BlogPostPage({ params }: Props) {
     description: post.excerpt,
     datePublished: post.isoDate,
     inLanguage: "es",
-    author: { "@type": "Organization", name: SITE.name },
-    publisher: { "@type": "Organization", name: SITE.name, url: SITE.url },
-    mainEntityOfPage: `${SITE.url}/blog/${post.slug}`,
+    dateModified: post.isoDate,
+    articleSection: post.category,
+    image: `${SITE.url}/blog/${post.slug}/opengraph-image`,
+    author: { "@id": ORG_ID },
+    publisher: { "@id": ORG_ID },
+    isPartOf: { "@id": WEBSITE_ID },
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE.url}/blog/${post.slug}` },
   }
 
   return (

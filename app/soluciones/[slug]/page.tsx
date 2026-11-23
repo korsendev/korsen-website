@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { JsonLd, faqLd, serviceLd } from "@/lib/seo"
 import { notFound } from "next/navigation"
 import { AdjacentNav } from "@/components/adjacent-nav"
 import { CtaFinal } from "@/components/cta-final"
@@ -41,6 +42,8 @@ export default async function SolucionPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={serviceLd({ path: `/soluciones/${s.slug}`, name: s.title, description: s.seoDescription, serviceType: s.title })} />
+      <JsonLd data={faqLd(s.faqs)} />
       <PageHero
         crumbs={[{ label: "Soluciones", href: "/soluciones" }, { label: s.title }]}
         label={`SOLUCIÓN ${s.n}`}

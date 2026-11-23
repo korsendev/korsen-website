@@ -1,4 +1,6 @@
 import type { Metadata } from "next"
+import { SITE } from "@/lib/content/global"
+import { JsonLd, ORG_ID } from "@/lib/seo"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 import { CtaFinal } from "@/components/cta-final"
@@ -26,8 +28,23 @@ export default async function ProductoPage({ params }: Props) {
   const { slug } = await params
   if (slug !== BOSQRA.slug) notFound()
 
+  const app = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": `${SITE.url}/productos/${BOSQRA.slug}#software`,
+    name: BOSQRA.name,
+    description: C.seoDescription,
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Android, iOS, Web",
+    url: BOSQRA.url,
+    inLanguage: "es",
+    featureList: BOSQRA.benefits,
+    publisher: { "@id": ORG_ID },
+  }
+
   return (
     <>
+      <JsonLd data={app} />
       <PageHero
         crumbs={[{ label: "Productos", href: "/productos" }, { label: "BOSQRA" }]}
         label={C.label}

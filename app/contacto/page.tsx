@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { JsonLd, pageLd } from "@/lib/seo"
 import { PageHero } from "@/components/page-hero"
 import { Reveal } from "@/components/reveal"
 import { Section } from "@/components/section"
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
 export default function ContactoPage() {
   return (
     <>
+      <JsonLd data={pageLd({ type: "ContactPage", path: "/contacto", name: C.seoTitle, description: C.seoDescription })} />
       <PageHero label={C.label} title={C.title} accent={C.accent} intro={C.intro} facts={HERO.facts} />
       <Section line={false}>
         <ul className="mn-grid mn-grid--4">
