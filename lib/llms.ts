@@ -8,6 +8,7 @@ import { BOSQRA } from "@/lib/content/bosqra"
 import { SERVICIOS } from "@/lib/content/servicios"
 import { SOLUCIONES } from "@/lib/content/soluciones"
 import { TECNOLOGIAS } from "@/lib/content/tecnologias"
+import { LANDINGS } from "@/lib/content/posicionamiento"
 import { PROJECTS } from "@/lib/projects-data"
 
 const u = (p: string) => `${SITE.url}${p}`
@@ -28,6 +29,9 @@ ${SOLUCIONES.map((s) => `- [${s.title}](${u(`/soluciones/${s.slug}`)}): ${s.seoD
 
 ## Servicios
 ${SERVICIOS.map((s) => `- [${s.title}](${u(`/servicios/${s.slug}`)}): ${s.short}`).join("\n")}
+
+## Desarrollo de software
+${LANDINGS.map((l) => `- [${l.seoTitle}](${u(`/${l.slug}`)}): ${l.seoDescription}`).join("\n")}
 
 ## Producto propio
 - [${BOSQRA.name}](${u(`/productos/${BOSQRA.slug}`)}): ${BOSQRA.text}

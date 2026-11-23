@@ -64,6 +64,9 @@ export const FOOTER = {
         { label: "Atiende y vende con IA", href: "/soluciones/atiende-y-vende-con-ia" },
         { label: "Lleva tu servicio al móvil", href: "/soluciones/lleva-tu-servicio-al-movil" },
         { label: "Capta clientes en internet", href: "/soluciones/capta-clientes-en-internet" },
+        { label: "Software en República Dominicana", href: "/desarrollo-de-software-republica-dominicana" },
+        { label: "Software a medida", href: "/desarrollo-de-software-a-medida" },
+        { label: "Apps móviles en RD", href: "/desarrollo-de-apps-moviles-republica-dominicana" },
       ],
     },
     {
