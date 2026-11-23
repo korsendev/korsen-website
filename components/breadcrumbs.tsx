@@ -23,7 +23,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
           <li key={c.label} className="flex items-center gap-2">
             {i > 0 ? <span aria-hidden>/</span> : null}
             {c.href ? (
-              <Link href={c.href} className="mn-tap transition-colors hover:text-[var(--mn-lime)]">
+              <Link href={c.href} className="mn-tap transition-colors hover:text-[var(--mn-accent)]">
                 {c.label}
               </Link>
             ) : (

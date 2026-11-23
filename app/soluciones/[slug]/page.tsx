@@ -69,11 +69,11 @@ export default async function SolucionPage({ params }: Props) {
               <p className="mn-kicker">{L.problemLabel}</p>
               <p className="mn-h3 mt-4 text-[20px] font-semibold leading-snug">{s.problem}</p>
             </MnCard>
-            <div className="grid place-items-center text-[var(--mn-lime)]" aria-hidden>
+            <div className="grid place-items-center text-[var(--mn-accent)]" aria-hidden>
               <span className="mn-code rotate-90 text-3xl lg:rotate-0">→</span>
             </div>
             <MnCard hl>
-              <p className="mn-kicker" style={{ color: "var(--mn-lime)" }}>
+              <p className="mn-kicker" style={{ color: "var(--mn-accent)" }}>
                 {L.resultLabel}
               </p>
               <p className="mn-h2 mt-4" style={{ fontSize: 28 }}>

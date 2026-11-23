@@ -86,7 +86,7 @@ export function HeroPipeline() {
                       {on ? <span className="absolute inset-[-6px] rounded-full border border-[var(--mn-lime)]/40" style={{ animation: "mn-pulse 2s infinite" }} /> : null}
                     </span>
                     <span className="min-w-0">
-                      <span className={cn("mn-code block text-[11px] tracking-[0.1em]", on ? "text-[var(--mn-lime)]" : "text-[var(--mn-text-3)]")}>{p.n}</span>
+                      <span className={cn("mn-code block text-[11px] tracking-[0.1em]", on ? "text-[var(--mn-accent)]" : "text-[var(--mn-text-3)]")}>{p.n}</span>
                       <span className={cn("mt-1 block text-[15px] font-extrabold uppercase tracking-[-0.01em] transition-colors", on ? "text-[var(--mn-text)]" : "text-[var(--mn-text-2)] group-hover:text-[var(--mn-text)]")}>
                         {p.name}
                       </span>
@@ -103,7 +103,7 @@ export function HeroPipeline() {
       {/* Detalle de la fase activa */}
       <div className="m-5 mt-6 grid gap-4 rounded-[var(--mn-r-lg)] border border-[var(--mn-lime-25)] bg-[var(--mn-lime-06)] p-5 sm:m-7 sm:mt-6 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-8" aria-live="polite">
         <div>
-          <p className="mn-kicker" style={{ color: "var(--mn-lime)" }}>
+          <p className="mn-kicker" style={{ color: "var(--mn-accent)" }}>
             Fase {cur.n} · {cur.name}
           </p>
           <p className="mt-2 text-[15px] leading-relaxed text-[var(--mn-text)]">{cur.text}</p>

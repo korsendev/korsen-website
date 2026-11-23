@@ -25,7 +25,7 @@ export default function ContactoPage() {
                 <MnCard>
                   <p className="mn-kicker">{ch.kicker}</p>
                   {ch.href ? (
-                    <a href={ch.href} className="mn-h3 mn-tap mt-3 break-words text-[20px] transition-colors hover:text-[var(--mn-lime)]">
+                    <a href={ch.href} className="mn-h3 mn-tap mt-3 break-words text-[20px] transition-colors hover:text-[var(--mn-accent)]">
                       {ch.value}
                     </a>
                   ) : (

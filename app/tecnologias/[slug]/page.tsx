@@ -80,7 +80,7 @@ export default async function TecnologiaPage({ params }: Props) {
                       <ResultBox>{s.result}</ResultBox>
                     </div>
                     <div className="mn-card__foot">
-                      <span className="mn-code text-[13px] text-[var(--mn-lime)]">Ver solución →</span>
+                      <span className="mn-code text-[13px] text-[var(--mn-accent)]">Ver solución →</span>
                     </div>
                   </MnCard>
                 </Reveal>

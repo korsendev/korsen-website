@@ -4,9 +4,6 @@ import Link from "next/link"
 import { X } from "lucide-react"
 import { TRANSITION_BAR } from "@/lib/content/global"
 
-/** Script inline (antes de pintar) que oculta la barra si ya se cerró. */
-export const TRANSITION_BAR_INIT = `try{if(localStorage.getItem(${JSON.stringify(TRANSITION_BAR.storageKey)})==="1")document.documentElement.setAttribute("data-bar-closed","")}catch(e){}`
-
 export function TransitionBar() {
   function close() {
     document.documentElement.setAttribute("data-bar-closed", "")
@@ -22,7 +19,7 @@ export function TransitionBar() {
       <div className="mn-container flex items-center justify-center gap-3 py-2.5 pr-12 text-center text-[13px] leading-snug sm:pr-[var(--mn-gutter)]">
         <p className="text-[var(--mn-text-2)]">
           <strong className="font-semibold text-[var(--mn-text)]">{TRANSITION_BAR.strong}</strong> {TRANSITION_BAR.text}{" "}
-          <Link href={TRANSITION_BAR.href} className="whitespace-nowrap font-medium text-[var(--mn-lime)] underline-offset-4 hover:underline">
+          <Link href={TRANSITION_BAR.href} className="whitespace-nowrap font-medium text-[var(--mn-accent)] underline-offset-4 hover:underline">
             {TRANSITION_BAR.cta} →
           </Link>
         </p>

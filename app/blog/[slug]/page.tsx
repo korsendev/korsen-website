@@ -135,7 +135,7 @@ export default async function BlogPostPage({ params }: Props) {
             <p className="mn-h2 mt-3" style={{ fontSize: 26 }}>
               {post.related.title}
             </p>
-            <span className="mn-code mt-4 text-[13px] text-[var(--mn-lime)]">Ver solución →</span>
+            <span className="mn-code mt-4 text-[13px] text-[var(--mn-accent)]">Ver solución →</span>
           </MnCard>
         </div>
       </Section>

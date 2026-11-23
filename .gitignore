@@ -28,3 +28,4 @@ next-env.d.ts
 # media pesada (videos) fuera del repo
 *.mp4
 *.mov
+scripts/i18n-missing.json

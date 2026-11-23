@@ -24,7 +24,7 @@ export function Coverage({ id = "cobertura", as = "h2", priority = false }: { id
                     </div>
                     <div className="relative mt-auto border-t border-[var(--mn-border-1)] p-6 sm:p-7">
                       <div>
-                        <p className="mn-kicker flex items-center gap-2" style={active ? { color: "var(--mn-lime)" } : undefined}>
+                        <p className="mn-kicker flex items-center gap-2" style={active ? { color: "var(--mn-accent)" } : undefined}>
                           <span
                             className="h-2 w-2 shrink-0 rounded-full"
                             style={active ? { background: "var(--mn-lime)", animation: "mn-pulse 2s infinite" } : { background: "var(--mn-text-3)" }}

@@ -43,12 +43,13 @@ export function Header() {
         aria-hidden
         className={cn(
           "absolute inset-0 -z-10 border-b backdrop-blur-[16px] transition-colors",
-          scrolled || open ? "border-[var(--mn-border-1)] bg-[rgba(5,5,5,0.88)]" : "border-transparent bg-[rgba(5,5,5,0.72)]",
+          scrolled || open ? "border-[var(--mn-border-1)] bg-[var(--mn-header-bg-solid)]" : "border-transparent bg-[var(--mn-header-bg)]",
         )}
       />
       <div className="mn-container flex h-full items-center justify-between gap-6">
         <Link href="/" aria-label="MAYNODE — Inicio" className="flex shrink-0 items-center">
-          <Image src="/brand/maynode-logo.svg" alt="MAYNODE" width={66} height={36} priority unoptimized className="h-9 w-auto" />
+          <Image src="/brand/maynode-logo.svg" alt="MAYNODE" width={66} height={36} priority unoptimized className="mn-logo--dark h-9 w-auto" />
+          <Image src="/brand/maynode-logo-negro.svg" alt="MAYNODE" width={66} height={36} priority unoptimized className="mn-logo--light h-9 w-auto" />
         </Link>
 
         <nav aria-label="Principal" className="hidden xl:block">
@@ -98,7 +99,7 @@ export function Header() {
                     <Link
                       href={item.href}
                       aria-current={isActive(item.href) ? "page" : undefined}
-                      className={cn("block py-4 text-2xl font-extrabold uppercase tracking-tight", isActive(item.href) ? "text-[var(--mn-lime)]" : "text-[var(--mn-text)]")}
+                      className={cn("block py-4 text-2xl font-extrabold uppercase tracking-tight", isActive(item.href) ? "text-[var(--mn-accent)]" : "text-[var(--mn-text)]")}
                     >
                       {item.label}
                     </Link>
@@ -110,10 +111,10 @@ export function Header() {
               {HEADER_CTA.label}
             </Button>
             <div className="mt-auto pt-10 font-semibold leading-relaxed text-[var(--mn-text)]">
-              <a href={`mailto:${SITE.email}`} className="block hover:text-[var(--mn-lime)]">
+              <a href={`mailto:${SITE.email}`} className="block hover:text-[var(--mn-accent)]">
                 {SITE.email}
               </a>
-              <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} className="block hover:text-[var(--mn-lime)]">
+              <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} className="block hover:text-[var(--mn-accent)]">
                 {SITE.phone}
               </a>
             </div>

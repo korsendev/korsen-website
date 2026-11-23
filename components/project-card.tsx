@@ -31,9 +31,9 @@ export function ProjectCard({ project }: { project: Project }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${PROJECTS_COPY.viewProject}: ${project.name}`}
-            className="mn-code break-all text-[13px] text-[var(--mn-text)] transition-colors hover:text-[var(--mn-lime)]"
+            className="mn-code break-all text-[13px] text-[var(--mn-text)] transition-colors hover:text-[var(--mn-accent)]"
           >
-            <span className="text-[var(--mn-lime)]">↗</span> {project.status}
+            <span className="text-[var(--mn-accent)]">↗</span> {project.status}
           </a>
         ) : wip ? (
           <Badge tone="wip">{project.status}</Badge>
